@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82BDD1250BFE010088A796 /* AppDelegate.swift */; };
-		0A82BDD4250BFE010088A796 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82BDD3250BFE010088A796 /* SceneDelegate.swift */; };
 		0A82BDD6250BFE010088A796 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82BDD5250BFE010088A796 /* ViewController.swift */; };
 		0A82BDD9250BFE010088A796 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDD7250BFE010088A796 /* Main.storyboard */; };
 		0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDA250BFE030088A796 /* Assets.xcassets */; };
@@ -18,7 +17,6 @@
 /* Begin PBXFileReference section */
 		0A82BDCE250BFE010088A796 /* TFS Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TFS Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A82BDD1250BFE010088A796 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0A82BDD3250BFE010088A796 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0A82BDD5250BFE010088A796 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0A82BDD8250BFE010088A796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A82BDDA250BFE030088A796 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				0A82BDD1250BFE010088A796 /* AppDelegate.swift */,
-				0A82BDD3250BFE010088A796 /* SceneDelegate.swift */,
 				0A82BDD5250BFE010088A796 /* ViewController.swift */,
 				0A82BDD7250BFE010088A796 /* Main.storyboard */,
 				0A82BDDA250BFE030088A796 /* Assets.xcassets */,
@@ -140,7 +137,6 @@
 			files = (
 				0A82BDD6250BFE010088A796 /* ViewController.swift in Sources */,
 				0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */,
-				0A82BDD4250BFE010088A796 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +212,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +266,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -287,7 +283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,7 +302,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
