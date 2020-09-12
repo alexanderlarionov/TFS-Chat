@@ -47,7 +47,9 @@ class ViewController: UIViewController {
     }
     
     private func printStateInfo(_ methodName: String) {
+        #if DEBUG
         print("Method \(methodName) of ViewController was called \n")
+        #endif
     }
     
     
