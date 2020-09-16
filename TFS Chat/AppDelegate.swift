@@ -40,9 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func printStateInfo(from: AppState, to: AppState, methodName: String) {
-        #if DEBUG
-        print("Method \(methodName) of AppDelegate was called. Application moved from '\(from)' to '\(to)' state. \n")
-        #endif
+        LoggingUtil.debugPrint("Method \(methodName) of AppDelegate was called. Application moved from '\(from)' to '\(to)' state. \n")
     }
     
 }

@@ -12,6 +12,7 @@
 		0A82BDD9250BFE010088A796 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDD7250BFE010088A796 /* Main.storyboard */; };
 		0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDA250BFE030088A796 /* Assets.xcassets */; };
 		0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDC250BFE030088A796 /* LaunchScreen.storyboard */; };
+		0AC52A8F251247350029503C /* LoggingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC52A8E251247350029503C /* LoggingUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0A82BDDA250BFE030088A796 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A82BDDD250BFE030088A796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A82BDDF250BFE030088A796 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AC52A8E251247350029503C /* LoggingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				0A82BDD1250BFE010088A796 /* AppDelegate.swift */,
 				0A82BDD5250BFE010088A796 /* ViewController.swift */,
+				0AC52A8E251247350029503C /* LoggingUtil.swift */,
 				0A82BDD7250BFE010088A796 /* Main.storyboard */,
 				0A82BDDA250BFE030088A796 /* Assets.xcassets */,
 				0A82BDDC250BFE030088A796 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				0A82BDD6250BFE010088A796 /* ViewController.swift in Sources */,
 				0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */,
+				0AC52A8F251247350029503C /* LoggingUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
