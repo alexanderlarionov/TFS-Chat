@@ -9,11 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
+   
+    @IBOutlet var profileLogoView: UIView!
+    @IBOutlet var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         printStateInfo(#function)
+        profileLogoView.layer.cornerRadius = profileLogoView.frame.width / 2;
+        saveButton.layer.cornerRadius = 14;
     }
     
     override func viewWillAppear(_ animated: Bool) {
