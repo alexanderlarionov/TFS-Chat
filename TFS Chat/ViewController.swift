@@ -9,17 +9,40 @@
 import UIKit
 
 class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-   
-    @IBOutlet var profileLogoView: UIView!
+    
+    @IBOutlet var profileUIView: UIView!
+    @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var saveButton: UIButton!
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         printStateInfo(#function)
-        profileLogoView.layer.cornerRadius = profileLogoView.frame.width / 2;
+        profileUIView.layer.cornerRadius = profileUIView.frame.width / 2;
+        profileImageView.layer.cornerRadius = profileUIView.layer.cornerRadius;
         saveButton.layer.cornerRadius = 14;
     }
+    
+    @IBAction func editButtonPressed(_ sender: UIButton) {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            LoggingUtil.debugPrint("Photo Library is not available")
+            return
+        }
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profileImageView.image = image
+        }
+    }
+}
+
+extension ViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -54,6 +77,5 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     private func printStateInfo(_ methodName: String) {
         LoggingUtil.debugPrint("Method \(methodName) of ViewController was called \n")
     }
-    
 }
 

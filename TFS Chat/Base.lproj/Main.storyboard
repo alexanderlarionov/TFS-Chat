@@ -36,20 +36,30 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jcl-48-KwE">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuC-ct-PJH">
                                         <rect key="frame" x="210" y="216" width="30" height="32"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <state key="normal" title="Edit">
                                             <color key="titleColor" red="0.0" green="0.4793452024" blue="0.99908632040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="editButtonPressed:" destination="gMr-jh-LkL" eventType="touchUpInside" id="7po-FC-GB1"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.89496898650000001" green="0.90891593690000005" blue="0.1692225933" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="eBS-K1-P9E" firstAttribute="centerY" secondItem="eFx-as-ePy" secondAttribute="centerY" id="9HI-lh-g1S"/>
                                     <constraint firstAttribute="bottom" secondItem="cuC-ct-PJH" secondAttribute="bottom" constant="-8" id="KxY-7m-aw8"/>
+                                    <constraint firstItem="Jcl-48-KwE" firstAttribute="height" secondItem="eFx-as-ePy" secondAttribute="height" id="PFP-2p-P1Z"/>
                                     <constraint firstAttribute="width" constant="240" id="RF4-f2-l1S"/>
+                                    <constraint firstItem="Jcl-48-KwE" firstAttribute="width" secondItem="eFx-as-ePy" secondAttribute="width" id="RTt-dk-Ozl"/>
+                                    <constraint firstItem="Jcl-48-KwE" firstAttribute="centerY" secondItem="eFx-as-ePy" secondAttribute="centerY" id="YAz-9P-5H6"/>
                                     <constraint firstAttribute="trailing" secondItem="cuC-ct-PJH" secondAttribute="trailing" id="avh-1i-xyw"/>
+                                    <constraint firstItem="Jcl-48-KwE" firstAttribute="centerX" secondItem="eFx-as-ePy" secondAttribute="centerX" id="cce-CZ-x9P"/>
                                     <constraint firstItem="eBS-K1-P9E" firstAttribute="centerX" secondItem="eFx-as-ePy" secondAttribute="centerX" id="e0B-bo-nuZ"/>
                                     <constraint firstItem="cuC-ct-PJH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eFx-as-ePy" secondAttribute="leading" constant="20" symbolic="YES" id="klX-hT-IZI"/>
                                     <constraint firstAttribute="width" secondItem="eFx-as-ePy" secondAttribute="height" multiplier="1:1" id="thC-Og-lmw"/>
@@ -109,7 +119,8 @@
                         <viewLayoutGuide key="safeArea" id="Mel-3p-oMu"/>
                     </view>
                     <connections>
-                        <outlet property="profileLogoView" destination="eFx-as-ePy" id="SAl-NH-5a7"/>
+                        <outlet property="profileImageView" destination="Jcl-48-KwE" id="DmE-21-VWF"/>
+                        <outlet property="profileUIView" destination="eFx-as-ePy" id="SAl-NH-5a7"/>
                         <outlet property="saveButton" destination="JHW-St-gmQ" id="KPr-qG-rIW"/>
                     </connections>
                 </viewController>
