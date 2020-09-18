@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
    
     @IBOutlet var profileLogoView: UIView!
     @IBOutlet var saveButton: UIButton!
