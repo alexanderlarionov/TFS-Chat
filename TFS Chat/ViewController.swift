@@ -13,7 +13,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet var profileUIView: UIView!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var saveButton: UIButton!
+    @IBOutlet var editButton: UIButton!
     var imagePicker = UIImagePickerController()
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        //printSaveButtonFrame(#function) view is not initialized yet, saveButton is nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +27,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         profileUIView.layer.cornerRadius = profileUIView.frame.width / 2;
         profileImageView.layer.cornerRadius = profileUIView.layer.cornerRadius;
         saveButton.layer.cornerRadius = 14;
+        printSaveButtonFrame(#function)
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
@@ -52,6 +59,14 @@ extension ViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         printStateInfo(#function)
+        
+        /*
+        Storyboard XML contains coordinates of elements in coordinate system of a device
+        which selected in "View as" section.
+        After initialization of view, Autolayout mechanism performs
+        and adjusts coordinates for an actual device.
+        */
+        printSaveButtonFrame(#function)
     }
     
     override func viewWillLayoutSubviews() {
@@ -75,7 +90,11 @@ extension ViewController {
     }
     
     private func printStateInfo(_ methodName: String) {
-        LoggingUtil.debugPrint("Method \(methodName) of ViewController was called \n")
+        LoggingUtil.debugPrint("Method \(methodName) of ViewController was called")
+    }
+    
+    private func printSaveButtonFrame(_ methodName: String) {
+        LoggingUtil.debugPrint("'Save button' frame in \(methodName)) is \(saveButton.frame)")
     }
 }
 
