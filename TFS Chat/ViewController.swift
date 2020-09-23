@@ -24,21 +24,53 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
         printStateInfo(#function)
+        printSaveButtonFrame(#function)
         profileUIView.layer.cornerRadius = profileUIView.frame.width / 2;
         profileImageView.layer.cornerRadius = profileUIView.layer.cornerRadius;
         saveButton.layer.cornerRadius = 14;
-        printSaveButtonFrame(#function)
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            LoggingUtil.debugPrint("Photo Library is not available")
+        imagePicker.delegate = self
+        let alert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { (_) in
+            self.selectFromLibrary()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (_) in
+            self.selectFromCamera()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(alert, animated: true)
+    }
+    
+    func selectFromCamera() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            showAlert(title: "Camera is not available")
             return
         }
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
         
+        imagePicker.sourceType = .camera
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func selectFromLibrary() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            showAlert(title: "Photo Library is not available")
+            return
+        }
+        
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func showAlert(title: String) {
+        let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -61,11 +93,11 @@ extension ViewController {
         printStateInfo(#function)
         
         /*
-        Storyboard XML contains coordinates of elements in coordinate system of a device
-        which selected in "View as" section.
-        After initialization of view, Autolayout mechanism performs
-        and adjusts coordinates for an actual device.
-        */
+         Storyboard XML contains coordinates of elements in coordinate system of a device
+         which selected in "View as" section.
+         After initialization of view, Autolayout mechanism performs
+         and adjusts coordinates for an actual device.
+         */
         printSaveButtonFrame(#function)
     }
     
