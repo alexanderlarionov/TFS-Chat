@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @IBOutlet var profileUIView: UIView!
     @IBOutlet var profileImageView: UIImageView!
@@ -81,7 +81,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     }
 }
 
-extension ViewController {
+extension ProfileViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
