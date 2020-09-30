@@ -18,27 +18,27 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <color key="sectionIndexBackgroundColor" red="0.9591724277" green="0.95931011440000002" blue="0.95914238689999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationListCell" id="01K-3x-Lq0" customClass="ConversationListCell" customModule="TFS_Chat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationListCell" id="01K-3x-Lq0" customClass="ConversationListCell" customModule="TFS_Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="84"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="01K-3x-Lq0" id="Eyb-D3-Qbl">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="84"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="b24-Rt-Lie">
-                                            <rect key="frame" x="16" y="16" width="382" height="52"/>
+                                            <rect key="frame" x="16" y="16" width="351" height="52"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vrF-WK-7mt">
-                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="23"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEW-sV-Fq4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="333.5" height="23"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="302.5" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEV-Mi-LBh">
-                                                            <rect key="frame" x="341.5" y="0.0" width="40.5" height="23"/>
+                                                            <rect key="frame" x="310.5" y="0.0" width="40.5" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -46,7 +46,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIK-Ld-icm">
-                                                    <rect key="frame" x="0.0" y="31" width="382" height="21"/>
+                                                    <rect key="frame" x="0.0" y="31" width="351" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -66,7 +66,7 @@
                                     <outlet property="dateLabel" destination="qEV-Mi-LBh" id="7wL-c4-4mn"/>
                                     <outlet property="messageLabel" destination="AIK-Ld-icm" id="m5W-9w-LzR"/>
                                     <outlet property="nameLabel" destination="dEW-sV-Fq4" id="Jfe-5q-84f"/>
-                                    <segue destination="Z0f-Nc-Oaq" kind="show" id="Bl8-Kf-fbm"/>
+                                    <segue destination="Z0f-Nc-Oaq" kind="show" identifier="" id="Bl8-Kf-fbm"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

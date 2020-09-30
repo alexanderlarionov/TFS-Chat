@@ -154,6 +154,19 @@ struct FakeData {
         ]
     ]
     
+    static var conversationData = [
+        MessageCellModel(text: randomString(length: 20) + " " + randomString(length: 30), type: .sent),
+        MessageCellModel(text: randomString(length: 5) + randomString(length: 20), type: .recieved),
+        MessageCellModel(text: randomString(length: 4) + randomString(length: 6), type: .sent),
+        MessageCellModel(text: randomString(length: 6) + " " + randomString(length: 5), type: .recieved),
+        MessageCellModel(text: randomString(length: 20), type: .sent),
+        MessageCellModel(text: randomString(length: 30), type: .sent),
+        MessageCellModel(text: randomString(length: 3), type: .recieved),
+        MessageCellModel(text: randomString(length: 4) + randomString(length: 6), type: .sent),
+        MessageCellModel(text: randomString(length: 6) + " " + randomString(length: 5) + " " + randomString(length: 5), type: .recieved),
+        MessageCellModel(text: randomString(length: 20) + " " + randomString(length: 9), type: .recieved)
+    ]
+    
     private static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         return String((0..<length).map{ _ in letters.randomElement()! })
