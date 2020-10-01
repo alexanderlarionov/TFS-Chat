@@ -76,16 +76,56 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tinkoff Chat" id="JeF-ft-Pm0">
-                        <barButtonItem key="rightBarButtonItem" title="My Profle" id="QOw-2b-ezf">
-                            <connections>
-                                <segue destination="83Q-wb-O8f" kind="presentation" id="phw-sU-dfY"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" id="hj1-3W-88x">
+                            <view key="customView" clipsSubviews="YES" contentMode="scaleToFill" id="wmr-uT-8gD">
+                                <rect key="frame" x="302" y="5.5" width="92" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="MWN-wX-ubu">
+                                        <rect key="frame" x="7" y="7" width="82" height="19"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bx-SF-KXf">
+                                                <rect key="frame" x="0.0" y="0.0" width="43" height="19"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iK-et-cKb">
+                                                <rect key="frame" x="39" y="0.0" width="43" height="19"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.89482897520000004" green="0.91713434459999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="MWN-wX-ubu" secondAttribute="trailing" constant="3" id="0GC-7W-GyX"/>
+                                    <constraint firstItem="MWN-wX-ubu" firstAttribute="top" secondItem="wmr-uT-8gD" secondAttribute="top" constant="7" id="BEe-Ys-VsV"/>
+                                    <constraint firstItem="MWN-wX-ubu" firstAttribute="leading" secondItem="wmr-uT-8gD" secondAttribute="leading" constant="7" id="b6m-wQ-iGR"/>
+                                    <constraint firstAttribute="bottom" secondItem="MWN-wX-ubu" secondAttribute="bottom" constant="7" id="l7p-xG-ESW"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="KgG-iK-p1H" appends="YES" id="Q90-h1-6DY"/>
+                                </connections>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profileLogoView" destination="wmr-uT-8gD" id="WNs-ou-Ohc"/>
+                        <outlet property="rightBarButton" destination="hj1-3W-88x" id="wtm-OP-4ix"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="099-Hc-Bch" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="KgG-iK-p1H">
+                    <connections>
+                        <segue destination="83Q-wb-O8f" kind="presentation" id="Oqk-bk-CPw"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1105.7971014492755" y="146.65178571428569"/>
+            <point key="canvasLocation" x="1017" y="147"/>
         </scene>
         <!--ProfileViewController-->
         <scene sceneID="j0J-eM-I4A">
