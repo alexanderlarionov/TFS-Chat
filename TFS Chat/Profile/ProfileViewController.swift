@@ -10,8 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @IBOutlet var profileUIView: UIView!
-    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var profileLogoView: ProfileLogoView!
     @IBOutlet var saveButton: UIButton!
     @IBOutlet var editButton: UIButton!
     var imagePicker = UIImagePickerController()
@@ -25,8 +24,6 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         super.viewDidLoad()
         printStateInfo(#function)
         printSaveButtonFrame(#function)
-        profileUIView.layer.cornerRadius = profileUIView.frame.width / 2;
-        profileImageView.layer.cornerRadius = profileUIView.layer.cornerRadius;
         saveButton.layer.cornerRadius = 14;
     }
     
@@ -76,7 +73,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImageView.image = image
+            profileLogoView.setImage(image)
         }
     }
 }

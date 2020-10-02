@@ -10,16 +10,13 @@ import UIKit
 
 class ConversationsListViewController: UITableViewController {
     
-    @IBOutlet var profileLogoView: UIView!
+    @IBOutlet var profileLogoView: ProfileLogoView!
     let data = FakeData.conversationListData;
-    @IBOutlet var rightBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = item
-        profileLogoView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        profileLogoView.layer.cornerRadius = profileLogoView.frame.width / 2
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }

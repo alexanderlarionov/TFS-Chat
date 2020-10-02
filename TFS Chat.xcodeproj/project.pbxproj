@@ -23,6 +23,8 @@
 		0AC5369F25239CD500B03EE8 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC5369E25239CD500B03EE8 /* ConfigurableView.swift */; };
 		0AC536A12523AFF100B03EE8 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC536A02523AFF100B03EE8 /* ConversationCellModel.swift */; };
 		0AC536A32523B03200B03EE8 /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC536A22523B03200B03EE8 /* FakeData.swift */; };
+		0AE687712527C230005D6AB3 /* ProfileLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE687702527C230005D6AB3 /* ProfileLogoView.swift */; };
+		0AE687732527C248005D6AB3 /* ProfileLogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE687722527C248005D6AB3 /* ProfileLogoView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		0AC5369E25239CD500B03EE8 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		0AC536A02523AFF100B03EE8 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellModel.swift; sourceTree = "<group>"; };
 		0AC536A22523B03200B03EE8 /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
+		0AE687702527C230005D6AB3 /* ProfileLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoView.swift; sourceTree = "<group>"; };
+		0AE687722527C248005D6AB3 /* ProfileLogoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileLogoView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 			children = (
 				0A82BDD5250BFE010088A796 /* ProfileViewController.swift */,
 				0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */,
+				0AE687702527C230005D6AB3 /* ProfileLogoView.swift */,
+				0AE687722527C248005D6AB3 /* ProfileLogoView.xib */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -190,6 +196,7 @@
 				0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */,
 				0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */,
 				0A6F424D25228B29004BC50D /* ConversationViewController.storyboard in Resources */,
+				0AE687732527C248005D6AB3 /* ProfileLogoView.xib in Resources */,
 				0A82BDD9250BFE010088A796 /* ProfileViewController.storyboard in Resources */,
 				0A6F424F25228B3C004BC50D /* ConversationsListViewController.storyboard in Resources */,
 			);
@@ -207,6 +214,7 @@
 				0A82BDD6250BFE010088A796 /* ProfileViewController.swift in Sources */,
 				0A6F424925228ADF004BC50D /* ConversationsListViewController.swift in Sources */,
 				0AC536A12523AFF100B03EE8 /* ConversationCellModel.swift in Sources */,
+				0AE687712527C230005D6AB3 /* ProfileLogoView.swift in Sources */,
 				0A6F424B25228B12004BC50D /* ConversationViewController.swift in Sources */,
 				0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */,
 				0AC5369F25239CD500B03EE8 /* ConfigurableView.swift in Sources */,
