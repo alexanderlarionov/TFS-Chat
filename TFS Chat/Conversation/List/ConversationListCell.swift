@@ -13,8 +13,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
-    let lightYellow = UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0);
-    
+
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         setDate(for: model)
@@ -53,12 +52,22 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     }
     
     private func setColor(for model: ConversationCellModel) {
-        if model.isOnline {
-            self.backgroundColor = lightYellow
+        switch ThemesViewController.currentTheme {
+        case .classic:
+            self.backgroundColor = model.isOnline ? UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0) : UIColor.white
+            self.nameLabel.textColor = UIColor.black
+            self.dateLabel.textColor = UIColor(red: 0.235, green: 0.235, blue: 0.263, alpha: 0.6)
+            self.messageLabel.textColor = UIColor(red: 0.235, green: 0.235, blue: 0.263, alpha: 0.6)
+        case .day:
+            let color = UIColor.blue //TODO
+        case .night:
+            self.backgroundColor = model.isOnline ? UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1) : UIColor.black;
+            self.nameLabel.textColor = UIColor.white
+            self.dateLabel.textColor = UIColor(red: 0.553, green: 0.553, blue: 0.576, alpha: 1)
+            self.messageLabel.textColor = UIColor(red: 0.553, green: 0.553, blue: 0.576, alpha: 1)
         }
-        else {
-            self.backgroundColor = .none
-        }
+        
     }
-    
 }
+
+

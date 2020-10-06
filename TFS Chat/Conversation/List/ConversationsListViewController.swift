@@ -11,12 +11,12 @@ import UIKit
 class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
+    
     let data = FakeData.conversationListData;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = item
+        changeTheme(to: ThemesViewController.currentTheme)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }
@@ -49,13 +49,55 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let target = segue.destination as? ConversationViewController else { return }
-        guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-        target.title = data[selectedPath.section][selectedPath.row].name
-        target.navigationItem.largeTitleDisplayMode = .never
+        if let target = segue.destination as? ConversationViewController {
+            guard let selectedPath = tableView.indexPathForSelectedRow else { return }
+            target.title = data[selectedPath.section][selectedPath.row].name
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        } else if let target = segue.destination as? ThemesViewController {
+            target.title = "Settings"
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
+            target.themesDelegate = self
+        }
+        segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
     
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
+    }
+    
+    private func setNavBarAppearance(backgroundColor: UIColor, textColor: UIColor) {
+        navigationController?.navigationBar.barTintColor = backgroundColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: textColor]
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = backgroundColor
+            navBarAppearance.titleTextAttributes = [.foregroundColor: textColor]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: textColor]
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
+        //TODO test for ios<13
+    }
+    
+}
+
+extension ConversationsListViewController: ThemesPickerDelegate {
+    
+    func changeTheme(to theme: Theme) {
+        switch theme {
+        case .classic:
+            let grayNavBarColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
+            setNavBarAppearance(backgroundColor: grayNavBarColor, textColor: UIColor.black)
+            tableView.backgroundColor = UIColor.white
+        case .day:
+            let color = UIColor.blue //TODO
+        case .night:
+            let blackNavBar = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
+            setNavBarAppearance(backgroundColor: blackNavBar, textColor: UIColor.white)
+            tableView.backgroundColor = UIColor.black
+        }
+        
+        self.tableView.reloadData()
     }
     
 }

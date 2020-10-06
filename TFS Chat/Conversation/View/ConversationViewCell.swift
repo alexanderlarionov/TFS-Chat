@@ -9,6 +9,7 @@
 import UIKit
 
 class ConversationViewCell: UITableViewCell, ConfigurableView {
+    
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var messageView: UIView!
     

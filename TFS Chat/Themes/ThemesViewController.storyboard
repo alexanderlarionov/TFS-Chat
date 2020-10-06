@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Themes View Controller-->
+        <scene sceneID="cPL-hc-ehR">
+            <objects>
+                <viewController storyboardIdentifier="ThemesViewController" id="YPX-65-i8C" customClass="ThemesViewController" customModule="TFS_Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ewS-tF-7bb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gsx-6M-nAQ">
+                                <rect key="frame" x="40" y="253.5" width="334" height="389"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="2fr-o9-VQE">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="103"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SC0-Is-5AP">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="cJs-du-XUx"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="classicButtonPressed:" destination="YPX-65-i8C" eventType="touchUpInside" id="EQk-Ch-sns"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1F-oz-agg">
+                                                <rect key="frame" x="136" y="80" width="62.5" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="SC0-Is-5AP" firstAttribute="leading" secondItem="2fr-o9-VQE" secondAttribute="leading" id="ax5-19-x3m"/>
+                                            <constraint firstAttribute="trailing" secondItem="SC0-Is-5AP" secondAttribute="trailing" id="jPy-OI-WI9"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="b7r-FJ-E66">
+                                        <rect key="frame" x="0.0" y="143" width="334" height="103"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXP-KV-TEc">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="ech-Zu-mp6"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="dayButtonPressed:" destination="YPX-65-i8C" eventType="touchUpInside" id="6fD-0F-AMb"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-dc-Xtg">
+                                                <rect key="frame" x="150" y="80" width="34" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="yXP-KV-TEc" secondAttribute="trailing" id="4sy-DU-Fan"/>
+                                            <constraint firstItem="yXP-KV-TEc" firstAttribute="leading" secondItem="b7r-FJ-E66" secondAttribute="leading" id="s2M-Eb-7Um"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wjH-Jz-Z8f">
+                                        <rect key="frame" x="0.0" y="286" width="334" height="103"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibW-GH-Nu4">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                <color key="backgroundColor" red="0.023529411764705882" green="0.023529411764705882" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="zE6-i4-MHt"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="nightButtonPressed:" destination="YPX-65-i8C" eventType="touchUpInside" id="Ocf-nL-bCh"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cn3-kv-tVU">
+                                                <rect key="frame" x="143" y="80" width="48" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ibW-GH-Nu4" firstAttribute="leading" secondItem="wjH-Jz-Z8f" secondAttribute="leading" id="XoP-8w-jUS"/>
+                                            <constraint firstAttribute="trailing" secondItem="ibW-GH-Nu4" secondAttribute="trailing" id="qKl-fV-y6i"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.098039215686274508" green="0.21176470588235294" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="gsx-6M-nAQ" firstAttribute="centerY" secondItem="ewS-tF-7bb" secondAttribute="centerY" id="AJU-5v-IDE"/>
+                            <constraint firstItem="GvV-8T-Wfm" firstAttribute="trailing" secondItem="gsx-6M-nAQ" secondAttribute="trailing" constant="40" id="cF9-Ei-CwO"/>
+                            <constraint firstItem="gsx-6M-nAQ" firstAttribute="leading" secondItem="GvV-8T-Wfm" secondAttribute="leading" constant="40" id="fKc-0P-ehb"/>
+                            <constraint firstItem="gsx-6M-nAQ" firstAttribute="centerX" secondItem="ewS-tF-7bb" secondAttribute="centerX" id="gOX-ta-8Hl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="GvV-8T-Wfm"/>
+                    </view>
+                    <connections>
+                        <outlet property="classicButton" destination="SC0-Is-5AP" id="rXd-12-te6"/>
+                        <outlet property="dayButton" destination="yXP-KV-TEc" id="ZvT-t1-4wz"/>
+                        <outlet property="nightButton" destination="ibW-GH-Nu4" id="DW0-ot-GqX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b9K-Sf-wPf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905.79710144927549" y="8.7053571428571423"/>
+        </scene>
+    </scenes>
+</document>
