@@ -13,6 +13,9 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet var profileLogoView: ProfileLogoView!
     @IBOutlet var saveButton: UIButton!
     @IBOutlet var editButton: UIButton!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var jobTitleLabel: UILabel!
+    @IBOutlet var cityLabel: UILabel!
     var imagePicker = UIImagePickerController()
     
     required init?(coder: NSCoder) {
@@ -25,6 +28,12 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         printStateInfo(#function)
         printSaveButtonFrame(#function)
         saveButton.layer.cornerRadius = 14;
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        printStateInfo(#function)
+        adjustViewForCurrentTheme()
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
@@ -76,14 +85,23 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
             profileLogoView.setImage(image)
         }
     }
+    
+}
+
+extension ProfileViewController: Themable {
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.currentTheme()
+        view.backgroundColor = theme.conversationViewBackgroundColor
+        saveButton.layer.backgroundColor = theme.navigationBarColor.cgColor
+        nameLabel.textColor = theme.navigationBarTextColor
+        jobTitleLabel.textColor = theme.navigationBarTextColor
+        cityLabel.textColor = theme.navigationBarTextColor
+        navigationController?.navigationBar.barTintColor = theme.navigationBarColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.navigationBarTextColor]
+    }
 }
 
 extension ProfileViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        printStateInfo(#function)
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

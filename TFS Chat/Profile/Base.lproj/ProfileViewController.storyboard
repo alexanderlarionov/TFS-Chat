@@ -99,7 +99,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cityLabel" destination="3BD-R9-zPn" id="aov-7O-jHq"/>
                         <outlet property="editButton" destination="cuC-ct-PJH" id="ptz-bh-UOu"/>
+                        <outlet property="jobTitleLabel" destination="Va0-lq-TFp" id="orS-X7-y1U"/>
+                        <outlet property="nameLabel" destination="F79-hP-vX1" id="aoX-C9-a7X"/>
                         <outlet property="profileLogoView" destination="eFx-as-ePy" id="SAl-NH-5a7"/>
                         <outlet property="saveButton" destination="JHW-St-gmQ" id="KPr-qG-rIW"/>
                     </connections>

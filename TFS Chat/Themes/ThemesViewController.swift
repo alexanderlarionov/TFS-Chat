@@ -11,9 +11,7 @@ import UIKit
 class ThemesViewController: UIViewController {
     
     var themesPickerDelegate: ThemesPickerDelegate?
-    var themesPickerBlock: ((ColorTheme) -> Void)?
-    
-    static var currentTheme = ColorTheme.classic
+    var applyThemeBlock: ((ColorTheme) -> Void)?
     
     @IBOutlet var classicButtonView: UIView!
     @IBOutlet var dayButtonView: UIView!
@@ -36,7 +34,11 @@ class ThemesViewController: UIViewController {
         for label in [classicLeftLabel, classicRightLabel, dayLeftLabel, dayRightLabel, nightLeftLabel, nightRightLabel] {
             label?.layer.cornerRadius = 7
         }
-        adjustView(for: ThemesViewController.currentTheme)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
     }
     
     @IBAction func classicButtonPressed(_ sender: Any) {
@@ -52,24 +54,31 @@ class ThemesViewController: UIViewController {
     }
     
     private func handleThemeSelection(_ theme: ColorTheme) {
-        //themesPickerDelegate?.changeTheme(to: theme)
-        themesPickerBlock?(theme)
-        ThemesViewController.currentTheme = theme
-        adjustView(for: theme)
+        //themesPickerDelegate?.applyTheme(_: theme)
+        applyThemeBlock?(theme)
+        adjustViewForCurrentTheme()
     }
     
-    private func adjustView(for theme: ColorTheme) {
+}
+
+protocol ThemesPickerDelegate {
+    func applyTheme(_: ColorTheme)
+}
+
+extension ThemesViewController: Themable {
+    
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.currentTheme()
+        view.backgroundColor = theme.themesViewControllerBackgroundColor
         switch theme {
         case .classic:
-            view.backgroundColor = UIColor(red: 0.07, green: 0.55, blue: 0.49, alpha: 1.00)
             highlightButton(classicButtonView)
         case .day:
-            view.backgroundColor = UIColor(red: 0.098, green: 0.21, blue: 0.379, alpha: 1)
             highlightButton(dayButtonView)
         case .night:
-            view.backgroundColor = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
             highlightButton(nightButtonView)
         }
+        //TODO how to adjust navbar color?
     }
     
     private func highlightButton(_ button: UIView) {
@@ -78,12 +87,4 @@ class ThemesViewController: UIViewController {
         nightButtonView.layer.borderWidth = 0
         button.layer.borderWidth = 3
     }
-}
-
-protocol ThemesPickerDelegate {
-    func changeTheme(to theme: ColorTheme)
-}
-
-enum ColorTheme {
-    case classic, night, day
 }

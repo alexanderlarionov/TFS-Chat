@@ -12,11 +12,16 @@ class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
+    let themeManager = ThemeManager()
     let data = FakeData.conversationListData;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setClassicTheme()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }
@@ -56,9 +61,9 @@ class ConversationsListViewController: UITableViewController {
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
-            //target.themesPickerDelegate = self
-            target.themesPickerBlock = { theme in
-                self.changeTheme(to: theme)
+            //target.themesPickerDelegate = self.themeManager
+            target.applyThemeBlock = { theme in
+                self.themeManager.applyTheme(theme)
             }
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
@@ -67,7 +72,14 @@ class ConversationsListViewController: UITableViewController {
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
     }
     
-    private func setNavBarAppearance(backgroundColor: UIColor, textColor: UIColor) {
+}
+
+extension ConversationsListViewController: Themable {
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.currentTheme()
+        let backgroundColor = theme.navigationBarColor
+        let textColor = theme.navigationBarTextColor
+        
         guard let navBar = navigationController?.navigationBar else { return }
         navBar.barTintColor = backgroundColor
         navBar.titleTextAttributes = [.foregroundColor: textColor]
@@ -81,34 +93,9 @@ class ConversationsListViewController: UITableViewController {
             navBar.standardAppearance = navBarAppearance
             navBar.scrollEdgeAppearance = navBarAppearance
         }
-
-    }
-    
-    private func setClassicTheme() {
-        let grayNavBarColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
-        setNavBarAppearance(backgroundColor: grayNavBarColor, textColor: UIColor.black)
-        tableView.backgroundColor = UIColor.white
-    }
-    
-}
-
-extension ConversationsListViewController: ThemesPickerDelegate {
-    
-    func changeTheme(to theme: ColorTheme) {
-        switch theme {
-        case .classic:
-            setClassicTheme()
-        case .day:
-            let lightGrayNavBarColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
-            setNavBarAppearance(backgroundColor: lightGrayNavBarColor, textColor: UIColor.black)
-            tableView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .night:
-            let blackNavBar = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
-            setNavBarAppearance(backgroundColor: blackNavBar, textColor: UIColor.white)
-            tableView.backgroundColor = UIColor.black
-        }
         
+        tableView.backgroundColor = theme.conversationListBackgroundColor
         tableView.reloadData()
     }
-    
 }
+

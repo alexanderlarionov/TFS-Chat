@@ -20,4 +20,16 @@ class ConversationViewCell: UITableViewCell, ConfigurableView {
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.text
     }
+    
+    func setColor(for identifier: String) {
+        let theme = ThemeManager.currentTheme()
+        backgroundColor = theme.conversationViewBackgroundColor
+        if identifier == "SentMessageCell" {
+            messageView.backgroundColor = theme.sentMessageBackgroundColor
+            messageLabel.textColor = theme.sentMessageTextColor
+        } else {
+            messageView.backgroundColor = theme.recievedMessageBackgroundColor
+            messageLabel.textColor = theme.recievedMessageTextColor
+        }
+    }
 }

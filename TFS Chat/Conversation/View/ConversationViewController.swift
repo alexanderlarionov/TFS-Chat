@@ -16,6 +16,11 @@ class ConversationViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,8 +39,16 @@ class ConversationViewController: UITableViewController {
     
     private func configureCell(indexPath: IndexPath, identifier: String, model: MessageCellModel) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ConversationViewCell else { return UITableViewCell()}
+        cell.setColor(for: identifier)
         cell.configure(with: model)
         return cell
     }
     
+}
+
+extension ConversationViewController: Themable {
+    func adjustViewForCurrentTheme() {
+        tableView.backgroundColor = ThemeManager.currentTheme().conversationViewBackgroundColor
+        tableView.reloadData()
+    }
 }

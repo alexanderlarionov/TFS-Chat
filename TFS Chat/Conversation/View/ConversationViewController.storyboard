@@ -14,14 +14,9 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7Sa-OJ-B1D">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="D4J-LW-QW5">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SentMessageCell" id="6jx-4q-zZd" customClass="ConversationViewCell" customModule="TFS_Chat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="72.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SentMessageCell" id="6jx-4q-zZd" customClass="ConversationViewCell" customModule="TFS_Chat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="72.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6jx-4q-zZd" id="Mja-Vh-R5q">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="72.5"/>
@@ -46,7 +41,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="U3W-df-0Yk" secondAttribute="bottom" constant="16" id="6BF-Vp-1fV"/>
                                         <constraint firstItem="U3W-df-0Yk" firstAttribute="leading" secondItem="Mja-Vh-R5q" secondAttribute="leading" constant="16" id="XDC-4k-DPZ"/>
@@ -59,8 +53,8 @@
                                     <outlet property="messageView" destination="U3W-df-0Yk" id="pmN-4Q-8uM"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecievedMessageCell" id="9N5-PU-P16" customClass="ConversationViewCell" customModule="TFS_Chat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="144.5" width="414" height="72.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecievedMessageCell" id="9N5-PU-P16" customClass="ConversationViewCell" customModule="TFS_Chat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="100.5" width="414" height="72.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9N5-PU-P16" id="Voi-SZ-GeP">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="72.5"/>
@@ -85,7 +79,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="kza-oH-bYb" firstAttribute="top" secondItem="Voi-SZ-GeP" secondAttribute="top" constant="16" id="MUh-Ed-4RD"/>
                                         <constraint firstAttribute="trailing" secondItem="kza-oH-bYb" secondAttribute="trailing" constant="16" id="ZWd-CR-M3a"/>
