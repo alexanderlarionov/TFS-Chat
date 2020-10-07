@@ -68,18 +68,20 @@ class ConversationsListViewController: UITableViewController {
     }
     
     private func setNavBarAppearance(backgroundColor: UIColor, textColor: UIColor) {
-        navigationController?.navigationBar.barTintColor = backgroundColor
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: textColor]
+        guard let navBar = navigationController?.navigationBar else { return }
+        navBar.barTintColor = backgroundColor
+        navBar.titleTextAttributes = [.foregroundColor: textColor]
+        navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.backgroundColor = backgroundColor
             navBarAppearance.titleTextAttributes = [.foregroundColor: textColor]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: textColor]
-            navigationController?.navigationBar.standardAppearance = navBarAppearance
-            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            navBar.standardAppearance = navBarAppearance
+            navBar.scrollEdgeAppearance = navBarAppearance
         }
-        //TODO test for ios<13
+
     }
     
     private func setClassicTheme() {
@@ -97,8 +99,8 @@ extension ConversationsListViewController: ThemesPickerDelegate {
         case .classic:
             setClassicTheme()
         case .day:
-            let navBarColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
-            setNavBarAppearance(backgroundColor: navBarColor, textColor: UIColor.black)
+            let lightGrayNavBarColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
+            setNavBarAppearance(backgroundColor: lightGrayNavBarColor, textColor: UIColor.black)
             tableView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         case .night:
             let blackNavBar = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)

@@ -38,6 +38,7 @@ class ProfileLogoView: UIView {
     }
     
     private func prepareView(_ view: UIView) {
+        //TODO fix for ios12 (view not loading)
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let frameWidth = view.frame.width
