@@ -10,8 +10,10 @@ import UIKit
 
 class ThemesViewController: UIViewController {
     
-    var themesDelegate: ThemesPickerDelegate!
-    static var currentTheme = Theme.classic
+    var themesPickerDelegate: ThemesPickerDelegate?
+    var themesPickerBlock: ((ColorTheme) -> Void)?
+    
+    static var currentTheme = ColorTheme.classic
     
     @IBOutlet var classicButtonView: UIView!
     @IBOutlet var dayButtonView: UIView!
@@ -49,13 +51,14 @@ class ThemesViewController: UIViewController {
         handleThemeSelection(.night)
     }
     
-    private func handleThemeSelection(_ theme: Theme) {
-        themesDelegate.changeTheme(to: theme)
+    private func handleThemeSelection(_ theme: ColorTheme) {
+        //themesPickerDelegate?.changeTheme(to: theme)
+        themesPickerBlock?(theme)
         ThemesViewController.currentTheme = theme
         adjustView(for: theme)
     }
     
-    private func adjustView(for theme: Theme) {
+    private func adjustView(for theme: ColorTheme) {
         switch theme {
         case .classic:
             view.backgroundColor = UIColor(red: 0.07, green: 0.55, blue: 0.49, alpha: 1.00)
@@ -78,9 +81,9 @@ class ThemesViewController: UIViewController {
 }
 
 protocol ThemesPickerDelegate {
-    func changeTheme(to theme: Theme)
+    func changeTheme(to theme: ColorTheme)
 }
 
-enum Theme {
+enum ColorTheme {
     case classic, night, day
 }

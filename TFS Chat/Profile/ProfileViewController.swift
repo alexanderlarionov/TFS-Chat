@@ -31,17 +31,17 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         imagePicker.delegate = self
         let alert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { _ in
             self.selectFromLibrary()
         }))
         
-        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { _ in
             self.selectFromCamera()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
     
     func selectFromCamera() {

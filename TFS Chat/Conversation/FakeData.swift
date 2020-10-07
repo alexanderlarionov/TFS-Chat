@@ -20,7 +20,7 @@ struct FakeData {
          
          ConversationCellModel(
             name: randomString(length: 3) + " " + randomString(length: 10),
-            message: randomString(length: 50) + " " + randomString(length: 50),
+            message: randomString(length: 5) + " " + randomString(length: 3) + " " + randomString(length: 8),
             date: Calendar.current.date(byAdding: .minute, value: -14, to: Date())!,
             isOnline: true,
             hasUnreadMessages: true),

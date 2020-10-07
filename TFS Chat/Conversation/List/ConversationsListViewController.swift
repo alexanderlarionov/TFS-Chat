@@ -16,7 +16,7 @@ class ConversationsListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        changeTheme(to: ThemesViewController.currentTheme)
+        setClassicTheme()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }
@@ -52,11 +52,14 @@ class ConversationsListViewController: UITableViewController {
         if let target = segue.destination as? ConversationViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
             target.title = data[selectedPath.section][selectedPath.row].name
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
-            target.themesDelegate = self
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
+            //target.themesPickerDelegate = self
+            target.themesPickerBlock = { theme in
+                self.changeTheme(to: theme)
+            }
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
@@ -79,25 +82,31 @@ class ConversationsListViewController: UITableViewController {
         //TODO test for ios<13
     }
     
+    private func setClassicTheme() {
+        let grayNavBarColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
+        setNavBarAppearance(backgroundColor: grayNavBarColor, textColor: UIColor.black)
+        tableView.backgroundColor = UIColor.white
+    }
+    
 }
 
 extension ConversationsListViewController: ThemesPickerDelegate {
     
-    func changeTheme(to theme: Theme) {
+    func changeTheme(to theme: ColorTheme) {
         switch theme {
         case .classic:
-            let grayNavBarColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
-            setNavBarAppearance(backgroundColor: grayNavBarColor, textColor: UIColor.black)
-            tableView.backgroundColor = UIColor.white
+            setClassicTheme()
         case .day:
-            let color = UIColor.blue //TODO
+            let navBarColor = UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
+            setNavBarAppearance(backgroundColor: navBarColor, textColor: UIColor.black)
+            tableView.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         case .night:
             let blackNavBar = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
             setNavBarAppearance(backgroundColor: blackNavBar, textColor: UIColor.white)
             tableView.backgroundColor = UIColor.black
         }
         
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
 }
