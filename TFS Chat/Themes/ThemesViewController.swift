@@ -13,32 +13,39 @@ class ThemesViewController: UIViewController {
     var themesDelegate: ThemesPickerDelegate!
     static var currentTheme = Theme.classic
     
-    @IBOutlet var classicButton: UIButton!
-    @IBOutlet var dayButton: UIButton!
-    @IBOutlet var nightButton: UIButton!
+    @IBOutlet var classicButtonView: UIView!
+    @IBOutlet var dayButtonView: UIView!
+    @IBOutlet var nightButtonView: UIView!
+    
+    @IBOutlet var classicLeftLabel: UILabel!
+    @IBOutlet var classicRightLabel: UILabel!
+    @IBOutlet var dayLeftLabel: UILabel!
+    @IBOutlet var dayRightLabel: UILabel!
+    @IBOutlet var nightLeftLabel: UILabel!
+    @IBOutlet var nightRightLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cornerRadius = CGFloat(14)
-        classicButton.layer.cornerRadius = cornerRadius
-        dayButton.layer.cornerRadius = cornerRadius
-        nightButton.layer.cornerRadius = cornerRadius
-        let borderColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1).cgColor
-        classicButton.layer.borderColor = borderColor
-        dayButton.layer.borderColor = borderColor
-        nightButton.layer.borderColor = borderColor
+        let buttonBorderColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1).cgColor
+        for buttonView in [classicButtonView, dayButtonView, nightButtonView] {
+            buttonView?.layer.cornerRadius = 14
+            buttonView?.layer.borderColor = buttonBorderColor
+        }
+        for label in [classicLeftLabel, classicRightLabel, dayLeftLabel, dayRightLabel, nightLeftLabel, nightRightLabel] {
+            label?.layer.cornerRadius = 7
+        }
         adjustView(for: ThemesViewController.currentTheme)
     }
-
-    @IBAction func classicButtonPressed(_ sender: UIButton) {
+    
+    @IBAction func classicButtonPressed(_ sender: Any) {
         handleThemeSelection(.classic)
     }
     
-    @IBAction func dayButtonPressed(_ sender: UIButton) {
+    @IBAction func dayButtonPressed(_ sender: Any) {
         handleThemeSelection(.day)
     }
     
-    @IBAction func nightButtonPressed(_ sender: UIButton) {
+    @IBAction func nightButtonPressed(_ sender: Any) {
         handleThemeSelection(.night)
     }
     
@@ -52,20 +59,20 @@ class ThemesViewController: UIViewController {
         switch theme {
         case .classic:
             view.backgroundColor = UIColor(red: 0.07, green: 0.55, blue: 0.49, alpha: 1.00)
-            highlightButton(classicButton)
+            highlightButton(classicButtonView)
         case .day:
             view.backgroundColor = UIColor(red: 0.098, green: 0.21, blue: 0.379, alpha: 1)
-            highlightButton(dayButton)
+            highlightButton(dayButtonView)
         case .night:
             view.backgroundColor = UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
-            highlightButton(nightButton)
+            highlightButton(nightButtonView)
         }
     }
     
-    private func highlightButton(_ button: UIButton) {
-        classicButton.layer.borderWidth = 0
-        dayButton.layer.borderWidth = 0
-        nightButton.layer.borderWidth = 0
+    private func highlightButton(_ button: UIView) {
+        classicButtonView.layer.borderWidth = 0
+        dayButtonView.layer.borderWidth = 0
+        nightButtonView.layer.borderWidth = 0
         button.layer.borderWidth = 3
     }
 }
