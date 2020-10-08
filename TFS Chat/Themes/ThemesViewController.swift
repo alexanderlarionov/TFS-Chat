@@ -24,6 +24,11 @@ class ThemesViewController: UIViewController {
     @IBOutlet var nightLeftLabel: UILabel!
     @IBOutlet var nightRightLabel: UILabel!
     
+    deinit {
+        print("deinit \(self)")
+        //there is no retain cycle because we don't use object of ThemesViewController as a field in ConversationViewController or in opposite way
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let buttonBorderColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1).cgColor
