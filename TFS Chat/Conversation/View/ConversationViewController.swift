@@ -48,7 +48,7 @@ class ConversationViewController: UITableViewController {
 
 extension ConversationViewController: Themable {
     func adjustViewForCurrentTheme() {
-        tableView.backgroundColor = ThemeManager.currentTheme().conversationViewBackgroundColor
+        tableView.backgroundColor = ThemeManager.instance.currentTheme.conversationViewBackgroundColor
         tableView.reloadData()
     }
 }

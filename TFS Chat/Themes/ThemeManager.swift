@@ -8,16 +8,20 @@
 
 import UIKit
 
-struct ThemeManager: ThemesPickerDelegate {
+class ThemeManager: ThemesPickerDelegate {
     
-    static func currentTheme() -> ColorTheme {
+    static let instance = ThemeManager()
+    var currentTheme: ColorTheme
+    
+    private init() {
         let storedTheme = UserDefaults.standard.integer(forKey: "SelectedTheme")
-        return ColorTheme(rawValue: storedTheme) ?? .classic
+        currentTheme = ColorTheme(rawValue: storedTheme) ?? .classic
     }
     
     func applyTheme(_ theme: ColorTheme) {
         UserDefaults.standard.set(theme.rawValue, forKey: "SelectedTheme")
         UserDefaults.standard.synchronize()
+        currentTheme = theme
     }
     
 }

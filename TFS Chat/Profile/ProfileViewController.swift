@@ -90,7 +90,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
 
 extension ProfileViewController: Themable {
     func adjustViewForCurrentTheme() {
-        let theme = ThemeManager.currentTheme()
+        let theme = ThemeManager.instance.currentTheme
         view.backgroundColor = theme.conversationViewBackgroundColor
         saveButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         nameLabel.textColor = theme.navigationBarTextColor

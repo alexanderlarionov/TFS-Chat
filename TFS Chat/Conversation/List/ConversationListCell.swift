@@ -52,7 +52,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     }
     
     private func setColor(for model: ConversationCellModel) {
-        let theme = ThemeManager.currentTheme()
+        let theme = ThemeManager.instance.currentTheme
         backgroundColor = model.isOnline ? theme.conversationListCellOnlineColor : theme.conversationListCellOfflineColor
         nameLabel.textColor = theme.conversationListCellNameColor
         dateLabel.textColor = theme.conversationListCellTextColor
