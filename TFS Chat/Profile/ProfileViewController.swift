@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet var jobTitleLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
     var imagePicker = UIImagePickerController()
+    var avatarUpdaterDelegate: AvatarUpdaterDelegate?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,6 +26,7 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker.delegate = self
         printStateInfo(#function)
         printSaveButtonFrame(#function)
         saveButton.layer.cornerRadius = 14;
@@ -37,15 +39,14 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
-        imagePicker.delegate = self
         let alert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { _ in
-            self.selectFromLibrary()
+        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { [weak self] _ in
+            self?.selectFromLibrary()
         }))
         
-        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { _ in
-            self.selectFromCamera()
+        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { [weak self] _ in
+            self?.selectFromCamera()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -83,6 +84,10 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileLogoView.setImage(image)
+            avatarUpdaterDelegate?.updateAvatar(to: image)
+            DispatchQueue.global(qos: .utility).async {
+                FileUtil.saveAvatarImage(image: image)
+            }
         }
     }
     
@@ -99,6 +104,10 @@ extension ProfileViewController: Themable {
         navigationController?.navigationBar.barTintColor = theme.navigationBarColor
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.navigationBarTextColor]
     }
+}
+
+protocol AvatarUpdaterDelegate {
+    func updateAvatar(to image: UIImage)
 }
 
 extension ProfileViewController {

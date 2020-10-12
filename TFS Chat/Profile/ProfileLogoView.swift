@@ -40,12 +40,14 @@ class ProfileLogoView: UIView {
     private func prepareView(_ view: UIView) {
         //TODO how to fix for ios12? (view not loading)
         view.frame = self.bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let frameWidth = view.frame.width
         view.layer.cornerRadius = frameWidth / 2;
         firstLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         secondLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         lettersStackView.spacing = -frameWidth / 10
+        if let avatar = FileUtil.loadAvatarImage() {
+            setImage(avatar)
+        }
         addSubview(view)
     }
     

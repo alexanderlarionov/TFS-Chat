@@ -64,6 +64,9 @@ class ConversationsListViewController: UITableViewController {
             target.applyThemeBlock = { theme in
                 ThemeManager.instance.applyTheme(theme)
             }
+        } else if let target = segue.destination as? UINavigationController {
+            guard let profileController = target.viewControllers.first as? ProfileViewController else { return }
+            profileController.avatarUpdaterDelegate = self
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
@@ -71,6 +74,12 @@ class ConversationsListViewController: UITableViewController {
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
     }
     
+}
+
+extension ConversationsListViewController: AvatarUpdaterDelegate {
+    func updateAvatar(to image: UIImage) {
+        profileLogoView.setImage(image)
+    }
 }
 
 extension ConversationsListViewController: Themable {
@@ -97,4 +106,5 @@ extension ConversationsListViewController: Themable {
         tableView.reloadData()
     }
 }
+
 

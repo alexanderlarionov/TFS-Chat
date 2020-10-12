@@ -29,6 +29,7 @@
 		0AC55E83252E4FCE00C815BB /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC55E82252E4FCE00C815BB /* ColorTheme.swift */; };
 		0AE687712527C230005D6AB3 /* ProfileLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE687702527C230005D6AB3 /* ProfileLogoView.swift */; };
 		0AE687732527C248005D6AB3 /* ProfileLogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE687722527C248005D6AB3 /* ProfileLogoView.xib */; };
+		0AEE20972533E35F00EF38C8 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEE20962533E35F00EF38C8 /* FileUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		0AC55E82252E4FCE00C815BB /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		0AE687702527C230005D6AB3 /* ProfileLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoView.swift; sourceTree = "<group>"; };
 		0AE687722527C248005D6AB3 /* ProfileLogoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileLogoView.xib; sourceTree = "<group>"; };
+		0AEE20962533E35F00EF38C8 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		0A82BDD0250BFE010088A796 /* TFS Chat */ = {
 			isa = PBXGroup;
 			children = (
+				0AEE20952533E34C00EF38C8 /* Data */,
 				0AB1FF2C252CA50B00AFD8C5 /* Themes */,
 				0AC536A62523B0E700B03EE8 /* Conversation */,
 				0AC536A52523B0D500B03EE8 /* Profile */,
@@ -153,6 +156,14 @@
 				0AC536A22523B03200B03EE8 /* FakeData.swift */,
 			);
 			path = Conversation;
+			sourceTree = "<group>";
+		};
+		0AEE20952533E34C00EF38C8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				0AEE20962533E35F00EF38C8 /* FileUtil.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +248,7 @@
 				0A6F424925228ADF004BC50D /* ConversationsListViewController.swift in Sources */,
 				0AC536A12523AFF100B03EE8 /* ConversationCellModel.swift in Sources */,
 				0AC55E83252E4FCE00C815BB /* ColorTheme.swift in Sources */,
+				0AEE20972533E35F00EF38C8 /* FileUtil.swift in Sources */,
 				0AE687712527C230005D6AB3 /* ProfileLogoView.swift in Sources */,
 				0A6F424B25228B12004BC50D /* ConversationViewController.swift in Sources */,
 				0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */,

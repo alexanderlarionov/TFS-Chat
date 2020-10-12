@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,7 +20,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFx-as-ePy" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
                                 <rect key="frame" x="67.5" y="64" width="240" height="240"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuC-ct-PJH">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuC-ct-PJH">
                                         <rect key="frame" x="210" y="216" width="30" height="32"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <state key="normal" title="Edit">
@@ -39,22 +40,22 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Marina Dudarenko" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F79-hP-vX1">
-                                <rect key="frame" x="88" y="336" width="199.5" height="29"/>
+                                <rect key="frame" x="88.5" y="336" width="198.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cKy-mk-05j">
-                                <rect key="frame" x="78.5" y="397" width="218" height="39"/>
+                                <rect key="frame" x="79" y="397" width="217.5" height="39"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UX/UI designer, web-designer" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Va0-lq-TFp">
-                                        <rect key="frame" x="0.0" y="0.0" width="218" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="217.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moscow, Russia" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BD-R9-zPn">
-                                        <rect key="frame" x="0.0" y="19.5" width="218" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="19.5" width="217.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -64,8 +65,8 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="2dR-1p-gCZ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHW-St-gmQ">
-                                <rect key="frame" x="56.5" y="598" width="262" height="39"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHW-St-gmQ">
+                                <rect key="frame" x="57" y="598" width="261" height="39"/>
                                 <color key="backgroundColor" red="0.96460121870000004" green="0.96476620440000005" blue="0.96459084750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <inset key="contentEdgeInsets" minX="109" minY="8" maxX="110" maxY="8"/>
@@ -74,7 +75,8 @@
                                 </state>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Mel-3p-oMu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="JHW-St-gmQ" secondAttribute="bottom" constant="30" id="1vJ-Fn-1PU"/>
                             <constraint firstItem="cKy-mk-05j" firstAttribute="top" secondItem="F79-hP-vX1" secondAttribute="bottom" constant="32" id="AeB-WJ-IWM"/>
@@ -89,14 +91,14 @@
                             <constraint firstItem="eFx-as-ePy" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="nYs-Wd-EmD"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F79-hP-vX1" secondAttribute="trailing" constant="50" id="yNX-L2-69b"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Mel-3p-oMu"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="RkU-vl-wf6">
-                        <barButtonItem key="rightBarButtonItem" title="Close" id="iU9-mZ-kHH">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="8C7-zA-Qj8">
                             <connections>
-                                <segue destination="4lQ-1G-4OB" kind="unwind" unwindAction="unwindToConversationListWithSegue:" id="RKX-uh-9Yh"/>
+                                <segue destination="4lQ-1G-4OB" kind="unwind" unwindAction="unwindToConversationListWithSegue:" id="diI-Z8-A8s"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="iU9-mZ-kHH"/>
                     </navigationItem>
                     <connections>
                         <outlet property="cityLabel" destination="3BD-R9-zPn" id="aov-7O-jHq"/>
@@ -115,6 +117,7 @@
         <!--Navigation Controller-->
         <scene sceneID="d9j-3I-m3s">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uFq-HE-YMD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="ProfileViewController" automaticallyAdjustsScrollViewInsets="NO" id="h1m-g5-Rao" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UjI-uA-HjC">
@@ -126,9 +129,13 @@
                         <segue destination="gMr-jh-LkL" kind="relationship" relationship="rootViewController" id="tU0-mU-omF"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uFq-HE-YMD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="680.79999999999995" y="31.934032983508249"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
