@@ -45,6 +45,7 @@ class ProfileLogoView: UIView {
         firstLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         secondLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         lettersStackView.spacing = -frameWidth / 10
+        
         if let avatar = FileUtil.loadAvatarImage() {
             setImage(avatar)
         }
