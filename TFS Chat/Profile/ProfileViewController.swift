@@ -17,10 +17,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
     var imagePicker = UIImagePickerController()
     var avatarUpdaterDelegate: AvatarUpdaterDelegate?
-    var profileHasChanges: Bool?
+    var nameBeforeChange: String?
+    var infoBeforeChange: String?
+    var avatarBeforeChange: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +35,12 @@ class ProfileViewController: UIViewController {
         infoTextView.layer.cornerRadius = 5
         saveButton.layer.cornerRadius = 14;
         setSaveButtonEnable(false)
-        nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)),
-                                for: .editingChanged)
-        if let name = FileUtil.loadString(fileName: "profileName.txt") {
+        nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        
+        if let name = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
             nameTextField.text = name
         }
-        if let info = FileUtil.loadString(fileName: "profileInfo.txt") {
+        if let info = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
             infoTextView.text = info
         }
     }
@@ -72,68 +73,110 @@ class ProfileViewController: UIViewController {
         infoTextView.layer.borderWidth = 1.0
         editAvatarButton.isHidden = false
         setEditButtonVisible(false)
-        setSaveButtonEnable(true)
+        
+        nameBeforeChange = nameTextField.text
+        infoBeforeChange = infoTextView.text
+        avatarBeforeChange = profileLogoView.profileImage.image
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        nameTextField.isUserInteractionEnabled = false
         nameTextField.layer.borderWidth = 0
         infoTextView.layer.borderWidth = 0
-        nameTextField.isUserInteractionEnabled = false
         infoTextView.isEditable = false
         editAvatarButton.isHidden = true
         setSaveButtonEnable(false)
-        
-        guard profileHasChanges == true else {
-            showAlert(title: "No changes")
-            setEditButtonVisible(true)
-            return
-        }
-        
         activityIndicator.startAnimating()
-        
+        saveDataViaGCD()
+    }
+    
+    private func saveDataViaGCD() {
         let queue = DispatchQueue(label: "com.akatev.TFS-Chat", attributes: .concurrent)
         let group = DispatchGroup()
+        var avatarSaved = true
+        var nameSaved = true
+        var infoSaved = true
         
-        group.enter()
-        let avatar = profileLogoView.profileImage.image
-        if let avatar = avatar {
+        if profileLogoView.profileImage.image != avatarBeforeChange {
+            guard let avatar = profileLogoView.profileImage.image else { return }
+            group.enter()
             queue.async {
-                FileUtil.saveAvatarImage(image: avatar)
+                if FileUtil.saveAvatarImage(image: avatar) {
+                    DispatchQueue.main.async {
+                        self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
+                    }
+                    self.avatarBeforeChange = avatar
+                } else {
+                    avatarSaved = false
+                }
                 group.leave()
             }
         }
         
-        group.enter()
-        if let name = nameTextField.text {
+        if nameTextField.text != nameBeforeChange {
+            guard let name = nameTextField.text else { return }
+            group.enter()
             queue.async {
-                FileUtil.saveString(name, fileName: "profileName.txt")
+                if FileUtil.saveString(name, fileName: FileUtil.profileNameFile) {
+                    self.nameBeforeChange = name
+                } else {
+                    nameSaved = false
+                }
                 group.leave()
             }
         }
         
-        group.enter()
-        if let info = infoTextView.text {
+        
+        if infoTextView.text != infoBeforeChange {
+            guard let info = infoTextView.text else { return }
+            group.enter()
             queue.async {
-                FileUtil.saveString(info, fileName: "profileInfo.txt")
+                if FileUtil.saveString(info, fileName: FileUtil.profileInfoFile) {
+                    self.infoBeforeChange = info
+                } else {
+                    infoSaved = false
+                }
                 group.leave()
             }
         }
         
         group.notify(queue: queue) {
             DispatchQueue.main.async { [weak self] in
-                self?.showAlert(title: "Data succesfully saved")
-                self?.activityIndicator.stopAnimating()
-                self?.setEditButtonVisible(true)
-                if let avatar = avatar {
-                    self?.avatarUpdaterDelegate?.updateAvatar(to: avatar)
+                guard let self = self else { return }
+                
+                self.activityIndicator.stopAnimating()
+                self.setSaveButtonEnable(false)
+                self.setEditButtonVisible(true)
+                
+                if avatarSaved && nameSaved && infoSaved {
+                    self.showOkAlert(title: "Data succesfully saved")
+                } else {
+                    var errorsCollector = [String]()
+                    if !avatarSaved { errorsCollector.append("Avatar") }
+                    if !nameSaved { errorsCollector.append("Name") }
+                    if !infoSaved { errorsCollector.append("Info") }
+                    self.showErrorAlert(title: "Error: \(errorsCollector.joined(separator: ", ")) not saved")
                 }
-                self?.profileHasChanges = false
             }
         }
-        
     }
     
-    func showAlert(title: String) {
+    func showErrorAlert(title: String) {
+        let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) {_ in
+            self.infoTextView.text = self.infoBeforeChange
+            self.profileLogoView.profileImage.image = self.avatarBeforeChange
+            self.nameTextField.text = self.nameBeforeChange }
+        let tryAgainAction = UIAlertAction(title: "Try again", style: .default) {_ in
+            self.activityIndicator.startAnimating()
+            self.saveDataViaGCD()
+        }
+        ac.addAction(okAction)
+        ac.addAction(tryAgainAction)
+        self.present(ac, animated: true)
+    }
+    
+    func showOkAlert(title: String) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
@@ -166,13 +209,13 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileLogoView.setImage(image)
-            profileHasChanges = true
+            setSaveButtonEnable(true)
         }
     }
     
     func selectFromCamera() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            showAlert(title: "Camera is not available")
+            showOkAlert(title: "Camera is not available")
             return
         }
         
@@ -182,7 +225,7 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
     
     func selectFromLibrary() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            showAlert(title: "Photo Library is not available")
+            showOkAlert(title: "Photo Library is not available")
             return
         }
         
@@ -224,7 +267,7 @@ extension ProfileViewController: UITextViewDelegate, UITextFieldDelegate {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        profileHasChanges = true
+        setSaveButtonEnable(true)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -236,7 +279,7 @@ extension ProfileViewController: UITextViewDelegate, UITextFieldDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        profileHasChanges = true
+        setSaveButtonEnable(true)
     }
     
     private func setNameFieldPadding(_ padding: CGFloat){
