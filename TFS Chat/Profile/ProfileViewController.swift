@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
     
     var imagePicker = UIImagePickerController()
     var avatarUpdaterDelegate: AvatarUpdaterDelegate?
+    var profileHasChanges: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,9 @@ class ProfileViewController: UIViewController {
         infoTextView.layer.borderColor = UIColor.lightGray.cgColor
         infoTextView.layer.cornerRadius = 5
         saveButton.layer.cornerRadius = 14;
-        disableButton(saveButton)
+        setSaveButtonEnable(false)
+        nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)),
+                                for: .editingChanged)
         if let name = FileUtil.loadString(fileName: "profileName.txt") {
             nameTextField.text = name
         }
@@ -68,9 +71,8 @@ class ProfileViewController: UIViewController {
         infoTextView.isEditable = true
         infoTextView.layer.borderWidth = 1.0
         editAvatarButton.isHidden = false
-        editProfileButton.isEnabled = false
-        editProfileButton.tintColor = UIColor.clear
-        enableButton(saveButton)
+        setEditButtonVisible(false)
+        setSaveButtonEnable(true)
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -79,7 +81,13 @@ class ProfileViewController: UIViewController {
         nameTextField.isUserInteractionEnabled = false
         infoTextView.isEditable = false
         editAvatarButton.isHidden = true
-        disableButton(saveButton)
+        setSaveButtonEnable(false)
+        
+        guard profileHasChanges == true else {
+            showAlert(title: "No changes")
+            setEditButtonVisible(true)
+            return
+        }
         
         activityIndicator.startAnimating()
         
@@ -115,11 +123,11 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.showAlert(title: "Data succesfully saved")
                 self?.activityIndicator.stopAnimating()
-                self?.editProfileButton.isEnabled = true
-                self?.editProfileButton.tintColor = nil
+                self?.setEditButtonVisible(true)
                 if let avatar = avatar {
                     self?.avatarUpdaterDelegate?.updateAvatar(to: avatar)
                 }
+                self?.profileHasChanges = false
             }
         }
         
@@ -131,14 +139,24 @@ class ProfileViewController: UIViewController {
         present(ac, animated: true)
     }
     
-    func disableButton(_ button: UIButton) {
-        button.isEnabled = false
-        button.alpha = 0.5
+    func setSaveButtonEnable(_ state: Bool) {
+        if state {
+            saveButton.isEnabled = true
+            saveButton.alpha = 1.0
+        } else {
+            saveButton.isEnabled = false
+            saveButton.alpha = 0.5
+        }
     }
     
-    func enableButton(_ button: UIButton) {
-        button.isEnabled = true
-        button.alpha = 1.0
+    func setEditButtonVisible(_ state: Bool) {
+        if state {
+            editProfileButton.isEnabled = true
+            editProfileButton.tintColor = nil
+        } else {
+            editProfileButton.isEnabled = false
+            editProfileButton.tintColor = .clear
+        }
     }
 }
 
@@ -148,6 +166,7 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileLogoView.setImage(image)
+            profileHasChanges = true
         }
     }
     
@@ -204,12 +223,20 @@ extension ProfileViewController: UITextViewDelegate, UITextFieldDelegate {
         return true
     }
     
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        profileHasChanges = true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         view.frame.origin.y = -200
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         view.frame.origin.y = 0
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        profileHasChanges = true
     }
     
     private func setNameFieldPadding(_ padding: CGFloat){
