@@ -19,8 +19,10 @@ class ThemeManager: ThemesPickerDelegate {
     }
     
     func applyTheme(_ theme: ColorTheme) {
-        UserDefaults.standard.set(theme.rawValue, forKey: "SelectedTheme")
-        UserDefaults.standard.synchronize()
+        DispatchQueue.global(qos: .background).async {
+            UserDefaults.standard.set(theme.rawValue, forKey: "SelectedTheme")
+            UserDefaults.standard.synchronize()
+        }
         currentTheme = theme
     }
     
