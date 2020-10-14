@@ -14,15 +14,17 @@ struct FileUtil {
     static let profileNameFile = "profileName.txt"
     static let profileInfoFile = "profileInfo.txt"
     
+    /* Uncomment for error handling check
     enum MyError: Error {
         case runtimeError(String)
     }
+    */
     
     static func saveAvatarImage(image: UIImage) -> Bool {
         guard let data = image.jpegData(compressionQuality: 1) else { return false }
         do {
-            let randomInt = Int.random(in: 1..<3)
-            if randomInt % 2 == 0 { throw MyError.runtimeError("avatar not saved") }
+            //let randomInt = Int.random(in: 1..<3)
+            //if randomInt % 2 == 0 { throw MyError.runtimeError("avatar not saved") }
             try data.write(to: getDocumentsDirectory().appendingPathComponent(avatarFile))
             return true
         } catch {
@@ -37,8 +39,8 @@ struct FileUtil {
     
     static func saveString(_ input: String, fileName: String) -> Bool {
         do {
-            let randomInt = Int.random(in: 1..<3)
-            if randomInt % 2 == 0 { throw MyError.runtimeError("info not saved") }
+            //let randomInt = Int.random(in: 1..<3)
+            //if randomInt % 2 == 0 { throw MyError.runtimeError("info not saved") }
             try input.write(to: getDocumentsDirectory().appendingPathComponent(fileName), atomically: true, encoding: String.Encoding.utf8)
             return true
         } catch {
@@ -52,7 +54,7 @@ struct FileUtil {
             return try String(contentsOf: getDocumentsDirectory().appendingPathComponent(fileName), encoding: .utf8)
         }
         catch {
-            print(error.localizedDescription)
+            print(error)
             return nil
         }
     }

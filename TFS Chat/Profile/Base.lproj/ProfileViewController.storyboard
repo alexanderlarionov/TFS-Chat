@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="width" secondItem="eFx-as-ePy" secondAttribute="height" multiplier="1:1" id="thC-Og-lmw"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Marina Dudarenko" placeholder="Name" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F0w-SN-vej">
+                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Marina Dudarenko" placeholder="Username" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F0w-SN-vej">
                                 <rect key="frame" x="88" y="336" width="199" height="30.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="name"/>
@@ -59,9 +59,14 @@
                                     <action selector="saveButtonPressed:" destination="gMr-jh-LkL" eventType="touchUpInside" id="Eth-aw-tdM"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="UX/UI designer, web-designer Moscow, Russia" translatesAutoresizingMaskIntoConstraints="NO" id="hUr-m6-ZFC">
-                                <rect key="frame" x="72" y="398.5" width="231.5" height="54.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUr-m6-ZFC">
+                                <rect key="frame" x="74" y="398.5" width="227.5" height="54.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="47b-H0-IBl"/>
+                                </constraints>
+                                <string key="text">UX/UI designer, web-designer
+Moscow, Russia</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>

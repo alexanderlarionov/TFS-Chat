@@ -10,10 +10,12 @@ import UIKit
 
 struct GCDDataManager {
     
+    static let instance = GCDDataManager()
+    
     let queue: DispatchQueue
     let group: DispatchGroup
     
-    init() {
+    private init() {
         queue = DispatchQueue(label: "com.akatev.TFS-Chat", attributes: .concurrent)
         group = DispatchGroup()
     }
@@ -41,11 +43,39 @@ struct GCDDataManager {
         saveString(value: value, fileName: FileUtil.profileInfoFile, completion: completion, failure: failure)
     }
     
-    func completeSave(completion: @escaping () -> Void) {
+    func completeBatchSave(completion: @escaping () -> Void) {
         group.notify(queue: queue) {
             DispatchQueue.main.async {
                 completion()
             }
+        }
+    }
+    
+    func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
+        if let image = FileUtil.loadAvatarImage() {
+            DispatchQueue.main.async {
+                completion(image)
+            }
+        } else { failure() }
+    }
+    
+    func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        if let name = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
+            DispatchQueue.main.async {
+                completion(name)
+            }
+        } else {
+            failure()
+        }
+    }
+    
+    func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        if let info = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
+            DispatchQueue.main.async {
+                completion(info)
+            }
+        } else {
+            failure()
         }
     }
     

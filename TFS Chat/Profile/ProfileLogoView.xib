@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="ktp-wY-XMo" id="BzW-r2-i1x"/>
                 <outlet property="firstLetterLabel" destination="tqo-80-YOW" id="mnF-Yf-IKR"/>
                 <outlet property="lettersStackView" destination="6Df-wx-cg6" id="b2z-8F-VY2"/>
                 <outlet property="profileImage" destination="eD7-u4-TtR" id="igc-34-FdQ"/>
@@ -21,6 +22,11 @@
             <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ktp-wY-XMo">
+                    <rect key="frame" x="102" y="102" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="-24" translatesAutoresizingMaskIntoConstraints="NO" id="6Df-wx-cg6">
                     <rect key="frame" x="41.5" y="48.5" width="157.5" height="143.5"/>
                     <subviews>

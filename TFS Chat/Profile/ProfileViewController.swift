@@ -17,12 +17,14 @@ class ProfileViewController: UIViewController {
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     var imagePicker = UIImagePickerController()
     var avatarUpdaterDelegate: AvatarUpdaterDelegate?
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
-
+    let dataManager = GCDDataManager.instance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -36,18 +38,43 @@ class ProfileViewController: UIViewController {
         saveButton.layer.cornerRadius = 14;
         setSaveButtonEnable(false)
         nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        activityIndicator.startAnimating()
+        nameTextField.isHidden = true
+        infoTextView.isHidden = true
         
-        if let name = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
-            nameTextField.text = name
-        }
-        if let info = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
-            infoTextView.text = info
-        }
+        loadProfileName()
+        loadProfileInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    func loadProfileName() {
+        dataManager.loadProfileName(
+            completion:  { name in
+                self.activityIndicator.stopAnimating()
+                self.nameTextField.text = name
+                self.nameTextField.isHidden = false
+            },
+            failure: {
+                self.activityIndicator.stopAnimating()
+                self.nameTextField.isHidden = false
+            })
+    }
+    
+    func loadProfileInfo() {
+        dataManager.loadProfileInfo(
+            completion:  { name in
+                self.activityIndicator.stopAnimating()
+                self.infoTextView.text = name
+                self.infoTextView.isHidden = false
+            },
+            failure: {
+                self.activityIndicator.stopAnimating()
+                self.infoTextView.isHidden = false
+            })
     }
     
     @IBAction func editAvatarButtonPressed(_ sender: UIButton) {
@@ -91,12 +118,10 @@ class ProfileViewController: UIViewController {
     }
     
     private func saveData() {
-        let dataManager = GCDDataManager()
-        
         var avatarSaved = true
         var nameSaved = true
         var infoSaved = true
-       
+        
         if profileLogoView.profileImage.image != avatarBeforeChange {
             guard let avatar = profileLogoView.profileImage.image else { return }
             dataManager.saveAvatar(image: avatar,
@@ -110,12 +135,12 @@ class ProfileViewController: UIViewController {
                                     avatarSaved = false
                                    })
         }
-       
+        
         if nameTextField.text != nameBeforeChange {
             guard let name = nameTextField.text else { return }
             dataManager.saveName(value: name,
                                  completion: {
-                                  self.nameBeforeChange = name
+                                    self.nameBeforeChange = name
                                  },
                                  failure: {
                                     nameSaved = false
@@ -126,14 +151,14 @@ class ProfileViewController: UIViewController {
             guard let info = infoTextView.text else { return }
             dataManager.saveInfo(value: info,
                                  completion: {
-                                  self.infoBeforeChange = info
+                                    self.infoBeforeChange = info
                                  },
                                  failure: {
                                     infoSaved = false
                                  })
         }
-
-        dataManager.completeSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved) })
+        
+        dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved) })
     }
     
     
