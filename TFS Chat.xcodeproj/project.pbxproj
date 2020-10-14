@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A66717225374E3300B2DCDD /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A66717125374E3300B2DCDD /* GCDDataManager.swift */; };
 		0A6F424925228ADF004BC50D /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6F424825228ADF004BC50D /* ConversationsListViewController.swift */; };
 		0A6F424B25228B12004BC50D /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6F424A25228B12004BC50D /* ConversationViewController.swift */; };
 		0A6F424D25228B29004BC50D /* ConversationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A6F424C25228B29004BC50D /* ConversationViewController.storyboard */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A66717125374E3300B2DCDD /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		0A6F424825228ADF004BC50D /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		0A6F424A25228B12004BC50D /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		0A6F424C25228B29004BC50D /* ConversationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationViewController.storyboard; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				0AC52A8E251247350029503C /* LoggingUtil.swift */,
 				0AEE20962533E35F00EF38C8 /* FileUtil.swift */,
+				0A66717125374E3300B2DCDD /* GCDDataManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				0A82BDD6250BFE010088A796 /* ProfileViewController.swift in Sources */,
 				0AB1FF2B252CA50600AFD8C5 /* ThemesViewController.swift in Sources */,
 				0A6F424925228ADF004BC50D /* ConversationsListViewController.swift in Sources */,
+				0A66717225374E3300B2DCDD /* GCDDataManager.swift in Sources */,
 				0AC536A12523AFF100B03EE8 /* ConversationCellModel.swift in Sources */,
 				0AC55E83252E4FCE00C815BB /* ColorTheme.swift in Sources */,
 				0AEE20972533E35F00EF38C8 /* FileUtil.swift in Sources */,

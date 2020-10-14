@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -87,77 +87,69 @@ class ProfileViewController: UIViewController {
         editAvatarButton.isHidden = true
         setSaveButtonEnable(false)
         activityIndicator.startAnimating()
-        saveDataViaGCD()
+        saveData()
     }
     
-    private func saveDataViaGCD() {
-        let queue = DispatchQueue(label: "com.akatev.TFS-Chat", attributes: .concurrent)
-        let group = DispatchGroup()
+    private func saveData() {
+        let dataManager = GCDDataManager()
+        
         var avatarSaved = true
         var nameSaved = true
         var infoSaved = true
-        
+       
         if profileLogoView.profileImage.image != avatarBeforeChange {
             guard let avatar = profileLogoView.profileImage.image else { return }
-            group.enter()
-            queue.async {
-                if FileUtil.saveAvatarImage(image: avatar) {
-                    DispatchQueue.main.async {
-                        self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
-                    }
-                    self.avatarBeforeChange = avatar
-                } else {
-                    avatarSaved = false
-                }
-                group.leave()
-            }
+            dataManager.saveAvatar(image: avatar,
+                                   updateAction: { avatar in
+                                    self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
+                                   },
+                                   completion: {
+                                    self.avatarBeforeChange = avatar
+                                   },
+                                   failure: {
+                                    avatarSaved = false
+                                   })
         }
-        
+       
         if nameTextField.text != nameBeforeChange {
             guard let name = nameTextField.text else { return }
-            group.enter()
-            queue.async {
-                if FileUtil.saveString(name, fileName: FileUtil.profileNameFile) {
-                    self.nameBeforeChange = name
-                } else {
-                    nameSaved = false
-                }
-                group.leave()
-            }
+            dataManager.saveName(value: name,
+                                 completion: {
+                                  self.nameBeforeChange = name
+                                 },
+                                 failure: {
+                                    nameSaved = false
+                                 })
         }
-        
         
         if infoTextView.text != infoBeforeChange {
             guard let info = infoTextView.text else { return }
-            group.enter()
-            queue.async {
-                if FileUtil.saveString(info, fileName: FileUtil.profileInfoFile) {
-                    self.infoBeforeChange = info
-                } else {
-                    infoSaved = false
-                }
-                group.leave()
-            }
+            dataManager.saveInfo(value: info,
+                                 completion: {
+                                  self.infoBeforeChange = info
+                                 },
+                                 failure: {
+                                    infoSaved = false
+                                 })
         }
+
+        dataManager.completeSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved) })
+    }
+    
+    
+    func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool) {
+        self.activityIndicator.stopAnimating()
+        self.setSaveButtonEnable(false)
+        self.setEditButtonVisible(true)
         
-        group.notify(queue: queue) {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.activityIndicator.stopAnimating()
-                self.setSaveButtonEnable(false)
-                self.setEditButtonVisible(true)
-                
-                if avatarSaved && nameSaved && infoSaved {
-                    self.showOkAlert(title: "Data succesfully saved")
-                } else {
-                    var errorsCollector = [String]()
-                    if !avatarSaved { errorsCollector.append("Avatar") }
-                    if !nameSaved { errorsCollector.append("Name") }
-                    if !infoSaved { errorsCollector.append("Info") }
-                    self.showErrorAlert(title: "Error: \(errorsCollector.joined(separator: ", ")) not saved")
-                }
-            }
+        if avatarSaved && nameSaved && infoSaved {
+            self.showOkAlert(title: "Data succesfully saved")
+        } else {
+            var errorsCollector = [String]()
+            if !avatarSaved { errorsCollector.append("Avatar") }
+            if !nameSaved { errorsCollector.append("Name") }
+            if !infoSaved { errorsCollector.append("Info") }
+            self.showErrorAlert(title: "Error: \(errorsCollector.joined(separator: ", ")) not saved")
         }
     }
     
@@ -169,7 +161,7 @@ class ProfileViewController: UIViewController {
             self.nameTextField.text = self.nameBeforeChange }
         let tryAgainAction = UIAlertAction(title: "Try again", style: .default) {_ in
             self.activityIndicator.startAnimating()
-            self.saveDataViaGCD()
+            self.saveData()
         }
         ac.addAction(okAction)
         ac.addAction(tryAgainAction)
