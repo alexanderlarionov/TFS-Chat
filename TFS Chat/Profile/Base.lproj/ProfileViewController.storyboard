@@ -81,20 +81,20 @@ Moscow, Russia</string>
                         <constraints>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="0Xh-cj-v9K"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="1fu-av-Ujh"/>
-                            <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="JHW-St-gmQ" secondAttribute="bottom" constant="30" id="1vJ-Fn-1PU"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="top" secondItem="eFx-as-ePy" secondAttribute="bottom" constant="32" id="2Tg-L7-pYe"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F0w-SN-vej" secondAttribute="trailing" constant="50" id="6VQ-L9-vdA"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hUr-m6-ZFC" secondAttribute="trailing" constant="50" id="8Ab-mN-HIl"/>
+                            <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="Nm6-80-mWD" secondAttribute="bottom" constant="40" id="9I7-gA-Mb1"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="top" secondItem="o9S-FW-R0F" secondAttribute="bottom" constant="5" id="EYI-32-itZ"/>
+                            <constraint firstItem="hfK-1r-1Rc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nm6-80-mWD" secondAttribute="trailing" constant="10" id="FQs-Pw-t5I"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="top" secondItem="F0w-SN-vej" secondAttribute="bottom" constant="32" id="JMi-85-OjO"/>
-                            <constraint firstItem="JHW-St-gmQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hUr-m6-ZFC" secondAttribute="bottom" constant="32" id="QBB-YV-28A"/>
-                            <constraint firstItem="JHW-St-gmQ" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="RF5-Ko-LKg"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="Xxb-A6-QDZ"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="cid-uZ-fhR"/>
                             <constraint firstItem="eFx-as-ePy" firstAttribute="top" secondItem="Mel-3p-oMu" secondAttribute="top" constant="20" id="cxh-xr-c3o"/>
                             <constraint firstItem="o9S-FW-R0F" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="eaN-aX-FcD"/>
                             <constraint firstItem="o9S-FW-R0F" firstAttribute="top" secondItem="F0w-SN-vej" secondAttribute="bottom" constant="5" id="edL-dE-j6L"/>
                             <constraint firstItem="eFx-as-ePy" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="nYs-Wd-EmD"/>
+                            <constraint firstItem="Nm6-80-mWD" firstAttribute="leading" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="zjr-Hc-RWw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="RkU-vl-wf6">
@@ -117,7 +117,8 @@ Moscow, Russia</string>
                         <outlet property="infoTextView" destination="hUr-m6-ZFC" id="TFL-Rt-ivh"/>
                         <outlet property="nameTextField" destination="F0w-SN-vej" id="L8F-Mj-fQF"/>
                         <outlet property="profileLogoView" destination="eFx-as-ePy" id="SAl-NH-5a7"/>
-                        <outlet property="saveButton" destination="JHW-St-gmQ" id="KPr-qG-rIW"/>
+                        <outlet property="saveGDCButton" destination="hfK-1r-1Rc" id="oov-MV-bMK"/>
+                        <outlet property="saveOperationsButton" destination="Nm6-80-mWD" id="HYm-FZ-gAR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1w-zM-gXY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

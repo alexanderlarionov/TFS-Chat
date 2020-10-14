@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
     let dataManager = GCDDataManager.instance
+    //let dataManager = GCDDataManager.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,7 +124,7 @@ class ProfileViewController: UIViewController {
         var infoSaved = true
         
         if profileLogoView.profileImage.image != avatarBeforeChange {
-            guard let avatar = profileLogoView.profileImage.image else { return }
+            if let avatar = profileLogoView.profileImage.image {
             dataManager.saveAvatar(image: avatar,
                                    updateAction: { avatar in
                                     self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
@@ -134,10 +135,11 @@ class ProfileViewController: UIViewController {
                                    failure: {
                                     avatarSaved = false
                                    })
+            }
         }
         
         if nameTextField.text != nameBeforeChange {
-            guard let name = nameTextField.text else { return }
+            if let name = nameTextField.text {
             dataManager.saveName(value: name,
                                  completion: {
                                     self.nameBeforeChange = name
@@ -146,9 +148,10 @@ class ProfileViewController: UIViewController {
                                     nameSaved = false
                                  })
         }
+        }
         
         if infoTextView.text != infoBeforeChange {
-            guard let info = infoTextView.text else { return }
+            if let info = infoTextView.text {
             dataManager.saveInfo(value: info,
                                  completion: {
                                     self.infoBeforeChange = info
@@ -156,6 +159,7 @@ class ProfileViewController: UIViewController {
                                  failure: {
                                     infoSaved = false
                                  })
+        }
         }
         
         dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved) })

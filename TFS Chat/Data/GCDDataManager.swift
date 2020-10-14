@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct GCDDataManager {
+struct GCDDataManager: DataManager {
     
     static let instance = GCDDataManager()
     
@@ -51,7 +51,7 @@ struct GCDDataManager {
         }
     }
     
-    func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
+    func loadAvatar(completion: @escaping (UIImage) -> Void, failure: () -> Void) {
         if let image = FileUtil.loadAvatarImage() {
             DispatchQueue.main.async {
                 completion(image)
@@ -59,7 +59,7 @@ struct GCDDataManager {
         } else { failure() }
     }
     
-    func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+    func loadProfileName(completion: @escaping (String) -> Void, failure: () -> Void) {
         if let name = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
             DispatchQueue.main.async {
                 completion(name)
@@ -69,7 +69,7 @@ struct GCDDataManager {
         }
     }
     
-    func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+    func loadProfileInfo(completion: @escaping (String) -> Void, failure: () -> Void) {
         if let info = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
             DispatchQueue.main.async {
                 completion(info)

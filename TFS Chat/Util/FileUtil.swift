@@ -15,17 +15,16 @@ struct FileUtil {
     static let profileInfoFile = "profileInfo.txt"
     
     /* Uncomment for error handling check
-    enum MyError: Error {
-        case runtimeError(String)
-    }
-    */
+     enum MyError: Error {
+     case runtimeError(String)
+     }
+     */
     
     static func saveAvatarImage(image: UIImage) -> Bool {
-        guard let data = image.jpegData(compressionQuality: 1) else { return false }
         do {
             //let randomInt = Int.random(in: 1..<3)
             //if randomInt % 2 == 0 { throw MyError.runtimeError("avatar not saved") }
-            try data.write(to: getDocumentsDirectory().appendingPathComponent(avatarFile))
+            try image.jpegData(compressionQuality: 1)?.write(to: getDocumentsDirectory().appendingPathComponent(avatarFile))
             return true
         } catch {
             print(error)
