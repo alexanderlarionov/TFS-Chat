@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
     let dataManager = GCDDataManager.instance
-    //let dataManager = GCDDataManager.instance
+    //let dataManager = OperationDataManager.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
