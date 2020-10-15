@@ -60,12 +60,22 @@ Moscow, Russia</string>
                                 <rect key="frame" x="177.5" y="371.5" width="20" height="22"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNP-0R-05M">
-                                <rect key="frame" x="40" y="595" width="295" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="Save"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPB-GB-MDn">
+                                <rect key="frame" x="40" y="583" width="165" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Save Operations"/>
                                 <connections>
-                                    <action selector="saveButtonPressed:" destination="gMr-jh-LkL" eventType="touchUpInside" id="oNn-kF-c2S"/>
+                                    <action selector="saveOperationsButtonPressed:" destination="gMr-jh-LkL" eventType="touchUpInside" id="gme-9x-bR0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGj-tI-rCF">
+                                <rect key="frame" x="225" y="583" width="110" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Save GCD"/>
+                                <connections>
+                                    <action selector="saveGCDButtonPressed:" destination="gMr-jh-LkL" eventType="touchUpInside" id="Wns-Ci-61E"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -76,18 +86,20 @@ Moscow, Russia</string>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="1fu-av-Ujh"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="top" secondItem="eFx-as-ePy" secondAttribute="bottom" constant="32" id="2Tg-L7-pYe"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F0w-SN-vej" secondAttribute="trailing" constant="50" id="6VQ-L9-vdA"/>
-                            <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="hNP-0R-05M" secondAttribute="bottom" constant="32" id="6bG-W5-akD"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hUr-m6-ZFC" secondAttribute="trailing" constant="50" id="8Ab-mN-HIl"/>
-                            <constraint firstItem="hNP-0R-05M" firstAttribute="leading" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="40" id="AJI-nQ-gQZ"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="top" secondItem="o9S-FW-R0F" secondAttribute="bottom" constant="5" id="EYI-32-itZ"/>
+                            <constraint firstItem="TPB-GB-MDn" firstAttribute="leading" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="40" id="GVn-xe-lPK"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="top" secondItem="F0w-SN-vej" secondAttribute="bottom" constant="32" id="JMi-85-OjO"/>
+                            <constraint firstItem="ZGj-tI-rCF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TPB-GB-MDn" secondAttribute="trailing" constant="20" id="WQu-FP-cEt"/>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="Xxb-A6-QDZ"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="cid-uZ-fhR"/>
                             <constraint firstItem="eFx-as-ePy" firstAttribute="top" secondItem="Mel-3p-oMu" secondAttribute="top" constant="20" id="cxh-xr-c3o"/>
+                            <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="TPB-GB-MDn" secondAttribute="bottom" constant="40" id="d9E-PC-GYi"/>
                             <constraint firstItem="o9S-FW-R0F" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="eaN-aX-FcD"/>
                             <constraint firstItem="o9S-FW-R0F" firstAttribute="top" secondItem="F0w-SN-vej" secondAttribute="bottom" constant="5" id="edL-dE-j6L"/>
                             <constraint firstItem="eFx-as-ePy" firstAttribute="centerX" secondItem="fcJ-NM-AIU" secondAttribute="centerX" id="nYs-Wd-EmD"/>
-                            <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" secondItem="hNP-0R-05M" secondAttribute="trailing" constant="40" id="soD-5X-zUF"/>
+                            <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="ZGj-tI-rCF" secondAttribute="bottom" constant="40" id="oAT-ef-sgz"/>
+                            <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" secondItem="ZGj-tI-rCF" secondAttribute="trailing" constant="40" id="rPu-6v-Z2t"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="RkU-vl-wf6">
@@ -110,7 +122,8 @@ Moscow, Russia</string>
                         <outlet property="infoTextView" destination="hUr-m6-ZFC" id="TFL-Rt-ivh"/>
                         <outlet property="nameTextField" destination="F0w-SN-vej" id="L8F-Mj-fQF"/>
                         <outlet property="profileLogoView" destination="eFx-as-ePy" id="SAl-NH-5a7"/>
-                        <outlet property="saveButton" destination="hNP-0R-05M" id="NV7-4V-Dsc"/>
+                        <outlet property="saveGCDButton" destination="ZGj-tI-rCF" id="ike-OZ-vFH"/>
+                        <outlet property="saveOperationsButton" destination="TPB-GB-MDn" id="9d6-BD-S2p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1w-zM-gXY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -11,7 +11,8 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
-    @IBOutlet var saveButton: UIButton!
+    @IBOutlet var saveGCDButton: UIButton!
+    @IBOutlet var saveOperationsButton: UIButton!
     @IBOutlet var editProfileButton: UIBarButtonItem!
     @IBOutlet var editAvatarButton: UIButton!
     @IBOutlet var nameTextField: UITextField!
@@ -23,8 +24,7 @@ class ProfileViewController: UIViewController {
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
-    let dataManager = GCDDataManager.instance
-    //let dataManager = OperationDataManager.instance
+    let loadDataManager = GCDDataManager.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,8 @@ class ProfileViewController: UIViewController {
         setNameFieldPadding(10)
         infoTextView.layer.borderColor = UIColor.lightGray.cgColor
         infoTextView.layer.cornerRadius = 5
-        saveButton.layer.cornerRadius = 14;
+        saveGCDButton.layer.cornerRadius = 14;
+        saveOperationsButton.layer.cornerRadius = 14;
         setSaveButtonEnable(false)
         nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         activityIndicator.startAnimating()
@@ -53,7 +54,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadProfileName() {
-        dataManager.loadProfileName(
+        loadDataManager.loadProfileName(
             completion:  { name in
                 self.activityIndicator.stopAnimating()
                 self.nameTextField.text = name
@@ -66,7 +67,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadProfileInfo() {
-        dataManager.loadProfileInfo(
+        loadDataManager.loadProfileInfo(
             completion:  { name in
                 self.activityIndicator.stopAnimating()
                 self.infoTextView.text = name
@@ -107,66 +108,65 @@ class ProfileViewController: UIViewController {
         avatarBeforeChange = profileLogoView.profileImage.image
     }
     
-    @IBAction func saveButtonPressed(_ sender: UIButton) {
-        nameTextField.isUserInteractionEnabled = false
-        nameTextField.layer.borderWidth = 0
-        infoTextView.layer.borderWidth = 0
-        infoTextView.isEditable = false
-        editAvatarButton.isHidden = true
-        setSaveButtonEnable(false)
-        activityIndicator.startAnimating()
-        saveData()
+    @IBAction func saveGCDButtonPressed(_ sender: UIButton) {
+        handleSaveButtonPress()
+        saveData(dataManager: GCDDataManager.instance)
     }
     
-    private func saveData() {
+    @IBAction func saveOperationsButtonPressed(_ sender: UIButton) {
+        handleSaveButtonPress()
+        saveData(dataManager: OperationDataManager.instance)
+    }
+    
+    func saveData(dataManager: DataManager) {
         var avatarSaved = true
         var nameSaved = true
         var infoSaved = true
         
         if profileLogoView.profileImage.image != avatarBeforeChange {
             if let avatar = profileLogoView.profileImage.image {
-            dataManager.saveAvatar(image: avatar,
-                                   updateAction: { avatar in
-                                    self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
-                                   },
-                                   completion: {
-                                    self.avatarBeforeChange = avatar
-                                   },
-                                   failure: {
-                                    avatarSaved = false
-                                   })
+                dataManager.saveAvatar(image: avatar,
+                                       updateAction: { avatar in
+                                        self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
+                                       },
+                                       completion: {
+                                        self.avatarBeforeChange = avatar
+                                       },
+                                       failure: {
+                                        avatarSaved = false
+                                       })
             }
         }
         
         if nameTextField.text != nameBeforeChange {
             if let name = nameTextField.text {
-            dataManager.saveName(value: name,
-                                 completion: {
-                                    self.nameBeforeChange = name
-                                 },
-                                 failure: {
-                                    nameSaved = false
-                                 })
-        }
+                dataManager.saveName(value: name,
+                                     completion: {
+                                        self.nameBeforeChange = name
+                                     },
+                                     failure: {
+                                        nameSaved = false
+                                     })
+            }
         }
         
         if infoTextView.text != infoBeforeChange {
             if let info = infoTextView.text {
-            dataManager.saveInfo(value: info,
-                                 completion: {
-                                    self.infoBeforeChange = info
-                                 },
-                                 failure: {
-                                    infoSaved = false
-                                 })
-        }
+                dataManager.saveInfo(value: info,
+                                     completion: {
+                                        self.infoBeforeChange = info
+                                     },
+                                     failure: {
+                                        infoSaved = false
+                                     })
+            }
         }
         
-        dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved) })
+        dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved, dataManager: dataManager) })
     }
     
     
-    func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool) {
+    func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool, dataManager: DataManager) {
         self.activityIndicator.stopAnimating()
         self.setSaveButtonEnable(false)
         self.setEditButtonVisible(true)
@@ -178,11 +178,11 @@ class ProfileViewController: UIViewController {
             if !avatarSaved { errorsCollector.append("Avatar") }
             if !nameSaved { errorsCollector.append("Name") }
             if !infoSaved { errorsCollector.append("Info") }
-            self.showErrorAlert(title: "Error: \(errorsCollector.joined(separator: ", ")) not saved")
+            self.showErrorAlert(title: "Error: \(errorsCollector.joined(separator: ", ")) not saved", dataManager: dataManager)
         }
     }
     
-    func showErrorAlert(title: String) {
+    func showErrorAlert(title: String, dataManager: DataManager) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) {_ in
             self.infoTextView.text = self.infoBeforeChange
@@ -190,7 +190,7 @@ class ProfileViewController: UIViewController {
             self.nameTextField.text = self.nameBeforeChange }
         let tryAgainAction = UIAlertAction(title: "Try again", style: .default) {_ in
             self.activityIndicator.startAnimating()
-            self.saveData()
+            self.saveData(dataManager: dataManager)
         }
         ac.addAction(okAction)
         ac.addAction(tryAgainAction)
@@ -205,11 +205,15 @@ class ProfileViewController: UIViewController {
     
     func setSaveButtonEnable(_ state: Bool) {
         if state {
-            saveButton.isEnabled = true
-            saveButton.alpha = 1.0
+            saveGCDButton.isEnabled = true
+            saveGCDButton.alpha = 1.0
+            saveOperationsButton.isEnabled = true
+            saveOperationsButton.alpha = 1.0
         } else {
-            saveButton.isEnabled = false
-            saveButton.alpha = 0.5
+            saveGCDButton.isEnabled = false
+            saveGCDButton.alpha = 0.5
+            saveOperationsButton.isEnabled = false
+            saveOperationsButton.alpha = 0.5
         }
     }
     
@@ -221,6 +225,16 @@ class ProfileViewController: UIViewController {
             editProfileButton.isEnabled = false
             editProfileButton.tintColor = .clear
         }
+    }
+    
+    func handleSaveButtonPress() {
+        nameTextField.isUserInteractionEnabled = false
+        nameTextField.layer.borderWidth = 0
+        infoTextView.layer.borderWidth = 0
+        infoTextView.isEditable = false
+        editAvatarButton.isHidden = true
+        setSaveButtonEnable(false)
+        activityIndicator.startAnimating()
     }
 }
 
@@ -259,7 +273,8 @@ extension ProfileViewController: Themable {
     func adjustViewForCurrentTheme() {
         let theme = ThemeManager.instance.currentTheme
         view.backgroundColor = theme.conversationViewBackgroundColor
-        saveButton.layer.backgroundColor = theme.navigationBarColor.cgColor
+        saveGCDButton.layer.backgroundColor = theme.navigationBarColor.cgColor
+        saveOperationsButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         nameTextField.textColor = theme.navigationBarTextColor
         infoTextView.textColor = theme.navigationBarTextColor
         infoTextView.backgroundColor = view.backgroundColor
