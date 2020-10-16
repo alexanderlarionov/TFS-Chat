@@ -89,7 +89,6 @@ enum ColorTheme: Int {
         }
     }
     
-    
     var themesViewControllerBackgroundColor: UIColor {
         switch self {
         case .classic:

@@ -12,7 +12,7 @@ class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    let data = FakeData.conversationListData;
+    let data = FakeData.conversationListData
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,5 +106,3 @@ extension ConversationsListViewController: Themable {
         tableView.reloadData()
     }
 }
-
-

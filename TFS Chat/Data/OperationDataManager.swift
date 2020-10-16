@@ -91,8 +91,6 @@ struct OperationDataManager: DataManager {
     }
 }
 
-
-
 class SaveTextOperation: Operation {
     var dataToSave: String
     var fileName: String
@@ -124,4 +122,3 @@ class SaveImageOperation: Operation {
     }
     
 }
-

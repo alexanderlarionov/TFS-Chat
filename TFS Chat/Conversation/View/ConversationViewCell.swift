@@ -14,7 +14,8 @@ class ConversationViewCell: UITableViewCell, ConfigurableView {
     @IBOutlet var messageView: UIView!
     
     override func awakeFromNib() {
-        messageView.layer.cornerRadius = 10;
+        super.awakeFromNib()
+        messageView.layer.cornerRadius = 10
     }
     
     func configure(with model: MessageCellModel) {

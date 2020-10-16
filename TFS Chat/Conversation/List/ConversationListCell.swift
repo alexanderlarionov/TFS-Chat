@@ -29,8 +29,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
         } else if Calendar.current.isDateInToday(model.date) {
             formatter.dateFormat = "HH:mm"
             dateLabel.text = formatter.string(from: model.date)
-        }
-        else {
+        } else {
             formatter.dateFormat = "dd MMM"
             dateLabel.text = formatter.string(from: model.date)
         }
@@ -41,8 +40,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
         if model.message == "" {
             messageLabel.text = "No messages yet"
             messageLabel.font = UIFont.italicSystemFont(ofSize: fontSize)
-        }
-        else if model.hasUnreadMessages {
+        } else if model.hasUnreadMessages {
             messageLabel.text = model.message
             messageLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
         } else {
@@ -60,4 +58,3 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     }
     
 }
-

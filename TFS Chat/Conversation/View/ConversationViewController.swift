@@ -10,7 +10,7 @@ import UIKit
 
 class ConversationViewController: UITableViewController {
     
-    let data = FakeData.conversationData;
+    let data = FakeData.conversationData
     
     override func viewDidLoad() {
         super.viewDidLoad()

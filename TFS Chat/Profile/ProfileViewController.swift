@@ -36,8 +36,8 @@ class ProfileViewController: UIViewController {
         setNameFieldPadding(10)
         infoTextView.layer.borderColor = UIColor.lightGray.cgColor
         infoTextView.layer.cornerRadius = 5
-        saveGCDButton.layer.cornerRadius = 14;
-        saveOperationsButton.layer.cornerRadius = 14;
+        saveGCDButton.layer.cornerRadius = 14
+        saveOperationsButton.layer.cornerRadius = 14
         setSaveButtonEnable(false)
         nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         activityIndicator.startAnimating()
@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController {
     
     func loadProfileName() {
         loadDataManager.loadProfileName(
-            completion:  { name in
+            completion: { name in
                 self.activityIndicator.stopAnimating()
                 self.nameTextField.text = name
                 self.nameTextField.isHidden = false
@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
     
     func loadProfileInfo() {
         loadDataManager.loadProfileInfo(
-            completion:  { name in
+            completion: { name in
                 self.activityIndicator.stopAnimating()
                 self.infoTextView.text = name
                 self.infoTextView.isHidden = false
@@ -165,7 +165,6 @@ class ProfileViewController: UIViewController {
         dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved, dataManager: dataManager) })
     }
     
-    
     func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool, dataManager: DataManager) {
         self.activityIndicator.stopAnimating()
         self.setSaveButtonEnable(false)
@@ -240,7 +239,7 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileLogoView.setImage(image)
@@ -318,7 +317,7 @@ extension ProfileViewController: UITextViewDelegate, UITextFieldDelegate {
         setSaveButtonEnable(true)
     }
     
-    private func setNameFieldPadding(_ padding: CGFloat){
+    private func setNameFieldPadding(_ padding: CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: padding))
         nameTextField.leftView = paddingView
         nameTextField.leftViewMode = .always
@@ -327,5 +326,3 @@ extension ProfileViewController: UITextViewDelegate, UITextFieldDelegate {
     }
     
 }
-
-
