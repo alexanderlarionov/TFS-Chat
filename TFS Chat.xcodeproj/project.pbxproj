@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDC250BFE030088A796 /* LaunchScreen.storyboard */; };
 		0AB1FF2B252CA50600AFD8C5 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */; };
 		0AB1FF2E252CA51D00AFD8C5 /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */; };
+		0AC14B97253A213900FCA72C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AC14B96253A213900FCA72C /* GoogleService-Info.plist */; };
 		0AC4BC2A2523F021006EA53E /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4BC292523F021006EA53E /* MessageCellModel.swift */; };
 		0AC4BC2C2523F061006EA53E /* ConversationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4BC2B2523F061006EA53E /* ConversationViewCell.swift */; };
 		0AC52A8F251247350029503C /* LoggingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC52A8E251247350029503C /* LoggingUtil.swift */; };
@@ -33,6 +34,7 @@
 		0AE687712527C230005D6AB3 /* ProfileLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE687702527C230005D6AB3 /* ProfileLogoView.swift */; };
 		0AE687732527C248005D6AB3 /* ProfileLogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AE687722527C248005D6AB3 /* ProfileLogoView.xib */; };
 		0AEE20972533E35F00EF38C8 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEE20962533E35F00EF38C8 /* FileUtil.swift */; };
+		C5EC73C7B9E981F4FCF66360 /* Pods_TFS_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC66EC08DD769BD404064F00 /* Pods_TFS_Chat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,7 @@
 		0A82BDDF250BFE030088A796 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
+		0AC14B96253A213900FCA72C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AC4BC292523F021006EA53E /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellModel.swift; sourceTree = "<group>"; };
 		0AC4BC2B2523F061006EA53E /* ConversationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewCell.swift; sourceTree = "<group>"; };
 		0AC52A8E251247350029503C /* LoggingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingUtil.swift; sourceTree = "<group>"; };
@@ -64,6 +67,10 @@
 		0AE687702527C230005D6AB3 /* ProfileLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoView.swift; sourceTree = "<group>"; };
 		0AE687722527C248005D6AB3 /* ProfileLogoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileLogoView.xib; sourceTree = "<group>"; };
 		0AEE20962533E35F00EF38C8 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
+		35FE2667E25F24E5243B99F4 /* Pods-TFS Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFS Chat.release.xcconfig"; path = "Target Support Files/Pods-TFS Chat/Pods-TFS Chat.release.xcconfig"; sourceTree = "<group>"; };
+		4889533EACA3CC0EC11FA2B5 /* Pods-TFS Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFS Chat.debug.xcconfig"; path = "Target Support Files/Pods-TFS Chat/Pods-TFS Chat.debug.xcconfig"; sourceTree = "<group>"; };
+		E33F992B4C4FA11ACD0132B1 /* Pods-TFS Chat.debug w-o logs.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFS Chat.debug w-o logs.xcconfig"; path = "Target Support Files/Pods-TFS Chat/Pods-TFS Chat.debug w-o logs.xcconfig"; sourceTree = "<group>"; };
+		EC66EC08DD769BD404064F00 /* Pods_TFS_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFS_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EC73C7B9E981F4FCF66360 /* Pods_TFS_Chat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +100,8 @@
 			children = (
 				0A82BDD0250BFE010088A796 /* TFS Chat */,
 				0A82BDCF250BFE010088A796 /* Products */,
+				B7D3E44E863A5CC0B81F225F /* Pods */,
+				1A863EAA3D909755AAD362CE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +125,7 @@
 				0A82BDDA250BFE030088A796 /* Assets.xcassets */,
 				0A82BDDC250BFE030088A796 /* LaunchScreen.storyboard */,
 				0A82BDDF250BFE030088A796 /* Info.plist */,
+				0AC14B96253A213900FCA72C /* GoogleService-Info.plist */,
 			);
 			path = "TFS Chat";
 			sourceTree = "<group>";
@@ -183,6 +194,24 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		1A863EAA3D909755AAD362CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC66EC08DD769BD404064F00 /* Pods_TFS_Chat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7D3E44E863A5CC0B81F225F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4889533EACA3CC0EC11FA2B5 /* Pods-TFS Chat.debug.xcconfig */,
+				E33F992B4C4FA11ACD0132B1 /* Pods-TFS Chat.debug w-o logs.xcconfig */,
+				35FE2667E25F24E5243B99F4 /* Pods-TFS Chat.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,9 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A82BDE2250BFE030088A796 /* Build configuration list for PBXNativeTarget "TFS Chat" */;
 			buildPhases = (
+				B5E1BACCA601AD460E27D048 /* [CP] Check Pods Manifest.lock */,
 				0A82BDCA250BFE010088A796 /* Sources */,
 				0A82BDCB250BFE010088A796 /* Frameworks */,
 				0A82BDCC250BFE010088A796 /* Resources */,
+				677838C206ADB8C11873A806 /* [CP] Embed Pods Frameworks */,
+				0AC14B99253A380D00FCA72C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -242,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */,
+				0AC14B97253A213900FCA72C /* GoogleService-Info.plist in Resources */,
 				0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */,
 				0A6F424D25228B29004BC50D /* ConversationViewController.storyboard in Resources */,
 				0AE687732527C248005D6AB3 /* ProfileLogoView.xib in Resources */,
@@ -252,6 +285,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0AC14B99253A380D00FCA72C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		677838C206ADB8C11873A806 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFS Chat/Pods-TFS Chat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFS Chat/Pods-TFS Chat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TFS Chat/Pods-TFS Chat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5E1BACCA601AD460E27D048 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TFS Chat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0A82BDCA250BFE010088A796 /* Sources */ = {
@@ -420,6 +512,7 @@
 		};
 		0A82BDE3250BFE030088A796 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4889533EACA3CC0EC11FA2B5 /* Pods-TFS Chat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -430,7 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
+				PRODUCT_BUNDLE_IDENTIFIER = com.akatev.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -439,6 +532,7 @@
 		};
 		0A82BDE4250BFE030088A796 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35FE2667E25F24E5243B99F4 /* Pods-TFS Chat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -449,7 +543,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
+				PRODUCT_BUNDLE_IDENTIFIER = com.akatev.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -519,6 +613,7 @@
 		};
 		0AD46273250D7557006FFDF4 /* Debug w/o logs */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E33F992B4C4FA11ACD0132B1 /* Pods-TFS Chat.debug w-o logs.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -529,7 +624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
+				PRODUCT_BUNDLE_IDENTIFIER = com.akatev.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = NOLOGS;
 				SWIFT_VERSION = 5.0;
