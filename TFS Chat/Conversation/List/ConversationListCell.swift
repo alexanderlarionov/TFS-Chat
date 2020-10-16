@@ -13,7 +13,6 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
-    let lightYellow = UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0);
     
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
@@ -53,12 +52,12 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     }
     
     private func setColor(for model: ConversationCellModel) {
-        if model.isOnline {
-            self.backgroundColor = lightYellow
-        }
-        else {
-            self.backgroundColor = .none
-        }
+        let theme = ThemeManager.currentTheme()
+        backgroundColor = model.isOnline ? theme.conversationListCellOnlineColor : theme.conversationListCellOfflineColor
+        nameLabel.textColor = theme.conversationListCellNameColor
+        dateLabel.textColor = theme.conversationListCellTextColor
+        messageLabel.textColor = theme.conversationListCellTextColor
     }
     
 }
+

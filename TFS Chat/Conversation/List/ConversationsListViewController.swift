@@ -10,12 +10,18 @@ import UIKit
 
 class ConversationsListViewController: UITableViewController {
     
+    @IBOutlet var profileLogoView: ProfileLogoView!
+    
+    let themeManager = ThemeManager()
     let data = FakeData.conversationListData;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = item
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int { 2 }
@@ -48,13 +54,48 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let target = segue.destination as? ConversationViewController else { return }
-        guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-        target.title = data[selectedPath.section][selectedPath.row].name
-        target.navigationItem.largeTitleDisplayMode = .never
+        if let target = segue.destination as? ConversationViewController {
+            guard let selectedPath = tableView.indexPathForSelectedRow else { return }
+            target.title = data[selectedPath.section][selectedPath.row].name
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        } else if let target = segue.destination as? ThemesViewController {
+            target.title = "Settings"
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
+            //target.themesPickerDelegate = self.themeManager
+            target.applyThemeBlock = { theme in
+                self.themeManager.applyTheme(theme)
+            }
+        }
+        segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
     
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
     }
     
 }
+
+extension ConversationsListViewController: Themable {
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.currentTheme()
+        let backgroundColor = theme.navigationBarColor
+        let textColor = theme.navigationBarTextColor
+        
+        guard let navBar = navigationController?.navigationBar else { return }
+        navBar.barTintColor = backgroundColor
+        navBar.titleTextAttributes = [.foregroundColor: textColor]
+        navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = backgroundColor
+            navBarAppearance.titleTextAttributes = [.foregroundColor: textColor]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: textColor]
+            navBar.standardAppearance = navBarAppearance
+            navBar.scrollEdgeAppearance = navBarAppearance
+        }
+        
+        tableView.backgroundColor = theme.conversationListBackgroundColor
+        tableView.reloadData()
+    }
+}
+

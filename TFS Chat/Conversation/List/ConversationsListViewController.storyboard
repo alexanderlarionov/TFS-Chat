@@ -8,37 +8,36 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tinkoff Chat-->
+        <!--Chat-->
         <scene sceneID="Gez-8w-XwG">
             <objects>
                 <tableViewController id="Tnz-fl-kbU" customClass="ConversationsListViewController" customModule="TFS_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="YUU-F6-j2o">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <color key="sectionIndexBackgroundColor" red="0.9591724277" green="0.95931011440000002" blue="0.95914238689999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationListCell" id="01K-3x-Lq0" customClass="ConversationListCell" customModule="TFS_Chat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListCell" id="01K-3x-Lq0" customClass="ConversationListCell" customModule="TFS_Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="84"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="01K-3x-Lq0" id="Eyb-D3-Qbl">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="84"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="b24-Rt-Lie">
-                                            <rect key="frame" x="16" y="16" width="351" height="52"/>
+                                            <rect key="frame" x="16" y="16" width="382" height="52"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vrF-WK-7mt">
-                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="23"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEW-sV-Fq4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="302.5" height="23"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="333.5" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEV-Mi-LBh">
-                                                            <rect key="frame" x="310.5" y="0.0" width="40.5" height="23"/>
+                                                            <rect key="frame" x="341.5" y="0.0" width="40.5" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -46,7 +45,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIK-Ld-icm">
-                                                    <rect key="frame" x="0.0" y="31" width="351" height="21"/>
+                                                    <rect key="frame" x="0.0" y="31" width="382" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -75,17 +74,46 @@
                             <outlet property="delegate" destination="Tnz-fl-kbU" id="RNQ-vM-RVE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="JeF-ft-Pm0">
-                        <barButtonItem key="rightBarButtonItem" title="My Profle" id="QOw-2b-ezf">
+                    <navigationItem key="navigationItem" title="Chat" id="JeF-ft-Pm0">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="gear" id="5R5-B1-0tD">
+                            <color key="tintColor" red="0.5495058894" green="0.54958814379999998" blue="0.56095010040000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="83Q-wb-O8f" kind="presentation" id="phw-sU-dfY"/>
+                                <segue destination="eJ7-5o-7G3" kind="show" id="t0G-i7-hpp"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="hj1-3W-88x">
+                            <view key="customView" clipsSubviews="YES" contentMode="scaleToFill" id="wmr-uT-8gD" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
+                                <rect key="frame" x="359" y="4.5" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="KgG-iK-p1H" appends="YES" id="Q90-h1-6DY"/>
+                                </connections>
+                            </view>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profileLogoView" destination="wmr-uT-8gD" id="WNs-ou-Ohc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="099-Hc-Bch" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="KgG-iK-p1H">
+                    <connections>
+                        <segue destination="83Q-wb-O8f" kind="presentation" id="Oqk-bk-CPw"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1105.7971014492755" y="146.65178571428569"/>
+            <point key="canvasLocation" x="1017" y="147"/>
+        </scene>
+        <!--ThemesViewController-->
+        <scene sceneID="M0Z-Mh-rWK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ThemesViewController" referencedIdentifier="ThemesViewController" id="eJ7-5o-7G3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HC2-CW-9tE"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pxX-G4-BZl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1618" y="-178"/>
         </scene>
         <!--ProfileViewController-->
         <scene sceneID="j0J-eM-I4A">
@@ -124,4 +152,7 @@
             <point key="canvasLocation" x="195.6521739130435" y="146.65178571428569"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gear" width="25.5" height="25.5"/>
+    </resources>
 </document>

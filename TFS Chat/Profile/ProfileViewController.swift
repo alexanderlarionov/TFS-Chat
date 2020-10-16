@@ -10,10 +10,12 @@ import UIKit
 
 class ProfileViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @IBOutlet var profileUIView: UIView!
-    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var profileLogoView: ProfileLogoView!
     @IBOutlet var saveButton: UIButton!
     @IBOutlet var editButton: UIButton!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var jobTitleLabel: UILabel!
+    @IBOutlet var cityLabel: UILabel!
     var imagePicker = UIImagePickerController()
     
     required init?(coder: NSCoder) {
@@ -25,26 +27,30 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
         super.viewDidLoad()
         printStateInfo(#function)
         printSaveButtonFrame(#function)
-        profileUIView.layer.cornerRadius = profileUIView.frame.width / 2;
-        profileImageView.layer.cornerRadius = profileUIView.layer.cornerRadius;
         saveButton.layer.cornerRadius = 14;
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        printStateInfo(#function)
+        adjustViewForCurrentTheme()
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
         imagePicker.delegate = self
         let alert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { _ in
             self.selectFromLibrary()
         }))
         
-        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { _ in
             self.selectFromCamera()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
     
     func selectFromCamera() {
@@ -76,17 +82,26 @@ class ProfileViewController: UIViewController, UINavigationControllerDelegate, U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImageView.image = image
+            profileLogoView.setImage(image)
         }
+    }
+    
+}
+
+extension ProfileViewController: Themable {
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.currentTheme()
+        view.backgroundColor = theme.conversationViewBackgroundColor
+        saveButton.layer.backgroundColor = theme.navigationBarColor.cgColor
+        nameLabel.textColor = theme.navigationBarTextColor
+        jobTitleLabel.textColor = theme.navigationBarTextColor
+        cityLabel.textColor = theme.navigationBarTextColor
+        navigationController?.navigationBar.barTintColor = theme.navigationBarColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: theme.navigationBarTextColor]
     }
 }
 
 extension ProfileViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        printStateInfo(#function)
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
