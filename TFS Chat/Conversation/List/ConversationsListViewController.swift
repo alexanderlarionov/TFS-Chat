@@ -13,7 +13,6 @@ class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    //let data = FakeData.conversationListData
     var data = [ChannelModel]()
     
     override func viewDidLoad() {
@@ -22,11 +21,12 @@ class ConversationsListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getData()
+        getFirestoreData()
         adjustViewForCurrentTheme()
     }
     
-    func getData() {
+    func getFirestoreData() {
+        data.removeAll()
         FirestoreManager.root.getDocuments { snapshot, error in
             if let error = error {
                 print("error during query " + error.localizedDescription)
@@ -67,6 +67,7 @@ class ConversationsListViewController: UITableViewController {
         if let target = segue.destination as? ConversationViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
             target.title = data[selectedPath.row].name
+            target.channelId = data[selectedPath.row].identifier
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"

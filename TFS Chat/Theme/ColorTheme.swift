@@ -89,7 +89,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var sentMessageBackgroundColor: UIColor {
+    var recievedMessageBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
@@ -100,7 +100,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var recievedMessageBackgroundColor: UIColor {
+    var sentMessageBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.863, green: 0.969, blue: 0.773, alpha: 1)
@@ -111,7 +111,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var sentMessageTextColor: UIColor {
+    var recievedMessageTextColor: UIColor {
         switch self {
         case .classic:
             return UIColor.black
@@ -122,7 +122,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var recievedMessageTextColor: UIColor {
+    var sentMessageTextColor: UIColor {
         switch self {
         case .classic:
             return UIColor.black
