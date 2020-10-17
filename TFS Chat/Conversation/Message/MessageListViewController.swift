@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ConversationViewController: UITableViewController {
+class MessageListViewController: UITableViewController {
     
     var data = [MessageModel]()
     var channelId: String?
@@ -64,7 +64,7 @@ class ConversationViewController: UITableViewController {
     }
     
     private func configureCell(indexPath: IndexPath, identifier: String, model: MessageModel) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? ConversationViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? MessageViewCell else { return UITableViewCell()}
         cell.setColor(for: identifier)
         cell.configure(with: model)
         return cell
@@ -72,7 +72,7 @@ class ConversationViewController: UITableViewController {
     
 }
 
-extension ConversationViewController: Themable {
+extension MessageListViewController: Themable {
     func adjustViewForCurrentTheme() {
         tableView.backgroundColor = ThemeManager.instance.currentTheme.conversationViewBackgroundColor
         tableView.reloadData()

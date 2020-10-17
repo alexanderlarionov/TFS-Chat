@@ -7,15 +7,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Conversation View Controller-->
+        <!--Message List View Controller-->
         <scene sceneID="uZJ-9l-HOr">
             <objects>
-                <tableViewController storyboardIdentifier="ConversationViewController" id="zoV-jk-0Zi" customClass="ConversationViewController" customModule="TFS_Chat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MessageListViewController" id="zoV-jk-0Zi" customClass="MessageListViewController" customModule="TFS_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7Sa-OJ-B1D">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecievedMessageCell" id="6jx-4q-zZd" customClass="ConversationViewCell" customModule="TFS_Chat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecievedMessageCell" id="6jx-4q-zZd" customClass="MessageViewCell" customModule="TFS_Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6jx-4q-zZd" id="Mja-Vh-R5q">

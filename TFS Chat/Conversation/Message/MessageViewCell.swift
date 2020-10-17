@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationViewCell: UITableViewCell, ConfigurableView {
+class MessageViewCell: UITableViewCell, ConfigurableView {
     
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!

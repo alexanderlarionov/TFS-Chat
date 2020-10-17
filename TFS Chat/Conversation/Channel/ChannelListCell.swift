@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationListCell: UITableViewCell, ConfigurableView {
+class ChannelListCell: UITableViewCell, ConfigurableView {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!

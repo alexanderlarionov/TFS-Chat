@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ConversationsListViewController: UITableViewController {
+class ChannelListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
@@ -56,7 +56,7 @@ class ConversationsListViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationListCell", for: indexPath) as? ConversationListCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as? ChannelListCell else { return UITableViewCell() }
         
         let cellModel = data[indexPath.row]
         cell.configure(with: cellModel)
@@ -64,7 +64,7 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let target = segue.destination as? ConversationViewController {
+        if let target = segue.destination as? MessageListViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
             target.title = data[selectedPath.row].name
             target.channelId = data[selectedPath.row].identifier
@@ -88,13 +88,13 @@ class ConversationsListViewController: UITableViewController {
     
 }
 
-extension ConversationsListViewController: AvatarUpdaterDelegate {
+extension ChannelListViewController: AvatarUpdaterDelegate {
     func updateAvatar(to image: UIImage) {
         profileLogoView.setImage(image)
     }
 }
 
-extension ConversationsListViewController: Themable {
+extension ChannelListViewController: Themable {
     func adjustViewForCurrentTheme() {
         guard let navBar = navigationController?.navigationBar else { return }
         let theme = ThemeManager.instance.currentTheme
