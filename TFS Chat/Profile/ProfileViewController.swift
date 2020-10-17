@@ -271,7 +271,7 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
 extension ProfileViewController: Themable {
     func adjustViewForCurrentTheme() {
         let theme = ThemeManager.instance.currentTheme
-        view.backgroundColor = theme.conversationViewBackgroundColor
+        view.backgroundColor = theme.messageListViewBackgroundColor
         saveGCDButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         saveOperationsButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         nameTextField.textColor = theme.navigationBarTextColor

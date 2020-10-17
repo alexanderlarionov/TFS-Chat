@@ -37,14 +37,17 @@ class MessageViewCell: UITableViewCell, ConfigurableView {
     
     func setColor(for identifier: String) {
         let theme = ThemeManager.instance.currentTheme
-        backgroundColor = theme.conversationViewBackgroundColor
-        //        if identifier == "SentMessageCell" {
-        //            messageView.backgroundColor = theme.sentMessageBackgroundColor
-        //            messageLabel.textColor = theme.sentMessageTextColor
-        //        } else {
-        messageView.backgroundColor = theme.recievedMessageBackgroundColor
-        messageLabel.textColor = theme.recievedMessageTextColor
-        nameLabel.textColor = theme.recievedMessageTextColor
-        dateLabel.textColor = theme.recievedMessageTextColor
+        backgroundColor = theme.messageListViewBackgroundColor
+        if identifier == "SentMessageCell" {
+            messageView.backgroundColor = theme.sentMessageBackgroundColor
+            messageLabel.textColor = theme.sentMessageTextColor
+            nameLabel.textColor = theme.sentMessageTextColor
+            dateLabel.textColor = theme.sentMessageTextColor
+        } else {
+            messageView.backgroundColor = theme.recievedMessageBackgroundColor
+            messageLabel.textColor = theme.recievedMessageTextColor
+            nameLabel.textColor = theme.recievedMessageTextColor
+            dateLabel.textColor = theme.recievedMessageTextColor
+        }
     }
 }

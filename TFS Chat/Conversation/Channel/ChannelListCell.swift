@@ -51,10 +51,10 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
     
     private func setColor() {
         let theme = ThemeManager.instance.currentTheme
-        backgroundColor = theme.conversationListCellColor
-        nameLabel.textColor = theme.conversationListCellNameColor
-        dateLabel.textColor = theme.conversationListCellTextColor
-        messageLabel.textColor = theme.conversationListCellTextColor
+        backgroundColor = theme.channelListCellColor
+        nameLabel.textColor = theme.channelListCellNameColor
+        dateLabel.textColor = theme.channelListCellTextColor
+        messageLabel.textColor = theme.channelListCellTextColor
     }
     
 }

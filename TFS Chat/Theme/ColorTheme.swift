@@ -34,7 +34,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListBackgroundColor: UIColor {
+    var channelListBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor.white
@@ -45,7 +45,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListCellColor: UIColor {
+    var channelListCellColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0)
@@ -56,7 +56,7 @@ enum ColorTheme: Int {
         }
     }
 
-    var conversationListCellNameColor: UIColor {
+    var channelListCellNameColor: UIColor {
         switch self {
         case .classic:
             return UIColor.black
@@ -67,7 +67,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListCellTextColor: UIColor {
+    var channelListCellTextColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.235, green: 0.235, blue: 0.263, alpha: 0.6)
@@ -133,7 +133,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationViewBackgroundColor: UIColor {
+    var messageListViewBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor.white

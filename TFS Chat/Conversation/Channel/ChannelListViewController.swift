@@ -142,7 +142,7 @@ extension ChannelListViewController: Themable {
             navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
         }
         
-        tableView.backgroundColor = theme.conversationListBackgroundColor
+        tableView.backgroundColor = theme.channelListBackgroundColor
         tableView.reloadData()
     }
 }
