@@ -82,16 +82,23 @@
                                 <segue destination="eJ7-5o-7G3" kind="show" id="t0G-i7-hpp"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="hj1-3W-88x">
-                            <view key="customView" clipsSubviews="YES" contentMode="scaleToFill" id="wmr-uT-8gD" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
-                                <rect key="frame" x="359" y="4.5" width="35" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
+                        <rightBarButtonItems>
+                            <barButtonItem id="hj1-3W-88x">
+                                <view key="customView" clipsSubviews="YES" contentMode="scaleToFill" id="wmr-uT-8gD" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
+                                    <rect key="frame" x="359" y="4.5" width="35" height="35"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="KgG-iK-p1H" appends="YES" id="Q90-h1-6DY"/>
+                                    </connections>
+                                </view>
+                            </barButtonItem>
+                            <barButtonItem title="Create" image="square.and.pencil" catalog="system" id="GDz-iw-YA9">
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="KgG-iK-p1H" appends="YES" id="Q90-h1-6DY"/>
+                                    <action selector="createButtonTapped:" destination="Tnz-fl-kbU" id="grS-XX-wNt"/>
                                 </connections>
-                            </view>
-                        </barButtonItem>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="profileLogoView" destination="wmr-uT-8gD" id="WNs-ou-Ohc"/>
@@ -155,6 +162,7 @@
     </scenes>
     <resources>
         <image name="gear" width="25.5" height="25.5"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

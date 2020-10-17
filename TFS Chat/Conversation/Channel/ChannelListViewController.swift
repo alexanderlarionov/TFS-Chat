@@ -51,10 +51,23 @@ class ChannelListViewController: UITableViewController {
         }
     }
     
+    func createChannel(name: String) {
+        FirestoreManager.root.addDocument(data: [
+            "name": name
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                self.getFirestoreData()
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
- 
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as? ChannelListCell else { return UITableViewCell() }
         
@@ -81,6 +94,21 @@ class ChannelListViewController: UITableViewController {
             profileController.avatarUpdaterDelegate = self
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    @IBAction func createButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Create New Channel", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Name"
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        let createAction = UIAlertAction(title: "Create", style: .default) { [weak self] _ in
+            if let name = alert.textFields?[0].text {
+                self?.createChannel(name: name)
+            }
+        }
+        alert.addAction(createAction)
+        self.present(alert, animated: true)
     }
     
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
