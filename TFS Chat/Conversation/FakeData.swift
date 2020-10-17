@@ -11,7 +11,7 @@ import Foundation
 struct FakeData {
     
     static var conversationListData = [
-        [ConversationCellModel(
+        ConversationCellModel(
             name: randomString(length: 5) + " " + randomString(length: 5),
             message: randomString(length: 10) + " " + randomString(length: 10),
             date: Date(),
@@ -80,78 +80,6 @@ struct FakeData {
             date: Calendar.current.date(byAdding: .hour, value: -2, to: Date())!,
             isOnline: true,
             hasUnreadMessages: false)
-        ],
-        
-        [ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 5),
-            message: randomString(length: 30),
-            date: Date(),
-            isOnline: false,
-            hasUnreadMessages: false),
-         
-         ConversationCellModel(
-            name: randomString(length: 3) + " " + randomString(length: 10),
-            message: randomString(length: 100),
-            date: Calendar.current.date(byAdding: .minute, value: -22, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: true),
-         
-         ConversationCellModel(
-            name: randomString(length: 10) + " " + randomString(length: 10),
-            message: randomString(length: 10),
-            date: Calendar.current.date(byAdding: .day, value: -100, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: false),
-         
-         ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 35),
-            message: randomString(length: 5),
-            date: Date(),
-            isOnline: false,
-            hasUnreadMessages: true),
-         
-         ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 5),
-            message: randomString(length: 50) + " " + randomString(length: 50),
-            date: Calendar.current.date(byAdding: .hour, value: -22, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: false),
-         
-         ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 5),
-            message: randomString(length: 30),
-            date: Date(),
-            isOnline: false,
-            hasUnreadMessages: false),
-         
-         ConversationCellModel(
-            name: randomString(length: 3) + " " + randomString(length: 10),
-            message: randomString(length: 100),
-            date: Calendar.current.date(byAdding: .minute, value: -1, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: true),
-         
-         ConversationCellModel(
-            name: randomString(length: 10) + " " + randomString(length: 10),
-            message: randomString(length: 10),
-            date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: false),
-         
-         ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 35),
-            message: randomString(length: 5),
-            date: Date(),
-            isOnline: false,
-            hasUnreadMessages: true),
-         
-         ConversationCellModel(
-            name: randomString(length: 5) + " " + randomString(length: 5),
-            message: randomString(length: 15) + " " +  randomString(length: 20),
-            date: Calendar.current.date(byAdding: .hour, value: -2, to: Date())!,
-            isOnline: false,
-            hasUnreadMessages: false)
-        ]
     ]
     
     static var conversationData = [

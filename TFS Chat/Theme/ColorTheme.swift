@@ -45,7 +45,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListCellOnlineColor: UIColor {
+    var conversationListCellColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0)
@@ -55,18 +55,7 @@ enum ColorTheme: Int {
             return UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
         }
     }
-    
-    var conversationListCellOfflineColor: UIColor {
-        switch self {
-        case .classic:
-            return UIColor.white
-        case .day:
-            return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .night:
-            return UIColor.black
-        }
-    }
-    
+
     var conversationListCellNameColor: UIColor {
         switch self {
         case .classic:

@@ -14,44 +14,44 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
     
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: ChannelModel) {
         nameLabel.text = model.name
         setDate(for: model)
         setMessage(for: model)
-        setColor(for: model)
+        setColor()
     }
     
-    private func setDate(for model: ConversationCellModel) {
+    private func setDate(for model: ChannelModel) {
         let formatter = DateFormatter()
         
-        if model.message == "" {
-            dateLabel.text = nil
-        } else if Calendar.current.isDateInToday(model.date) {
-            formatter.dateFormat = "HH:mm"
-            dateLabel.text = formatter.string(from: model.date)
+        if let lastActivity = model.lastActivity {
+            if Calendar.current.isDateInToday(lastActivity) {
+                formatter.dateFormat = "HH:mm"
+                dateLabel.text = formatter.string(from: lastActivity)
+            } else {
+                formatter.dateFormat = "dd MMM"
+                dateLabel.text = formatter.string(from: lastActivity)
+            }
         } else {
-            formatter.dateFormat = "dd MMM"
-            dateLabel.text = formatter.string(from: model.date)
+            dateLabel.text = nil
         }
     }
     
-    private func setMessage(for model: ConversationCellModel) {
+    private func setMessage(for model: ChannelModel) {
         let fontSize = messageLabel.font.pointSize
-        if model.message == "" {
+        
+        if let lastMessage = model.lastMessage {
+            messageLabel.text = lastMessage
+            messageLabel.font = UIFont.systemFont(ofSize: fontSize)
+        } else {
             messageLabel.text = "No messages yet"
             messageLabel.font = UIFont.italicSystemFont(ofSize: fontSize)
-        } else if model.hasUnreadMessages {
-            messageLabel.text = model.message
-            messageLabel.font = UIFont.boldSystemFont(ofSize: fontSize)
-        } else {
-            messageLabel.text = model.message
-            messageLabel.font = UIFont.systemFont(ofSize: fontSize)
         }
     }
     
-    private func setColor(for model: ConversationCellModel) {
+    private func setColor() {
         let theme = ThemeManager.instance.currentTheme
-        backgroundColor = model.isOnline ? theme.conversationListCellOnlineColor : theme.conversationListCellOfflineColor
+        backgroundColor = theme.conversationListCellColor
         nameLabel.textColor = theme.conversationListCellNameColor
         dateLabel.textColor = theme.conversationListCellTextColor
         messageLabel.textColor = theme.conversationListCellTextColor

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    let data = FakeData.conversationListData
+    //let data = FakeData.conversationListData
+    var data = [ChannelModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,34 +22,43 @@ class ConversationsListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getData()
         adjustViewForCurrentTheme()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int { 2 }
+    func getData() {
+        FirestoreManager.root.getDocuments { snapshot, error in
+            if let error = error {
+                print("error during query " + error.localizedDescription)
+            } else {
+                guard let snapshot = snapshot else { return }
+                for channel in snapshot.documents {
+                    let id = channel.documentID
+                    let data = channel.data()
+                    let name = data["name"] as? String ?? "noname"
+                    let lastMessage = data["lastMessage"] as? String
+                    
+                    var lastActivity: Date?
+                    if let lastActivityTimestamp = data["lastActivity"] as? Timestamp {
+                        lastActivity = lastActivityTimestamp.dateValue()
+                    }
+                    
+                    let dataModel = ChannelModel(identifier: id, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
+                    self.data.append(dataModel)
+                }
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].count
+        return data.count
     }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var title: String?
-        if section == 0 {
-            title = "Online"
-        } else if section == 1 {
-            title = "History"
-        }
-        return title
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-    }
-    
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationListCell", for: indexPath) as? ConversationListCell else { return UITableViewCell() }
         
-        let cellModel = data[indexPath.section][indexPath.row]
+        let cellModel = data[indexPath.row]
         cell.configure(with: cellModel)
         return cell
     }
@@ -55,7 +66,7 @@ class ConversationsListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let target = segue.destination as? ConversationViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-            target.title = data[selectedPath.section][selectedPath.row].name
+            target.title = data[selectedPath.row].name
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"

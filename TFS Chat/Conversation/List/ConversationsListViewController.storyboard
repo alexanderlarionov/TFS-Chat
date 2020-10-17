@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat-->
+        <!--Channels-->
         <scene sceneID="Gez-8w-XwG">
             <objects>
                 <tableViewController id="Tnz-fl-kbU" customClass="ConversationsListViewController" customModule="TFS_Chat" customModuleProvider="target" sceneMemberID="viewController">
@@ -75,7 +75,7 @@
                             <outlet property="delegate" destination="Tnz-fl-kbU" id="RNQ-vM-RVE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Chat" id="JeF-ft-Pm0">
+                    <navigationItem key="navigationItem" title="Channels" id="JeF-ft-Pm0">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="gear" id="5R5-B1-0tD">
                             <color key="tintColor" red="0.5495058894" green="0.54958814379999998" blue="0.56095010040000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
