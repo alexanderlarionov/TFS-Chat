@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import Firebase
 
 class ChannelListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    var data = [ChannelModel]()
+    var channels = [ChannelModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,57 +20,35 @@ class ChannelListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getFirestoreData()
+        updateChannels()
         adjustViewForCurrentTheme()
     }
     
-    func getFirestoreData() {
-        data.removeAll()
-        FirestoreManager.root.getDocuments { snapshot, error in
-            if let error = error {
-                print("error during query " + error.localizedDescription)
-            } else {
-                guard let snapshot = snapshot else { return }
-                for channel in snapshot.documents {
-                    let id = channel.documentID
-                    let data = channel.data()
-                    let name = data["name"] as? String ?? "noname"
-                    let lastMessage = data["lastMessage"] as? String
-                    
-                    var lastActivity: Date?
-                    if let lastActivityTimestamp = data["lastActivity"] as? Timestamp {
-                        lastActivity = lastActivityTimestamp.dateValue()
-                    }
-                    
-                    let dataModel = ChannelModel(identifier: id, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
-                    self.data.append(dataModel)
-                }
-                self.tableView.reloadData()
-            }
-        }
+    func updateChannels() {
+        channels.removeAll()
+        FirestoreManager.getChannels(completion: { [weak self] channels in
+            self?.channels = channels
+            self?.sortChannelsByDate()
+            self?.tableView.reloadData()
+        })
     }
     
     func createChannel(name: String) {
-        FirestoreManager.root.addDocument(data: [
-            "name": name
-        ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                self.getFirestoreData()
-                self.tableView.reloadData()
-            }
-        }
+        let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
+        FirestoreManager.addChannel(channel: channel,
+                                    completion: { [weak self] in
+                                        self?.updateChannels()
+                                    })
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return channels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as? ChannelListCell else { return UITableViewCell() }
         
-        let cellModel = data[indexPath.row]
+        let cellModel = channels[indexPath.row]
         cell.configure(with: cellModel)
         return cell
     }
@@ -79,8 +56,8 @@ class ChannelListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let target = segue.destination as? MessageListViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-            target.title = data[selectedPath.row].name
-            target.channelId = data[selectedPath.row].identifier
+            target.title = channels[selectedPath.row].name
+            target.channelId = channels[selectedPath.row].identifier
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
@@ -112,6 +89,13 @@ class ChannelListViewController: UITableViewController {
     }
     
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
+    }
+    
+    private func sortChannelsByDate() {
+        channels.sort {
+            $0.lastActivity ?? Date(timeIntervalSince1970: 0)
+                > $1.lastActivity ?? Date(timeIntervalSince1970: 0)
+        }
     }
     
 }

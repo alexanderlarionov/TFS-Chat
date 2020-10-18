@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class MessageListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -15,9 +14,9 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet var messageTextField: UITextField!
     @IBOutlet var messageView: UIView!
     
-    var data = [MessageModel]()
+    var messages = [MessageModel]()
     var channelId: String?
-    let senderID = "hardcodeId123"
+    let senderID = UIDevice.current.identifierForVendor?.uuidString
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,61 +31,38 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getFirestoreData()
+        updateMessages()
         adjustViewForCurrentTheme()
     }
     
-    func getFirestoreData() {
-        data.removeAll()
+    func updateMessages() {
         guard let channelId = channelId else { return }
-        FirestoreManager.root.document(channelId).collection("messages").getDocuments { snapshot, error in
-            if let error = error {
-                print("error during query " + error.localizedDescription)
-            } else {
-                guard let snapshot = snapshot else { return }
-                for message in snapshot.documents {
-                    let data = message.data()
-                    let content = data["content"] as? String ?? ""
-                    let senderName = data["senderName"] as? String ?? ""
-                    let senderId = data["senderId"] as? String ?? ""
-                    var created = Date()
-                    if let createdTimestamp = data["created"] as? Timestamp {
-                        created = createdTimestamp.dateValue()
-                    }
-                    
-                    let dataModel = MessageModel(content: content, created: created, senderId: senderId, senderName: senderName)
-                    self.data.append(dataModel)
-                }
-                self.tableView.reloadData()
-            }
-        }
+        messages.removeAll()
+        FirestoreManager.getMessages(channelId: channelId,
+                                     completion: { [weak self] messages in
+                                        self?.messages = messages
+                                        self?.sortMessagesByDate()
+                                        self?.tableView.reloadData()
+                                     }
+        )
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        guard let content = messageTextField.text, content != "" else {
-            print("empty message, not sent")
-            return }
         guard let channelId = channelId else { return }
-        FirestoreManager.root.document(channelId).collection("messages").addDocument(data: [
-            "content": content,
-            "created": Date(),
-            "senderId": senderID,
-            "senderName": "Anonymous"
-        ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("message sent")
-                self.dismissKeyboard()
-                self.messageTextField.text = ""
-                self.getFirestoreData()
-                self.tableView.reloadData()
-            }
-        }
+        guard let senderID = senderID else { return }
+        guard let content = messageTextField.text, content != "" else { return }
+        let message = MessageModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
+        FirestoreManager.addMessage(channelId: channelId,
+                                    message: message,
+                                    completion: { [weak self] in
+                                        self?.dismissKeyboard()
+                                        self?.messageTextField.text = ""
+                                        self?.updateMessages()
+                                    })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -95,7 +71,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellModel = data[indexPath.row]
+        let cellModel = messages[indexPath.row]
         
         if cellModel.senderId == senderID {
             return configureCell(indexPath: indexPath, identifier: "SentMessageCell", model: cellModel)
@@ -109,6 +85,10 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         cell.setColor(for: identifier)
         cell.configure(with: model)
         return cell
+    }
+    
+    private func sortMessagesByDate() {
+        messages.sort { $0.created < $1.created }
     }
     
 }
