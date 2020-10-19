@@ -19,14 +19,13 @@ struct OperationDataManager: DataManager {
         queue.maxConcurrentOperationCount = 3
     }
     
-    func saveAvatar(image: UIImage, updateAction: @escaping (UIImage) -> Void, completion: @escaping () -> Void, failure: @escaping  () -> Void) {
+    func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void) {
         let operation = SaveImageOperation(dataToSave: image)
         operation.completionBlock = {
             if operation.success {
                 OperationQueue.main.addOperation {
-                    updateAction(image)
+                    completion(image)
                 }
-                completion()
             } else {
                 failure()
             }

@@ -13,6 +13,7 @@ class ChannelListViewController: UITableViewController {
     @IBOutlet var profileLogoView: ProfileLogoView!
     
     var channels = [ChannelModel]()
+    let selectedCellView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,7 @@ class ChannelListViewController: UITableViewController {
         
         let cellModel = channels[indexPath.row]
         cell.configure(with: cellModel)
+        cell.selectedBackgroundView = selectedCellView
         return cell
     }
     
@@ -115,6 +117,7 @@ extension ChannelListViewController: Themable {
         }
         
         tableView.backgroundColor = theme.channelListBackgroundColor
+        selectedCellView.backgroundColor = theme.navigationBarColor
         tableView.reloadData()
     }
 }

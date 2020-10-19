@@ -109,12 +109,12 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func saveGCDButtonPressed(_ sender: UIButton) {
-        handleSaveButtonPress()
+        handleSaveButtonPressed()
         saveData(dataManager: GCDDataManager.instance)
     }
     
     @IBAction func saveOperationsButtonPressed(_ sender: UIButton) {
-        handleSaveButtonPress()
+        handleSaveButtonPressed()
         saveData(dataManager: OperationDataManager.instance)
     }
     
@@ -126,10 +126,8 @@ class ProfileViewController: UIViewController {
         if profileLogoView.profileImage.image != avatarBeforeChange {
             if let avatar = profileLogoView.profileImage.image {
                 dataManager.saveAvatar(image: avatar,
-                                       updateAction: { avatar in
+                                       completion: { avatar in
                                         self.avatarUpdaterDelegate?.updateAvatar(to: avatar)
-                                       },
-                                       completion: {
                                         self.avatarBeforeChange = avatar
                                        },
                                        failure: {
@@ -226,7 +224,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func handleSaveButtonPress() {
+    func handleSaveButtonPressed() {
         nameTextField.isUserInteractionEnabled = false
         nameTextField.layer.borderWidth = 0
         infoTextView.layer.borderWidth = 0

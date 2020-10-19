@@ -22,16 +22,8 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
     }
     
     private func setDate(for model: ChannelModel) {
-        let formatter = DateFormatter()
-        
         if let lastActivity = model.lastActivity {
-            if Calendar.current.isDateInToday(lastActivity) {
-                formatter.dateFormat = "HH:mm"
-                dateLabel.text = formatter.string(from: lastActivity)
-            } else {
-                formatter.dateFormat = "dd MMM"
-                dateLabel.text = formatter.string(from: lastActivity)
-            }
+            dateLabel.text = DateUtil.formatForView(date: lastActivity)
         } else {
             dateLabel.text = nil
         }
@@ -51,7 +43,7 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
     
     private func setColor() {
         let theme = ThemeManager.instance.currentTheme
-        backgroundColor = theme.channelListCellColor
+        backgroundColor = theme.channelListBackgroundColor
         nameLabel.textColor = theme.channelListCellNameColor
         dateLabel.textColor = theme.channelListCellTextColor
         messageLabel.textColor = theme.channelListCellTextColor

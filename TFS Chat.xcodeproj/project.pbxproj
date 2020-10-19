@@ -19,6 +19,7 @@
 		0A82BDD9250BFE010088A796 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */; };
 		0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDA250BFE030088A796 /* Assets.xcassets */; };
 		0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDDC250BFE030088A796 /* LaunchScreen.storyboard */; };
+		0A8371F6253E31E300021647 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8371F5253E31E300021647 /* DateUtil.swift */; };
 		0AB1FF2B252CA50600AFD8C5 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */; };
 		0AB1FF2E252CA51D00AFD8C5 /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */; };
 		0AC14B97253A213900FCA72C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AC14B96253A213900FCA72C /* GoogleService-Info.plist */; };
@@ -52,6 +53,7 @@
 		0A82BDDA250BFE030088A796 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A82BDDD250BFE030088A796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A82BDDF250BFE030088A796 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A8371F5253E31E300021647 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
 		0AC14B96253A213900FCA72C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				0AC52A8E251247350029503C /* LoggingUtil.swift */,
 				0AEE20962533E35F00EF38C8 /* FileUtil.swift */,
+				0A8371F5253E31E300021647 /* DateUtil.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AC4BC2C2523F061006EA53E /* MessageViewCell.swift in Sources */,
+				0A8371F6253E31E300021647 /* DateUtil.swift in Sources */,
 				0A82BDD6250BFE010088A796 /* ProfileViewController.swift in Sources */,
 				0AB1FF2B252CA50600AFD8C5 /* ThemesViewController.swift in Sources */,
 				0A6F424925228ADF004BC50D /* ChannelListViewController.swift in Sources */,
@@ -515,6 +519,7 @@
 			baseConfigurationReference = 4889533EACA3CC0EC11FA2B5 /* Pods-TFS Chat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat/Info.plist";
@@ -523,8 +528,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -535,6 +541,7 @@
 			baseConfigurationReference = 35FE2667E25F24E5243B99F4 /* Pods-TFS Chat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat/Info.plist";
@@ -543,8 +550,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -616,6 +624,7 @@
 			baseConfigurationReference = E33F992B4C4FA11ACD0132B1 /* Pods-TFS Chat.debug w-o logs.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat/Info.plist";
@@ -624,8 +633,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akatev.TFS-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = NOLOGS;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

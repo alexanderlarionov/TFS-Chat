@@ -39,20 +39,9 @@ enum ColorTheme: Int {
         case .classic:
             return UIColor.white
         case .day:
-            return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .night:
-            return UIColor.black
-        }
-    }
-    
-    var channelListCellColor: UIColor {
-        switch self {
-        case .classic:
-            return UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0)
-        case .day:
             return UIColor(red: 0.58, green: 0.66, blue: 0.75, alpha: 1.00)
         case .night:
-            return UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
+            return UIColor.black
         }
     }
 

@@ -23,16 +23,7 @@ class MessageViewCell: UITableViewCell, ConfigurableView {
     func configure(with model: MessageModel) {
         messageLabel.text = model.content
         nameLabel.text = model.senderName
-        
-        let date = model.created
-        let formatter = DateFormatter()
-        if Calendar.current.isDateInToday(date) {
-            formatter.dateFormat = "HH:mm"
-            dateLabel.text = formatter.string(from: date)
-        } else {
-            formatter.dateFormat = "dd MMM"
-            dateLabel.text = formatter.string(from: date)
-        }
+        dateLabel.text = DateUtil.formatForView(date: model.created)
     }
     
     func setColor(for identifier: String) {
