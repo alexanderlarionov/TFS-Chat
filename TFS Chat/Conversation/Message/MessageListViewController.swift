@@ -31,19 +31,15 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateMessages()
         adjustViewForCurrentTheme()
-    }
-    
-    func updateMessages() {
         guard let channelId = channelId else { return }
-        messages.removeAll()
-        FirestoreManager.getMessages(channelId: channelId,
-                                     completion: { [weak self] messages in
-                                        self?.messages = messages
-                                        self?.sortMessagesByDate()
-                                        self?.tableView.reloadData()
-                                     }
+        FirestoreManager.listenMessagesSnapshot(channelId: channelId,
+                                                completion: { [weak self] messages in
+                                                    self?.messages = messages
+                                                    self?.sortMessagesByDate()
+                                                    self?.tableView.reloadData()
+                                                    self?.scrollToBottom()
+                                                }
         )
     }
     
@@ -57,7 +53,6 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
                                     completion: { [weak self] in
                                         self?.dismissKeyboard()
                                         self?.messageTextField.text = ""
-                                        self?.updateMessages()
                                     })
     }
     
@@ -91,6 +86,19 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         messages.sort { $0.created < $1.created }
     }
     
+    private func scrollToBottom() {
+        DispatchQueue.main.async {
+            if self.messages.count != 0 {
+                let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+            }
+        }
+    }
+    
+    deinit {
+        FirestoreManager.messageListener?.remove()
+    }
+    
 }
 
 extension MessageListViewController: UITextFieldDelegate {
@@ -117,6 +125,7 @@ extension MessageListViewController: UITextFieldDelegate {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
 }
 
 extension MessageListViewController: Themable {

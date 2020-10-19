@@ -11,14 +11,18 @@ import FirebaseFirestore
 struct FirestoreManager {
     
     static let root = Firestore.firestore().collection("channels")
+    static var messageListener: ListenerRegistration?
+    static var channelListener: ListenerRegistration?
     
-    static func getMessages(channelId: String, completion: @escaping ([MessageModel]) -> Void) {
-        var messages = [MessageModel]()
-        FirestoreManager.root.document(channelId).collection("messages").getDocuments { snapshot, error in
+    private init() {}
+    
+    static func listenMessagesSnapshot(channelId: String, completion: @escaping ([MessageModel]) -> Void) {
+        messageListener = FirestoreManager.root.document(channelId).collection("messages").addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Load messages error: " + error.localizedDescription)
             } else {
                 guard let snapshot = snapshot else { return }
+                var messages = [MessageModel]()
                 for message in snapshot.documents {
                     if let dataModel = MessageModel(firebaseData: message) {
                         messages.append(dataModel)
@@ -39,13 +43,13 @@ struct FirestoreManager {
         }
     }
     
-    static func getChannels(completion: @escaping ([ChannelModel]) -> Void) {
-        var channels = [ChannelModel]()
-        FirestoreManager.root.getDocuments { snapshot, error in
+    static func listenSnapshotChannels(completion: @escaping ([ChannelModel]) -> Void) {
+        channelListener = FirestoreManager.root.addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Load channels error: " + error.localizedDescription)
             } else {
                 guard let snapshot = snapshot else { return }
+                var channels = [ChannelModel]()
                 for channel in snapshot.documents {
                     if let dataModel = ChannelModel(firebaseData: channel) {
                         channels.append(dataModel)
@@ -56,12 +60,10 @@ struct FirestoreManager {
         }
     }
     
-    static func addChannel(channel: ChannelModel, completion: @escaping () -> Void) {
+    static func addChannel(channel: ChannelModel) {
         FirestoreManager.root.addDocument(data: channel.toFirebaseDictionary()) { error in
             if let error = error {
                 print("Add channel error: " + error.localizedDescription)
-            } else {
-                completion()
             }
         }
     }

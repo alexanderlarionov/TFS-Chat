@@ -20,25 +20,12 @@ class ChannelListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateChannels()
         adjustViewForCurrentTheme()
-    }
-    
-    func updateChannels() {
-        channels.removeAll()
-        FirestoreManager.getChannels(completion: { [weak self] channels in
+        FirestoreManager.listenSnapshotChannels(completion: { [weak self] channels in
             self?.channels = channels
             self?.sortChannelsByDate()
             self?.tableView.reloadData()
         })
-    }
-    
-    func createChannel(name: String) {
-        let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
-        FirestoreManager.addChannel(channel: channel,
-                                    completion: { [weak self] in
-                                        self?.updateChannels()
-                                    })
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,9 +66,10 @@ class ChannelListViewController: UITableViewController {
             textField.placeholder = "Name"
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
-        let createAction = UIAlertAction(title: "Create", style: .default) { [weak self] _ in
+        let createAction = UIAlertAction(title: "Create", style: .default) { _ in
             if let name = alert.textFields?[0].text {
-                self?.createChannel(name: name)
+                let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
+                FirestoreManager.addChannel(channel: channel)
             }
         }
         alert.addAction(createAction)
