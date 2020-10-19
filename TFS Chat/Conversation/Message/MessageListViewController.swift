@@ -25,7 +25,8 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         messageTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        setupMessageTextField()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -43,7 +44,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         )
     }
     
-    @IBAction func sendButtonPressed(_ sender: UIButton) {
+    @objc func sendButtonPressed() {
         guard let channelId = channelId else { return }
         guard let senderID = senderID else { return }
         guard let content = messageTextField.text, content != "" else { return }
@@ -93,6 +94,28 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
                 self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             }
         }
+    }
+    
+    private func setupMessageTextField() {
+        let iconView = UIImageView(frame: CGRect(x: 0, y: 5, width: 32, height: 32))
+        iconView.image = UIImage(named: "send")
+        iconView.tintColor = UIColor.systemBlue
+        let iconContainerView: UIView = UIView(frame: CGRect(x: 32, y: 0, width: 40, height: 40))
+        iconContainerView.addSubview(iconView)
+        messageTextField.rightView = iconContainerView
+        messageTextField.rightViewMode = .always
+        let tap = UITapGestureRecognizer(target: self, action: #selector(sendButtonPressed))
+        iconContainerView.addGestureRecognizer(tap)
+        
+        let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
+        messageTextField.leftView = leftPaddingView
+        messageTextField.leftViewMode = .always
+       
+        messageTextField.layer.borderColor = UIColor.lightGray.cgColor
+        messageTextField.layer.borderWidth = 0.5
+        messageTextField.layer.cornerRadius = 16
+        messageTextField.attributedPlaceholder = NSAttributedString(string: "Your message here...",
+                                     attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
     }
     
     deinit {

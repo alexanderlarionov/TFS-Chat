@@ -143,27 +143,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6CK-5F-BtB">
                                 <rect key="frame" x="0.0" y="816" width="414" height="80"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your message here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5n6-40-ZTs">
-                                        <rect key="frame" x="40" y="20" width="308" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Your message here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5n6-40-ZTs">
+                                        <rect key="frame" x="40" y="20" width="334" height="40"/>
+                                        <nil key="textColor"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6r2-7U-iZo">
-                                        <rect key="frame" x="358" y="5" width="36" height="70"/>
-                                        <state key="normal" title="Send"/>
-                                        <connections>
-                                            <action selector="sendButtonPressed:" destination="rmw-WV-og3" eventType="touchUpInside" id="LR4-nX-wU9"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="6r2-7U-iZo" secondAttribute="bottom" constant="5" id="2yb-YW-Oh5"/>
                                     <constraint firstAttribute="height" constant="80" id="3Vr-Cv-Vch"/>
-                                    <constraint firstItem="6r2-7U-iZo" firstAttribute="top" secondItem="6CK-5F-BtB" secondAttribute="top" constant="5" id="72o-8G-Ypf"/>
-                                    <constraint firstItem="6r2-7U-iZo" firstAttribute="leading" secondItem="5n6-40-ZTs" secondAttribute="trailing" constant="10" id="7ql-1I-V0v"/>
-                                    <constraint firstAttribute="trailing" secondItem="6r2-7U-iZo" secondAttribute="trailing" constant="20" id="eWh-E1-FQV"/>
                                     <constraint firstItem="5n6-40-ZTs" firstAttribute="leading" secondItem="6CK-5F-BtB" secondAttribute="leading" constant="40" id="mme-xJ-gf7"/>
                                     <constraint firstItem="5n6-40-ZTs" firstAttribute="top" secondItem="6CK-5F-BtB" secondAttribute="top" constant="20" id="qTy-yp-mve"/>
+                                    <constraint firstAttribute="trailing" secondItem="5n6-40-ZTs" secondAttribute="trailing" constant="40" id="r3z-0g-BZP"/>
                                     <constraint firstAttribute="bottom" secondItem="5n6-40-ZTs" secondAttribute="bottom" constant="20" id="rJJ-hD-9du"/>
                                 </constraints>
                             </view>
