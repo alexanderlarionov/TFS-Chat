@@ -49,8 +49,7 @@ class ProfileLogoView: UIView {
         addSubview(view)
         
         activityIndicator.startAnimating()
-        self.lettersStackView.isHidden = true
-        
+    
         GCDDataManager.instance.loadAvatar(
             completion: { avatar in
                 self.activityIndicator.stopAnimating()
@@ -59,7 +58,7 @@ class ProfileLogoView: UIView {
             failure: {
                 self.activityIndicator.stopAnimating()
                 self.lettersStackView.isHidden = false
-                self.backgroundColor = UIColor(red: 0.894, green: 0.908, blue: 0.17, alpha: 1)
+                view.backgroundColor = UIColor(red: 0.894, green: 0.908, blue: 0.17, alpha: 1)
             })
     }
 
