@@ -13,10 +13,3 @@ protocol ConfigurableView {
     func configure(with model: ConfigurationModel)
     
 }
-
-extension ConfigurableView {
-    
-    func configure(with model: ConfigurationModel) {
-        
-    }
-}

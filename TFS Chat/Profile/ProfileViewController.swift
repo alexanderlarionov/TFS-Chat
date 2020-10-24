@@ -19,8 +19,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    var imagePicker = UIImagePickerController()
-    var avatarUpdaterDelegate: AvatarUpdaterDelegate?
+    weak var avatarUpdaterDelegate: AvatarUpdaterDelegate?
+    lazy var imagePicker = UIImagePickerController()
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
@@ -31,19 +31,9 @@ class ProfileViewController: UIViewController {
         imagePicker.delegate = self
         infoTextView.delegate = self
         nameTextField.delegate = self
-        nameTextField.layer.borderColor = UIColor.lightGray.cgColor
-        nameTextField.layer.cornerRadius = 5
-        setNameFieldPadding(10)
-        infoTextView.layer.borderColor = UIColor.lightGray.cgColor
-        infoTextView.layer.cornerRadius = 5
-        saveGCDButton.layer.cornerRadius = 14
-        saveOperationsButton.layer.cornerRadius = 14
-        setSaveButtonEnable(false)
-        nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        setupTextFields()
+        setupButtons()
         activityIndicator.startAnimating()
-        nameTextField.isHidden = true
-        infoTextView.isHidden = true
-        
         loadProfileName()
         loadProfileInfo()
     }
@@ -53,41 +43,15 @@ class ProfileViewController: UIViewController {
         adjustViewForCurrentTheme()
     }
     
-    func loadProfileName() {
-        loadDataManager.loadProfileName(
-            completion: { name in
-                self.activityIndicator.stopAnimating()
-                self.nameTextField.text = name
-                self.nameTextField.isHidden = false
-            },
-            failure: {
-                self.activityIndicator.stopAnimating()
-                self.nameTextField.isHidden = false
-            })
-    }
-    
-    func loadProfileInfo() {
-        loadDataManager.loadProfileInfo(
-            completion: { name in
-                self.activityIndicator.stopAnimating()
-                self.infoTextView.text = name
-                self.infoTextView.isHidden = false
-            },
-            failure: {
-                self.activityIndicator.stopAnimating()
-                self.infoTextView.isHidden = false
-            })
-    }
-    
     @IBAction func editAvatarButtonPressed(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { [weak self] _ in
-            self?.selectFromLibrary()
+        alert.addAction(UIAlertAction(title: "From Photo Library", style: .default, handler: { _ in
+            self.selectFromLibrary()
         }))
         
-        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { [weak self] _ in
-            self?.selectFromCamera()
+        alert.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { _ in
+            self.selectFromCamera()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -233,6 +197,50 @@ class ProfileViewController: UIViewController {
         setSaveButtonEnable(false)
         activityIndicator.startAnimating()
     }
+    
+    func setupTextFields() {
+        nameTextField.layer.borderColor = UIColor.lightGray.cgColor
+        nameTextField.layer.cornerRadius = 5
+        setNameFieldPadding(10)
+        nameTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        nameTextField.isHidden = true
+        
+        infoTextView.layer.borderColor = UIColor.lightGray.cgColor
+        infoTextView.layer.cornerRadius = 5
+        infoTextView.isHidden = true
+    }
+    
+    func setupButtons() {
+        saveGCDButton.layer.cornerRadius = 14
+        saveOperationsButton.layer.cornerRadius = 14
+        setSaveButtonEnable(false)
+    }
+    
+    func loadProfileName() {
+        loadDataManager.loadProfileName(
+            completion: { name in
+                self.activityIndicator.stopAnimating()
+                self.nameTextField.text = name
+                self.nameTextField.isHidden = false
+            },
+            failure: {
+                self.activityIndicator.stopAnimating()
+                self.nameTextField.isHidden = false
+            })
+    }
+    
+    func loadProfileInfo() {
+        loadDataManager.loadProfileInfo(
+            completion: { name in
+                self.activityIndicator.stopAnimating()
+                self.infoTextView.text = name
+                self.infoTextView.isHidden = false
+            },
+            failure: {
+                self.activityIndicator.stopAnimating()
+                self.infoTextView.isHidden = false
+            })
+    }
 }
 
 extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -280,7 +288,7 @@ extension ProfileViewController: Themable {
     }
 }
 
-protocol AvatarUpdaterDelegate {
+protocol AvatarUpdaterDelegate: class {
     func updateAvatar(to image: UIImage)
 }
 
