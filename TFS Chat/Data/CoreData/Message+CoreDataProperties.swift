@@ -10,16 +10,16 @@
 import Foundation
 import CoreData
 
-extension Message {
+extension MessageDb {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Message> {
-        return NSFetchRequest<Message>(entityName: "Message")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDb> {
+        return NSFetchRequest<MessageDb>(entityName: "MessageDb")
     }
 
     @NSManaged public var content: String
     @NSManaged public var created: Date
     @NSManaged public var senderId: String
     @NSManaged public var senderName: String
-    @NSManaged public var channel: Channel
+    @NSManaged public var channel: ChannelDb
     
 }

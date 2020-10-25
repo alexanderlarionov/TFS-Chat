@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Channel" representedClassName=".Channel" syncable="YES">
+    <entity name="ChannelDb" representedClassName=".ChannelDb" syncable="YES">
         <attribute name="id" attributeType="String"/>
         <attribute name="lastActivity" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lastMessage" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="channel" inverseEntity="Message"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MessageDb" inverseName="channel" inverseEntity="MessageDb"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Message" representedClassName=".Message" syncable="YES">
+    <entity name="MessageDb" representedClassName=".MessageDb" syncable="YES">
         <attribute name="content" attributeType="String"/>
         <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="senderId" attributeType="String"/>
         <attribute name="senderName" attributeType="String"/>
-        <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Channel" inverseName="messages" inverseEntity="Channel"/>
+        <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChannelDb" inverseName="messages" inverseEntity="ChannelDb"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="content"/>
+                <constraint value="created"/>
+                <constraint value="senderId"/>
+                <constraint value="senderName"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Channel" positionX="-146.80078125" positionY="-183.26953125" width="128" height="118"/>
-        <element name="Message" positionX="-363.625" positionY="-104.32421875" width="128" height="118"/>
+        <element name="ChannelDb" positionX="-146.80078125" positionY="-183.26953125" width="128" height="118"/>
+        <element name="MessageDb" positionX="-363.625" positionY="-104.32421875" width="128" height="118"/>
     </elements>
 </model>

@@ -13,11 +13,8 @@ struct FirestoreManager {
     static let root = Firestore.firestore().collection("channels")
     static var messageListener: ListenerRegistration?
     static var channelListener: ListenerRegistration?
-    let coreDataManager: CoreDataManager!
     
-    private init() {
-        coreDataManager = CoreDataManager()
-    }
+    private init() {}
     
     static func listenMessagesSnapshot(channelId: String, completion: @escaping ([MessageModel]) -> Void) {
         messageListener = FirestoreManager.root.document(channelId).collection("messages").addSnapshotListener { snapshot, error in
@@ -26,12 +23,21 @@ struct FirestoreManager {
             } else {
                 guard let snapshot = snapshot else { return }
                 var messages = [MessageModel]()
+                let channel = CoreDataManager.fetchChannel(by: channelId)
+                
                 for message in snapshot.documents {
                     if let dataModel = MessageModel(firebaseData: message) {
                         messages.append(dataModel)
+                        
+                        if let channel = channel {
+                            let message = MessageDb(context: CoreDataManager.saveContext)
+                            message.channel = channel
+                            message.setupFromModel(model: dataModel)
+                        }
                     }
                 }
                 completion(messages)
+                CoreDataManager.saveData()
             }
         }
     }
@@ -56,16 +62,12 @@ struct FirestoreManager {
                 for channel in snapshot.documents {
                     if let dataModel = ChannelModel(firebaseData: channel) {
                         channels.append(dataModel)
-                        
-                        let channel = Channel(context: CoreDataManager.persistentContainer.viewContext)
-                        channel.id = dataModel.identifier
-                        channel.name = dataModel.name
-                        channel.lastMessage = dataModel.lastMessage
-                        channel.lastActivity = dataModel.lastActivity
-                        CoreDataManager.saveContext()
+                        let channel = ChannelDb(context: CoreDataManager.saveContext)
+                        channel.setupFromModel(model: dataModel)
                     }
                 }
                 completion(channels)
+                CoreDataManager.saveData()
             }
         }
     }

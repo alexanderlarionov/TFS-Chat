@@ -10,10 +10,10 @@
 import Foundation
 import CoreData
 
-extension Channel {
+extension ChannelDb {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Channel> {
-        return NSFetchRequest<Channel>(entityName: "Channel")
+    @nonobjc public class func createFetchRequest() -> NSFetchRequest<ChannelDb> {
+        return NSFetchRequest<ChannelDb>(entityName: "ChannelDb")
     }
 
     @NSManaged public var id: String
@@ -25,13 +25,13 @@ extension Channel {
 }
 
 // MARK: Generated accessors for messages
-extension Channel {
+extension ChannelDb {
 
     @objc(addMessagesObject:)
-    @NSManaged public func addToMessages(_ value: Message)
+    @NSManaged public func addToMessages(_ value: MessageDb)
 
     @objc(removeMessagesObject:)
-    @NSManaged public func removeFromMessages(_ value: Message)
+    @NSManaged public func removeFromMessages(_ value: MessageDb)
 
     @objc(addMessages:)
     @NSManaged public func addToMessages(_ values: NSSet)

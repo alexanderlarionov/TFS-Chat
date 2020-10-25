@@ -10,6 +10,12 @@
 import Foundation
 import CoreData
 
-public class Channel: NSManagedObject {
+public class ChannelDb: NSManagedObject {
 
+    func setupFromModel(model: ChannelModel) {
+        self.id = model.identifier
+        self.name = model.name
+        self.lastMessage = model.lastMessage
+        self.lastActivity = model.lastActivity
+    }
 }

@@ -10,6 +10,12 @@
 import Foundation
 import CoreData
 
-public class Message: NSManagedObject {
-
+public class MessageDb: NSManagedObject {
+    
+    func setupFromModel(model: MessageModel) {
+        self.content = model.content
+        self.created = model.created
+        self.senderId = model.senderId
+        self.senderName = model.senderName
+    }
 }
