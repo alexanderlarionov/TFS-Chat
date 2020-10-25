@@ -13,8 +13,11 @@ struct FirestoreManager {
     static let root = Firestore.firestore().collection("channels")
     static var messageListener: ListenerRegistration?
     static var channelListener: ListenerRegistration?
+    let coreDataManager: CoreDataManager!
     
-    private init() {}
+    private init() {
+        coreDataManager = CoreDataManager()
+    }
     
     static func listenMessagesSnapshot(channelId: String, completion: @escaping ([MessageModel]) -> Void) {
         messageListener = FirestoreManager.root.document(channelId).collection("messages").addSnapshotListener { snapshot, error in
@@ -53,6 +56,13 @@ struct FirestoreManager {
                 for channel in snapshot.documents {
                     if let dataModel = ChannelModel(firebaseData: channel) {
                         channels.append(dataModel)
+                        
+                        let channel = Channel(context: CoreDataManager.persistentContainer.viewContext)
+                        channel.id = dataModel.identifier
+                        channel.name = dataModel.name
+                        channel.lastMessage = dataModel.lastMessage
+                        channel.lastActivity = dataModel.lastActivity
+                        CoreDataManager.saveContext()
                     }
                 }
                 completion(channels)
