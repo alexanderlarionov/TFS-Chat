@@ -11,11 +11,17 @@ import Foundation
 import CoreData
 
 public class ChannelDb: NSManagedObject {
-
-    func setupFromModel(model: ChannelModel) {
+    
+    convenience init(context: NSManagedObjectContext, model: ChannelModel) {
+        self.init(context: context)
         self.id = model.identifier
         self.name = model.name
         self.lastMessage = model.lastMessage
         self.lastActivity = model.lastActivity
     }
+    
+    override public var description: String {
+        return "identifier: \(id), name: \(name), lastMessage: \(String(describing: lastMessage)), lastActivity: \(String(describing: lastActivity))"
+    }
+    
 }

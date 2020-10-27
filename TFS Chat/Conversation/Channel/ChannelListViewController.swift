@@ -17,16 +17,17 @@ class ChannelListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        FirestoreManager.instance.listenSnapshotChannels(completion: { [weak self] channels in
+            self?.channels = channels
+            self?.sortChannelsByDate()
+            self?.tableView.reloadData()
+            CoreDataManager.instance.saveChannels(channelModels: channels)
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
-        FirestoreManager.listenSnapshotChannels(completion: { [weak self] channels in
-            self?.channels = channels
-            self?.sortChannelsByDate()
-            self?.tableView.reloadData()
-        })
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,7 +72,7 @@ class ChannelListViewController: UITableViewController {
         let createAction = UIAlertAction(title: "Create", style: .default) { _ in
             if let name = alert.textFields?[0].text {
                 let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
-                FirestoreManager.addChannel(channel: channel)
+                FirestoreManager.instance.addChannel(channel: channel)
             }
         }
         alert.addAction(createAction)

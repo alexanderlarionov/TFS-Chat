@@ -9,11 +9,12 @@
 import Foundation
 import CoreData
 
-struct CoreDataManager {
+class CoreDataManager {
     
+    static let instance = CoreDataManager()
     private init() {}
     
-    private static var persistentContainer: NSPersistentContainer = {
+    private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Chat")
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
@@ -24,32 +25,96 @@ struct CoreDataManager {
         return container
     }()
     
-    static var saveContext: NSManagedObjectContext  = {
-        let context = persistentContainer.newBackgroundContext()
-        context.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
-        return context
-    }()
-    
-    static func saveData() {
-        if saveContext.hasChanges {
-            do {
-                try saveContext.save()
-            } catch {
-                print("An error occurred while saving: \(error)")
-                saveContext.rollback()
+    func saveChannels(channelModels: [ChannelModel]) {
+        saveData { context in
+            for model in channelModels {
+                _ = ChannelDb(context: context, model: model)
             }
         }
     }
     
-    static func fetchChannel(by id: String) -> ChannelDb? {
+    func saveMessages(messageModels: [MessageModel], channelId: String) {
+        saveData { context in
+            if let channel = self.fetchChannel(by: channelId, in: context) {
+                for model in messageModels {
+                    _ = MessageDb(context: context, model: model, channel: channel)
+                }
+            }
+        }
+    }
+    
+    private func saveData(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        persistentContainer.performBackgroundTask { context in
+            self.addObserver(for: context)
+            context.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
+            block(context)
+            if context.hasChanges {
+                do {
+                    try context.save()
+                    self.printDbStat()
+                } catch {
+                    print("An error occurred while saving: \(error)")
+                    context.rollback()
+                }
+            }
+        }
+    }
+    
+    private func fetchChannel(by id: String, in context: NSManagedObjectContext) -> ChannelDb? {
         let request = ChannelDb.createFetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         do {
-            let channels = try saveContext.fetch(request)
+            let channels = try context.fetch(request)
             return channels.first
         } catch {
             print("Fetch failed: \(error)")
             return nil
+        }
+    }
+    
+    private func addObserver(for context: NSManagedObjectContext) {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.managedObjectContextObjectsDidChange(notification:)),
+                                               name: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
+                                               object: context)
+    }
+    
+    @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
+           inserts.count > 0 {
+            print("Objects inserted in context: ", inserts.count)
+            //inserts.forEach {print("inserted: ", $0) }
+        }
+        
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
+           updates.count > 0 {
+            //print("Objects updated in context: ", updates.count)
+            //updates.forEach {print("updated: ", $0) }
+        }
+        
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
+           deletes.count > 0 {
+            //print("Objects deleted from context: ", deletes.count)
+            //deletes.forEach {print("deleted: ", $0) }
+        }
+    }
+    
+    private func printDbStat() {
+        persistentContainer.viewContext.perform {
+            do {
+                let channelsCount = try self.persistentContainer.viewContext.count(for: ChannelDb.createFetchRequest())
+                print("\n There are \(channelsCount) channels in DB: ")
+                let channels = try self.persistentContainer.viewContext.fetch(ChannelDb.createFetchRequest())
+                channels.forEach { print("<\($0)>") }
+                
+                let messagesCount = try self.persistentContainer.viewContext.count(for: MessageDb.fetchRequest())
+                print("\n There are \(messagesCount) messages in DB: ")
+                let messages = try self.persistentContainer.viewContext.fetch(MessageDb.createFetchRequest())
+                messages.forEach { print("<\($0)>") }
+            } catch {
+                print("Error during fetch data for statistic: ", error.localizedDescription)
+            }
         }
     }
 }

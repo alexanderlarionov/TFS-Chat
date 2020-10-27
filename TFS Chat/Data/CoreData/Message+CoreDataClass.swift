@@ -12,10 +12,17 @@ import CoreData
 
 public class MessageDb: NSManagedObject {
     
-    func setupFromModel(model: MessageModel) {
+    convenience init(context: NSManagedObjectContext, model: MessageModel, channel: ChannelDb) {
+        self.init(context: context)
         self.content = model.content
         self.created = model.created
         self.senderId = model.senderId
         self.senderName = model.senderName
+        self.channel = channel
     }
+    
+    override public var description: String {
+        return "content: \(content), created: \(created), senderId: \(senderId), senderName: \(senderName), channel: \(channel.id)"
+    }
+    
 }
