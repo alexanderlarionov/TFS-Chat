@@ -21,7 +21,6 @@ class CoreDataManager {
                 print("Something went wrong: \(error)")
             }
         }
-        print("DB directory: ", FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last ?? "Not Found!")
         return container
     }()
     
@@ -84,19 +83,19 @@ class CoreDataManager {
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
            inserts.count > 0 {
             print("Objects inserted in context: ", inserts.count)
-            //inserts.forEach {print("inserted: ", $0) }
+            inserts.forEach {print("inserted: ", $0) }
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            updates.count > 0 {
-            //print("Objects updated in context: ", updates.count)
-            //updates.forEach {print("updated: ", $0) }
+            print("Objects updated in context: ", updates.count)
+            updates.forEach {print("updated: ", $0) }
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
            deletes.count > 0 {
-            //print("Objects deleted from context: ", deletes.count)
-            //deletes.forEach {print("deleted: ", $0) }
+            print("Objects deleted from context: ", deletes.count)
+            deletes.forEach {print("deleted: ", $0) }
         }
     }
     
