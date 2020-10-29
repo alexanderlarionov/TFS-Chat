@@ -12,7 +12,6 @@ class ConversationsListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    let themeManager = ThemeManager()
     let data = FakeData.conversationListData;
     
     override func viewDidLoad() {
@@ -61,10 +60,13 @@ class ConversationsListViewController: UITableViewController {
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
-            //target.themesPickerDelegate = self.themeManager
+            //target.themesPickerDelegate = ThemeManager.instance
             target.applyThemeBlock = { theme in
-                self.themeManager.applyTheme(theme)
+                ThemeManager.instance.applyTheme(theme)
             }
+        } else if let target = segue.destination as? UINavigationController {
+            guard let profileController = target.viewControllers.first as? ProfileViewController else { return }
+            profileController.avatarUpdaterDelegate = self
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
@@ -74,16 +76,18 @@ class ConversationsListViewController: UITableViewController {
     
 }
 
+extension ConversationsListViewController: AvatarUpdaterDelegate {
+    func updateAvatar(to image: UIImage) {
+        profileLogoView.setImage(image)
+    }
+}
+
 extension ConversationsListViewController: Themable {
     func adjustViewForCurrentTheme() {
-        let theme = ThemeManager.currentTheme()
+        guard let navBar = navigationController?.navigationBar else { return }
+        let theme = ThemeManager.instance.currentTheme
         let backgroundColor = theme.navigationBarColor
         let textColor = theme.navigationBarTextColor
-        
-        guard let navBar = navigationController?.navigationBar else { return }
-        navBar.barTintColor = backgroundColor
-        navBar.titleTextAttributes = [.foregroundColor: textColor]
-        navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -92,10 +96,15 @@ extension ConversationsListViewController: Themable {
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: textColor]
             navBar.standardAppearance = navBarAppearance
             navBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navBar.barTintColor = backgroundColor
+            navBar.titleTextAttributes = [.foregroundColor: textColor]
+            navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
         }
         
         tableView.backgroundColor = theme.conversationListBackgroundColor
         tableView.reloadData()
     }
 }
+
 

@@ -15,6 +15,7 @@ class ProfileLogoView: UIView {
     @IBOutlet var firstLetterLabel: UILabel!
     @IBOutlet var secondLetterLabel: UILabel!
     @IBOutlet var lettersStackView: UIStackView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -40,13 +41,24 @@ class ProfileLogoView: UIView {
     private func prepareView(_ view: UIView) {
         //TODO how to fix for ios12? (view not loading)
         view.frame = self.bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let frameWidth = view.frame.width
         view.layer.cornerRadius = frameWidth / 2;
-        firstLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
-        secondLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
-        lettersStackView.spacing = -frameWidth / 10
+        self.firstLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
+        self.secondLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
+        self.lettersStackView.spacing = -frameWidth / 10
         addSubview(view)
+        
+        activityIndicator.startAnimating()
+        
+        GCDDataManager.instance.loadAvatar(
+            completion:  { avatar in
+                self.activityIndicator.stopAnimating()
+                self.setImage(avatar)
+            },
+            failure: {
+                self.activityIndicator.stopAnimating()
+            })
     }
     
 }
+

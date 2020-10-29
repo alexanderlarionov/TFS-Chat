@@ -22,7 +22,7 @@ class ConversationViewCell: UITableViewCell, ConfigurableView {
     }
     
     func setColor(for identifier: String) {
-        let theme = ThemeManager.currentTheme()
+        let theme = ThemeManager.instance.currentTheme
         backgroundColor = theme.conversationViewBackgroundColor
         if identifier == "SentMessageCell" {
             messageView.backgroundColor = theme.sentMessageBackgroundColor
