@@ -14,6 +14,7 @@ public class MessageDb: NSManagedObject {
     
     convenience init(context: NSManagedObjectContext, model: MessageModel, channel: ChannelDb) {
         self.init(context: context)
+        self.id = model.identifier
         self.content = model.content
         self.created = model.created
         self.senderId = model.senderId
@@ -22,7 +23,7 @@ public class MessageDb: NSManagedObject {
     }
     
     override public var description: String {
-        return "content: \(content), created: \(created), senderId: \(senderId), senderName: \(senderName), channel: \(channel.id)"
+        return "identifier: \(id), content: \(content), created: \(created), senderId: \(senderId), senderName: \(senderName), channel: \(channel.id)"
     }
     
 }
