@@ -29,6 +29,7 @@ class FirestoreManager {
                         messages.append(dataModel)
                     }
                 }
+                print(messages.count, " messages from firestore")
                 completion(messages)
             }
         }
@@ -56,6 +57,7 @@ class FirestoreManager {
                         channels.append(dataModel)
                     }
                 }
+                print(channels.count, " channels from firestore")
                 completion(channels)
             }
         }

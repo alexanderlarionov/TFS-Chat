@@ -24,4 +24,8 @@ public class ChannelDb: NSManagedObject {
         return "identifier: \(id), name: \(name), lastMessage: \(String(describing: lastMessage)), lastActivity: \(String(describing: lastActivity))"
     }
     
+    func toChannelModel() -> ChannelModel {
+        return ChannelModel(name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity)
+    }
+    
 }
