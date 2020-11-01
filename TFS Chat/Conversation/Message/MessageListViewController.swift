@@ -59,6 +59,11 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         adjustViewForCurrentTheme()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        scrollToBottom()
+    }
+    
     @objc func sendButtonPressed() {
         guard let channelId = channelId else { return }
         guard let senderID = senderID else { return }
@@ -99,11 +104,9 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     private func scrollToBottom() {
-        if let messagesCount = fetchedResultsController.sections?[0].numberOfObjects, messagesCount != 0 {
-            DispatchQueue.main.async {
-                let indexPath = IndexPath(row: messagesCount - 1, section: 0)
-                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
-            }
+        if let messagesCount = self.fetchedResultsController.sections?[0].numberOfObjects, messagesCount != 0 {
+            let indexPath = IndexPath(row: messagesCount - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }
     }
     
@@ -196,24 +199,7 @@ extension MessageListViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let path = newIndexPath else { return }
             tableView.insertRows(at: [path], with: .automatic)
-            self.scrollToBottom()
-            print("Insert message")
             
-        case .delete:
-            guard let path = indexPath else { return }
-            tableView.deleteRows(at: [path], with: .automatic)
-            print("Delete message")
-            
-        case .move:
-            guard let indexPath = indexPath, let newIndexPath = newIndexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-            print("Move message")
-            
-        case .update:
-            guard let path = indexPath else { return }
-            self.tableView.reloadRows(at: [path], with: .automatic)
-            print("Update message")
         default:
             break
         }

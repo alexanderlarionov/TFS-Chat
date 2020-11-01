@@ -57,6 +57,13 @@ class ChannelListViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channel = fetchedResultsController.object(at: indexPath)
+            FirestoreManager.instance.deleteChannel(id: channel.id)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let target = segue.destination as? MessageListViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
@@ -146,24 +153,14 @@ extension ChannelListViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let path = newIndexPath else { return }
             tableView.insertRows(at: [path], with: .automatic)
-            print("Insert channel")
             
         case .delete:
             guard let path = indexPath else { return }
             tableView.deleteRows(at: [path], with: .automatic)
-            print("Delete channel")
-            
-        case .move:
-            guard let indexPath = indexPath, let newIndexPath = newIndexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-            print("Move channel")
             
         case .update:
             guard let path = indexPath else { return }
             self.tableView.reloadRows(at: [path], with: .automatic)
-            //TODO what's wrong with animation?
-            print("Update channel")
         default:
             break
         }

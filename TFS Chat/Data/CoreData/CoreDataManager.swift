@@ -11,42 +11,41 @@ import CoreData
 class CoreDataManager {
     
     static let instance = CoreDataManager()
-    private init() {}
+    private let persistentContainer: NSPersistentContainer
+    let viewContext: NSManagedObjectContext
     
-    private var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Chat")
-        container.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                print("Something went wrong: \(error)")
+    private init() {
+        persistentContainer = NSPersistentContainer(name: "Chat")
+        persistentContainer.loadPersistentStores { _, error in
+            if let error = error {
+                print("Persistent store not loaded: \(error)")
             }
         }
+        viewContext = persistentContainer.viewContext
+        viewContext.automaticallyMergesChangesFromParent = true
+        
         print("DB directory: ", FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last ?? "Not Found!")
-        return container
-    }()
-    
-    lazy var viewContext: NSManagedObjectContext = {
-        let context = persistentContainer.viewContext
-        context.automaticallyMergesChangesFromParent = true
-        return context
-    }()
+    }
     
     func saveChannels(channelModels: [ChannelModel]) {
-        //TODO check deleted channels
         saveData { context in
-            for model in channelModels {
-                _ = ChannelDb(context: context, model: model)
+            channelModels.forEach { _ = ChannelDb(context: context, model: $0) }
+            self.deleteOldChannels(upToDateChannels: channelModels, context: context)
+        }
+    }
+        
+    func saveMessages(messageModels: [MessageModel], channelId: String) {
+        saveData { context in
+            if let channel = self.fetchChannel(by: channelId, in: context) {
+                messageModels.forEach { _ = MessageDb(context: context, model: $0, channel: channel) }
             }
         }
     }
     
-    func saveMessages(messageModels: [MessageModel], channelId: String) {
-        saveData { context in
-            if let channel = self.fetchChannel(by: channelId, in: context) {
-                for model in messageModels {
-                    _ = MessageDb(context: context, model: model, channel: channel)
-                }
-            }
-        }
+    func fetchChannel(by id: String, in context: NSManagedObjectContext) -> ChannelDb? {
+        let predicate = NSPredicate(format: "id == %@", id)
+        let channels = fetchChannels(by: predicate, in: context)
+        return channels?.first
     }
     
     private func saveData(_ block: @escaping (NSManagedObjectContext) -> Void) {
@@ -66,15 +65,22 @@ class CoreDataManager {
         }
     }
     
-    func fetchChannel(by id: String, in context: NSManagedObjectContext) -> ChannelDb? {
+    private func fetchChannels(by predicate: NSPredicate?, in context: NSManagedObjectContext) -> [ChannelDb]? {
         let request = ChannelDb.createFetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id)
+        request.predicate = predicate
         do {
-            let channels = try context.fetch(request)
-            return channels.first
+            return try context.fetch(request)
         } catch {
             print("Fetch failed: \(error)")
             return nil
+        }
+    }
+    
+    private func deleteOldChannels(upToDateChannels: [ChannelModel], context: NSManagedObjectContext) {
+        let deletionPredicate = NSPredicate(format: "NOT (id IN %@)", upToDateChannels.map { $0.identifier})
+        if let channelsToDelete = self.fetchChannels(by: deletionPredicate, in: context) {
+            print("Channels deleted: ", channelsToDelete)
+            channelsToDelete.forEach { context.delete($0) }
         }
     }
     
@@ -90,19 +96,16 @@ class CoreDataManager {
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
            inserts.count > 0 {
             print("Objects inserted in context: ", inserts.count)
-            //inserts.forEach {print("inserted: ", $0) }
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            updates.count > 0 {
             print("Objects updated in context: ", updates.count)
-            //updates.forEach {print("updated: ", $0) }
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
            deletes.count > 0 {
             print("Objects deleted from context: ", deletes.count)
-            //deletes.forEach {print("deleted: ", $0) }
         }
     }
     
