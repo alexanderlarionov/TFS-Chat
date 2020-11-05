@@ -161,6 +161,12 @@ extension ChannelListViewController: NSFetchedResultsControllerDelegate {
         case .update:
             guard let path = indexPath else { return }
             self.tableView.reloadRows(at: [path], with: .automatic)
+            
+        case .move:
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath  else { return }
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+            
         default:
             break
         }

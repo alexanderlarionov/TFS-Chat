@@ -29,11 +29,20 @@ class CoreDataManager {
     
     func saveChannels(channelModels: [ChannelModel]) {
         saveData { context in
-            channelModels.forEach { _ = ChannelDb(context: context, model: $0) }
-            self.deleteOldChannels(upToDateChannels: channelModels, context: context)
+            channelModels.forEach {
+                if let savedChannel = self.fetchChannel(by: $0.identifier, in: context) {
+                    //without this if condition core data triggers update on each cell (probably because of fault mechanism)
+                    if $0.lastMessage != savedChannel.lastMessage || $0.lastActivity != savedChannel.lastActivity {
+                        _ = ChannelDb(context: context, model: $0)
+                    }
+                } else {
+                    _ = ChannelDb(context: context, model: $0)
+                }
+            }
+            self.cleanDeletedChannels(upToDateChannels: channelModels, context: context)
         }
     }
-        
+    
     func saveMessages(messageModels: [MessageModel], channelId: String) {
         saveData { context in
             if let channel = self.fetchChannel(by: channelId, in: context) {
@@ -76,7 +85,7 @@ class CoreDataManager {
         }
     }
     
-    private func deleteOldChannels(upToDateChannels: [ChannelModel], context: NSManagedObjectContext) {
+    private func cleanDeletedChannels(upToDateChannels: [ChannelModel], context: NSManagedObjectContext) {
         let deletionPredicate = NSPredicate(format: "NOT (id IN %@)", upToDateChannels.map { $0.identifier})
         if let channelsToDelete = self.fetchChannels(by: deletionPredicate, in: context) {
             print("Channels deleted: ", channelsToDelete)
