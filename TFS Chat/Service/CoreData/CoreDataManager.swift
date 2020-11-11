@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+class CoreDataManager: CoreDataManagerProtocol {
     
-    static let instance = CoreDataManager()
+    static var instance: CoreDataManagerProtocol = CoreDataManager()
     private let persistentContainer: NSPersistentContainer
-    let viewContext: NSManagedObjectContext
+    var viewContext: NSManagedObjectContext
     
     private init() {
         persistentContainer = NSPersistentContainer(name: "Chat")
