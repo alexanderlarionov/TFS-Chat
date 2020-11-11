@@ -21,7 +21,7 @@ class ChannelListViewController: UITableViewController {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.fetchBatchSize = 10
         return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: CoreDataManager.instance.viewContext,
+                                          managedObjectContext: StorageService.instance.viewContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }()
@@ -34,8 +34,8 @@ class ChannelListViewController: UITableViewController {
         } catch {
             print(error)
         }
-        FirestoreManager.instance.listenSnapshotChannels { channels in
-            CoreDataManager.instance.saveChannels(channelModels: channels)
+        ApiService.instance.subscribeOnChannelsChanges { channels in
+            StorageService.instance.saveChannels(channelModels: channels)
         }
     }
     
@@ -60,7 +60,7 @@ class ChannelListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            FirestoreManager.instance.deleteChannel(id: channel.id)
+            ApiService.instance.deleteChannel(channelId: channel.id)
         }
     }
     
@@ -93,7 +93,7 @@ class ChannelListViewController: UITableViewController {
         let createAction = UIAlertAction(title: "Create", style: .default) { _ in
             if let name = alert.textFields?[0].text {
                 let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
-                FirestoreManager.instance.addChannel(channel: channel)
+                ApiService.instance.addChannel(channel: channel)
             }
         }
         alert.addAction(createAction)

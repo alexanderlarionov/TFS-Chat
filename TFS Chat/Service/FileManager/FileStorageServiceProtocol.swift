@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DataManager {
+protocol FileStorageServiceProtocol {
     
     func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void)
     

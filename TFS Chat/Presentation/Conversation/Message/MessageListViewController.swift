@@ -24,13 +24,13 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         fetchRequest.fetchBatchSize = 10
         
         if let channelId = channelId,
-           let channel = CoreDataManager.instance.fetchChannel(by: channelId, in: CoreDataManager.instance.viewContext) {
+           let channel = StorageService.instance.fetchChannel(by: channelId) {
             let predicate = NSPredicate(format: "channel == %@", channel)
             fetchRequest.predicate = predicate
         }
         
         return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: CoreDataManager.instance.viewContext,
+                                          managedObjectContext: StorageService.instance.viewContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }()
@@ -48,8 +48,8 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
             print(error)
         }
         if let channelId = channelId {
-            FirestoreManager.instance.listenMessagesSnapshot(channelId: channelId) { messages in
-                CoreDataManager.instance.saveMessages(messageModels: messages, channelId: channelId)
+            ApiService.instance.subscribeOnMessagesChanges(channelId: channelId) { messages in
+                StorageService.instance.saveMessages(messageModels: messages, channelId: channelId)
             }
         }
     }
@@ -69,7 +69,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let senderID = senderID else { return }
         guard let content = messageTextField.text, content != "" else { return }
         let message = MessageModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
-        FirestoreManager.instance.addMessage(channelId: channelId,
+        ApiService.instance.addMessage(channelId: channelId,
                                              message: message,
                                              completion: { [weak self] in
                                                 self?.dismissKeyboard()
@@ -111,7 +111,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     deinit {
-        FirestoreManager.instance.removeMessageListener()
+        ApiService.instance.unsubscribeFromMessagesChanges()
     }
     
 }

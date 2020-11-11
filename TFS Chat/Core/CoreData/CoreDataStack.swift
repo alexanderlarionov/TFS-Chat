@@ -1,18 +1,24 @@
 //
-//  CoreDataManager.swift
+//  CoreDataStack.swift
 //  TFS Chat
 //
-//  Created by dmitry on 25.10.2020.
+//  Created by dmitry on 11.11.2020.
 //  Copyright © 2020 dmitry. All rights reserved.
 //
+
 import Foundation
 import CoreData
 
-class CoreDataManager: CoreDataManagerProtocol {
+protocol StorageProtocol {
     
-    static var instance: CoreDataManagerProtocol = CoreDataManager()
+    //hmmmm
+}
+
+class CoreDataStack: StorageProtocol {
+    
+    static let instance = CoreDataStack()
     private let persistentContainer: NSPersistentContainer
-    var viewContext: NSManagedObjectContext
+    let viewContext: NSManagedObjectContext
     
     private init() {
         persistentContainer = NSPersistentContainer(name: "Chat")

@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct OperationDataManager: DataManager {
+struct OperationDataManager: FileStorageServiceProtocol {
     
     static let instance = OperationDataManager()
     
@@ -34,11 +34,11 @@ struct OperationDataManager: DataManager {
     }
     
     func saveName(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileUtil.profileNameFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func saveInfo(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileUtil.profileInfoFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     private func saveString(value: String, fileName: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
@@ -61,7 +61,7 @@ struct OperationDataManager: DataManager {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let image = FileUtil.loadAvatarImage() {
+            if let image = FileStorage.loadImage(fileName: FileStorage.avatarFile) {
                 OperationQueue.main.addOperation {
                     completion(image)
                 }
@@ -71,7 +71,7 @@ struct OperationDataManager: DataManager {
     
     func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
+            if let data = FileStorage.loadString(fileName: FileStorage.profileNameFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -81,7 +81,7 @@ struct OperationDataManager: DataManager {
     
     func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
+            if let data = FileStorage.loadString(fileName: FileStorage.profileInfoFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -102,7 +102,7 @@ class SaveTextOperation: Operation {
     }
     
     override func main() {
-        success = FileUtil.saveString(dataToSave, fileName: fileName)
+        success = FileStorage.saveString(dataToSave, fileName: fileName)
     }
     
 }
@@ -117,7 +117,7 @@ class SaveImageOperation: Operation {
     }
     
     override func main() {
-        success = FileUtil.saveAvatarImage(image: dataToSave)
+        success = FileStorage.saveImage(image: dataToSave, fileName: FileStorage.avatarFile)
     }
     
 }

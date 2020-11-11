@@ -8,13 +8,20 @@
 
 import UIKit
 
-struct FileUtil {
+protocol FileStorageProtocol {
     
-    static let avatarFile = "avatar.jpeg"
-    static let profileNameFile = "profileName.txt"
-    static let profileInfoFile = "profileInfo.txt"
+    static func saveImage(image: UIImage, fileName: String) -> Bool
     
-    static func saveAvatarImage(image: UIImage) -> Bool {
+    static func loadImage(fileName: String) -> UIImage?
+    
+    static func saveString(_ input: String, fileName: String) -> Bool
+    
+    static func loadString(fileName: String) -> String?
+}
+
+class FileStorage: FileStorageProtocol {
+    
+    static func saveImage(image: UIImage, fileName: String) -> Bool {
         do {
             try image.jpegData(compressionQuality: 1)?.write(to: getDocumentsDirectory().appendingPathComponent(avatarFile))
             return true
@@ -24,7 +31,7 @@ struct FileUtil {
         }
     }
     
-    static func loadAvatarImage() -> UIImage? {
+    static func loadImage(fileName: String) -> UIImage? {
         return UIImage(contentsOfFile: URL(fileURLWithPath: getDocumentsDirectory().absoluteString).appendingPathComponent(avatarFile).path)
     }
     
@@ -52,4 +59,10 @@ struct FileUtil {
         return paths[0]
     }
     
+}
+
+extension FileStorage {
+    static let avatarFile = "avatar.jpeg"
+    static let profileNameFile = "profileName.txt"
+    static let profileInfoFile = "profileInfo.txt"
 }

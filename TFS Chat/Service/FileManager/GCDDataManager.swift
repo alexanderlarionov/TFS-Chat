@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct GCDDataManager: DataManager {
+struct GCDDataManager: FileStorageServiceProtocol {
     
     static let instance = GCDDataManager()
     
@@ -23,7 +23,7 @@ struct GCDDataManager: DataManager {
     func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
-            if FileUtil.saveAvatarImage(image: image) {
+            if FileStorage.saveImage(image: image, fileName: FileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -35,11 +35,11 @@ struct GCDDataManager: DataManager {
     }
     
     func saveName(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileUtil.profileNameFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func saveInfo(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileUtil.profileInfoFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     func completeBatchSave(completion: @escaping () -> Void) {
@@ -52,7 +52,7 @@ struct GCDDataManager: DataManager {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.async {
-            if let image = FileUtil.loadAvatarImage() {
+            if let image = FileStorage.loadImage(fileName: FileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -64,16 +64,16 @@ struct GCDDataManager: DataManager {
     }
     
     func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
-        loadString(fileName: FileUtil.profileNameFile, completion: completion, failure: failure)
+        loadString(fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
-        loadString(fileName: FileUtil.profileInfoFile, completion: completion, failure: failure)
+        loadString(fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     private func loadString(fileName: String, completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.async {
-            if let image = FileUtil.loadString(fileName: fileName) {
+            if let image = FileStorage.loadString(fileName: fileName) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -88,7 +88,7 @@ struct GCDDataManager: DataManager {
     private func saveString(value: String, fileName: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
-            if FileUtil.saveString(value, fileName: fileName) {
+            if FileStorage.saveString(value, fileName: fileName) {
                 completion()
             } else {
                 failure()

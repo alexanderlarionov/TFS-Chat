@@ -10,7 +10,7 @@ struct LoggingUtil {
     
     static func debugPrint(_ info: String) {
         #if DEBUG
-        //print(info + "\n")
+        print(info + "\n")
         #endif
     }
 }

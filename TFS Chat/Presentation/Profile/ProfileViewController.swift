@@ -82,7 +82,7 @@ class ProfileViewController: UIViewController {
         saveData(dataManager: OperationDataManager.instance)
     }
     
-    func saveData(dataManager: DataManager) {
+    func saveData(dataManager: FileStorageServiceProtocol) {
         var avatarSaved = true
         var nameSaved = true
         var infoSaved = true
@@ -127,7 +127,7 @@ class ProfileViewController: UIViewController {
         dataManager.completeBatchSave(completion: { self.handleSavingResult(avatarSaved: avatarSaved, nameSaved: nameSaved, infoSaved: infoSaved, dataManager: dataManager) })
     }
     
-    func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool, dataManager: DataManager) {
+    func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool, dataManager: FileStorageServiceProtocol) {
         self.activityIndicator.stopAnimating()
         self.setSaveButtonEnable(false)
         self.setEditButtonVisible(true)
@@ -143,7 +143,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func showErrorAlert(title: String, dataManager: DataManager) {
+    func showErrorAlert(title: String, dataManager: FileStorageServiceProtocol) {
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) {_ in
             self.infoTextView.text = self.infoBeforeChange
