@@ -8,9 +8,10 @@
 
 struct LoggingUtil {
     
-    static func debugPrint(_ info: String) {
+    static func debugPrint(_ items: Any...) {
         #if DEBUG
-        print(info + "\n")
+        print(items)
         #endif
     }
+
 }

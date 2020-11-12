@@ -35,7 +35,7 @@ class FirestoreClient: ApiClientProtocol {
             } else {
                 guard let snapshot = snapshot else { return }
                 let documents = snapshot.documents.compactMap { mapper($0) }
-                print(documents.count, " documents loaded from firestore")
+                LoggingUtil.debugPrint(documents.count, " documents loaded from firestore")
                 completion(documents)
             }
         }
@@ -48,7 +48,7 @@ class FirestoreClient: ApiClientProtocol {
                 print("Add document error: " + error.localizedDescription)
             } else {
                 completion()
-                print("Document successfully added")
+                LoggingUtil.debugPrint("Document successfully added")
             }
         }
     }
@@ -58,7 +58,7 @@ class FirestoreClient: ApiClientProtocol {
             if let error = error {
                 print("Error deleting document: \(error)")
             } else {
-                print("Document successfully deleted")
+                LoggingUtil.debugPrint("Document successfully deleted")
             }
         }
     }

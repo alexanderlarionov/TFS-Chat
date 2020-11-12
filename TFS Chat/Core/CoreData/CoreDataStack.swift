@@ -30,7 +30,7 @@ class CoreDataStack: StorageProtocol {
         viewContext = persistentContainer.viewContext
         viewContext.automaticallyMergesChangesFromParent = true
         
-        print("DB directory: ", FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last ?? "Not Found!")
+        LoggingUtil.debugPrint("DB directory: ", FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
     func saveChannels(channelModels: [ChannelModel]) {
@@ -94,7 +94,7 @@ class CoreDataStack: StorageProtocol {
     private func cleanDeletedChannels(upToDateChannels: [ChannelModel], context: NSManagedObjectContext) {
         let deletionPredicate = NSPredicate(format: "NOT (id IN %@)", upToDateChannels.map { $0.identifier})
         if let channelsToDelete = self.fetchChannels(by: deletionPredicate, in: context) {
-            print("Channels deleted: ", channelsToDelete)
+            LoggingUtil.debugPrint("Channels deleted: ", channelsToDelete)
             channelsToDelete.forEach { context.delete($0) }
         }
     }
@@ -110,17 +110,17 @@ class CoreDataStack: StorageProtocol {
         guard let userInfo = notification.userInfo else { return }
         if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
            inserts.count > 0 {
-            print("Objects inserted in context: ", inserts.count)
+            LoggingUtil.debugPrint("Objects inserted in context: ", inserts.count)
         }
         
         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            updates.count > 0 {
-            print("Objects updated in context: ", updates.count)
+            LoggingUtil.debugPrint("Objects updated in context: ", updates.count)
         }
         
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
            deletes.count > 0 {
-            print("Objects deleted from context: ", deletes.count)
+            LoggingUtil.debugPrint("Objects deleted from context: ", deletes.count)
         }
     }
     
@@ -128,14 +128,14 @@ class CoreDataStack: StorageProtocol {
         persistentContainer.viewContext.perform {
             do {
                 let channelsCount = try self.viewContext.count(for: ChannelDb.createFetchRequest())
-                print("\n There are \(channelsCount) channels in DB: ")
+                LoggingUtil.debugPrint("\n There are \(channelsCount) channels in DB: ")
                 let channels = try self.viewContext.fetch(ChannelDb.createFetchRequest())
-                channels.forEach { print("<\($0)>") }
+                channels.forEach { LoggingUtil.debugPrint("<\($0)>") }
                 
                 let messagesCount = try self.viewContext.count(for: MessageDb.fetchRequest())
-                print("\n There are \(messagesCount) messages in DB: ")
+                LoggingUtil.debugPrint("\n There are \(messagesCount) messages in DB: ")
                 let messages = try self.viewContext.fetch(MessageDb.createFetchRequest())
-                messages.forEach { print("<\($0)>") }
+                messages.forEach { LoggingUtil.debugPrint("<\($0)>") }
             } catch {
                 print("Error during fetch data for statistic: ", error.localizedDescription)
             }
