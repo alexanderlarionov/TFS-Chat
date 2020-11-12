@@ -10,9 +10,9 @@ import CoreData
 
 protocol StorageServiceProtocol {
     
-    func saveChannels(channelModels: [ChannelModel])
+    func saveChannels(channelModels: [ChannelDataModel])
     
-    func saveMessages(messageModels: [MessageModel], channelId: String)
+    func saveMessages(messageModels: [MessageDataModel], channelId: String)
     
     func fetchChannel(by id: String) -> ChannelDb?
     
@@ -25,19 +25,22 @@ protocol StorageServiceProtocol {
 
 class StorageService: StorageServiceProtocol {
     
-    static let instance = StorageService()
-    lazy var viewContext = CoreDataStack.instance.viewContext
- 
-    func saveChannels(channelModels: [ChannelModel]) {
-        CoreDataStack.instance.saveChannels(channelModels: channelModels)
+    var storage: StorageProtocol
+    
+    init(storage: StorageProtocol) {
+        self.storage = storage
     }
     
-    func saveMessages(messageModels: [MessageModel], channelId: String) {
-        CoreDataStack.instance.saveMessages(messageModels: messageModels, channelId: channelId)
+    func saveChannels(channelModels: [ChannelDataModel]) {
+        storage.saveChannels(channelModels: channelModels)
+    }
+    
+    func saveMessages(messageModels: [MessageDataModel], channelId: String) {
+        storage.saveMessages(messageModels: messageModels, channelId: channelId)
     }
     
     func fetchChannel(by id: String) -> ChannelDb? {
-        return CoreDataStack.instance.fetchChannel(by: id, in: viewContext)
+        return storage.fetchChannel(by: id, in: storage.viewContext)
     }
     
     func getChannelsFRC() -> NSFetchedResultsController<ChannelDb> {
@@ -46,7 +49,7 @@ class StorageService: StorageServiceProtocol {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.fetchBatchSize = 10
         return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: viewContext,
+                                          managedObjectContext: storage.viewContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }
@@ -57,13 +60,13 @@ class StorageService: StorageServiceProtocol {
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.fetchBatchSize = 10
         
-        if let channel = StorageService.instance.fetchChannel(by: channelId) {
+        if let channel = fetchChannel(by: channelId) {
             let predicate = NSPredicate(format: "channel == %@", channel)
             fetchRequest.predicate = predicate
         }
         
         return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: StorageService.instance.viewContext,
+                                          managedObjectContext: storage.viewContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }

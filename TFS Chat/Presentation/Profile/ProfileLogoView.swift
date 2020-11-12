@@ -11,6 +11,7 @@ import UIKit
 @IBDesignable
 class ProfileLogoView: UIView {
     
+    var view: UIView?
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var firstLetterLabel: UILabel!
     @IBOutlet var secondLetterLabel: UILabel!
@@ -34,12 +35,12 @@ class ProfileLogoView: UIView {
     private func setupFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: String(describing: type(of: self)), bundle: bundle)
-        guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
-        prepareView(view)
+        view = nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    private func prepareView(_ view: UIView) {
+    func finishViewLoading(dataManager: FileStorageServiceProtocol) {
         //TODO how to fix for ios12? (view not loading)
+        guard let view = view else { return }
         view.frame = self.bounds
         let frameWidth = view.frame.width
         view.layer.cornerRadius = frameWidth / 2
@@ -49,8 +50,8 @@ class ProfileLogoView: UIView {
         addSubview(view)
         
         activityIndicator.startAnimating()
-    
-        GCDDataManager.instance.loadAvatar(
+        
+        dataManager.loadAvatar(
             completion: { avatar in
                 self.activityIndicator.stopAnimating()
                 self.setImage(avatar)
@@ -61,5 +62,5 @@ class ProfileLogoView: UIView {
                 view.backgroundColor = UIColor(red: 0.894, green: 0.908, blue: 0.17, alpha: 1)
             })
     }
-
+    
 }

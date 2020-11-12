@@ -8,19 +8,19 @@
 
 import UIKit
 
-struct OperationDataManager: FileStorageServiceProtocol {
+class OperationDataManager: FileStorageServiceProtocol {
     
-    static let instance = OperationDataManager()
-    
+    let fileStorage: FileStorageProtocol
     let queue: OperationQueue
     
-    private init() {
+    init(fileStorage: FileStorageProtocol) {
+        self.fileStorage = fileStorage
         queue = OperationQueue()
         queue.maxConcurrentOperationCount = 3
     }
     
     func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void) {
-        let operation = SaveImageOperation(dataToSave: image)
+        let operation = SaveImageOperation(fileStorage: fileStorage, dataToSave: image)
         operation.completionBlock = {
             if operation.success {
                 OperationQueue.main.addOperation {
@@ -42,7 +42,7 @@ struct OperationDataManager: FileStorageServiceProtocol {
     }
     
     private func saveString(value: String, fileName: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        let operation = SaveTextOperation(dataToSave: value, fileName: fileName)
+        let operation = SaveTextOperation(fileStorage: fileStorage, dataToSave: value, fileName: fileName)
         operation.completionBlock = {
             if operation.success {
                 completion()
@@ -61,7 +61,7 @@ struct OperationDataManager: FileStorageServiceProtocol {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let image = FileStorage.loadImage(fileName: FileStorage.avatarFile) {
+            if let image = self.fileStorage.loadImage(fileName: FileStorage.avatarFile) {
                 OperationQueue.main.addOperation {
                     completion(image)
                 }
@@ -71,7 +71,7 @@ struct OperationDataManager: FileStorageServiceProtocol {
     
     func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = FileStorage.loadString(fileName: FileStorage.profileNameFile) {
+            if let data = self.fileStorage.loadString(fileName: FileStorage.profileNameFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -81,7 +81,7 @@ struct OperationDataManager: FileStorageServiceProtocol {
     
     func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = FileStorage.loadString(fileName: FileStorage.profileInfoFile) {
+            if let data = self.fileStorage.loadString(fileName: FileStorage.profileInfoFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -94,15 +94,17 @@ class SaveTextOperation: Operation {
     var dataToSave: String
     var fileName: String
     var success = false
+    let fileStorage: FileStorageProtocol
     
-    init(dataToSave: String, fileName: String) {
+    init(fileStorage: FileStorageProtocol, dataToSave: String, fileName: String) {
         self.dataToSave = dataToSave
         self.fileName = fileName
+        self.fileStorage = fileStorage
         super.init()
     }
     
     override func main() {
-        success = FileStorage.saveString(dataToSave, fileName: fileName)
+        success = fileStorage.saveString(dataToSave, fileName: fileName)
     }
     
 }
@@ -110,14 +112,16 @@ class SaveTextOperation: Operation {
 class SaveImageOperation: Operation {
     var dataToSave: UIImage
     var success = false
+    let fileStorage: FileStorageProtocol
     
-    init(dataToSave: UIImage) {
+    init(fileStorage: FileStorageProtocol, dataToSave: UIImage) {
         self.dataToSave = dataToSave
+        self.fileStorage = fileStorage
         super.init()
     }
     
     override func main() {
-        success = FileStorage.saveImage(image: dataToSave, fileName: FileStorage.avatarFile)
+        success = fileStorage.saveImage(image: dataToSave, fileName: FileStorage.avatarFile)
     }
     
 }

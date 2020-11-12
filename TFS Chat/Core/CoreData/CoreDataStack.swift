@@ -11,7 +11,13 @@ import CoreData
 
 protocol StorageProtocol {
     
-    //TODO hmmmm
+    var viewContext: NSManagedObjectContext { get } 
+    
+    func saveChannels(channelModels: [ChannelDataModel])
+    
+    func saveMessages(messageModels: [MessageDataModel], channelId: String)
+    
+    func fetchChannel(by id: String, in context: NSManagedObjectContext) -> ChannelDb?
 }
 
 class CoreDataStack: StorageProtocol {
@@ -33,7 +39,7 @@ class CoreDataStack: StorageProtocol {
         LoggingUtil.debugPrint("DB directory: ", FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
-    func saveChannels(channelModels: [ChannelModel]) {
+    func saveChannels(channelModels: [ChannelDataModel]) {
         saveData { context in
             channelModels.forEach {
                 if let savedChannel = self.fetchChannel(by: $0.identifier, in: context) {
@@ -49,7 +55,7 @@ class CoreDataStack: StorageProtocol {
         }
     }
     
-    func saveMessages(messageModels: [MessageModel], channelId: String) {
+    func saveMessages(messageModels: [MessageDataModel], channelId: String) {
         saveData { context in
             if let channel = self.fetchChannel(by: channelId, in: context) {
                 messageModels.forEach { _ = MessageDb(context: context, model: $0, channel: channel) }
@@ -91,7 +97,7 @@ class CoreDataStack: StorageProtocol {
         }
     }
     
-    private func cleanDeletedChannels(upToDateChannels: [ChannelModel], context: NSManagedObjectContext) {
+    private func cleanDeletedChannels(upToDateChannels: [ChannelDataModel], context: NSManagedObjectContext) {
         let deletionPredicate = NSPredicate(format: "NOT (id IN %@)", upToDateChannels.map { $0.identifier})
         if let channelsToDelete = self.fetchChannels(by: deletionPredicate, in: context) {
             LoggingUtil.debugPrint("Channels deleted: ", channelsToDelete)

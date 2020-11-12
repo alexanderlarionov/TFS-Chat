@@ -14,14 +14,14 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
     
-    func configure(with model: ChannelModel) {
+    func configure(with model: ChannelDataModel) {
         nameLabel.text = model.name
         setDate(for: model)
         setMessage(for: model)
         setColor()
     }
     
-    private func setDate(for model: ChannelModel) {
+    private func setDate(for model: ChannelDataModel) {
         if let lastActivity = model.lastActivity {
             dateLabel.text = DateUtil.formatForView(date: lastActivity)
         } else {
@@ -29,7 +29,7 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
         }
     }
     
-    private func setMessage(for model: ChannelModel) {
+    private func setMessage(for model: ChannelDataModel) {
         let fontSize = messageLabel.font.pointSize
         
         if let lastMessage = model.lastMessage {

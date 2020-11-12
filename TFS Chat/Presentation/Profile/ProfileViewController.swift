@@ -24,7 +24,14 @@ class ProfileViewController: UIViewController {
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
-    let loadDataManager = GCDDataManager.instance
+    
+    var gcdDataManager: FileStorageServiceProtocol!
+    var operationDataManager: FileStorageServiceProtocol!
+    
+    func injectDependcies(gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
+        self.gcdDataManager = gcdDataManager
+        self.operationDataManager = operationDataManager
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +43,7 @@ class ProfileViewController: UIViewController {
         activityIndicator.startAnimating()
         loadProfileName()
         loadProfileInfo()
+        profileLogoView.finishViewLoading(dataManager: gcdDataManager)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,12 +82,12 @@ class ProfileViewController: UIViewController {
     
     @IBAction func saveGCDButtonPressed(_ sender: UIButton) {
         handleSaveButtonPressed()
-        saveData(dataManager: GCDDataManager.instance)
+        saveData(dataManager: gcdDataManager)
     }
     
     @IBAction func saveOperationsButtonPressed(_ sender: UIButton) {
         handleSaveButtonPressed()
-        saveData(dataManager: OperationDataManager.instance)
+        saveData(dataManager: operationDataManager)
     }
     
     func saveData(dataManager: FileStorageServiceProtocol) {
@@ -217,7 +225,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadProfileName() {
-        loadDataManager.loadProfileName(
+        gcdDataManager.loadProfileName(
             completion: { name in
                 self.activityIndicator.stopAnimating()
                 self.nameTextField.text = name
@@ -230,7 +238,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadProfileInfo() {
-        loadDataManager.loadProfileInfo(
+        gcdDataManager.loadProfileInfo(
             completion: { name in
                 self.activityIndicator.stopAnimating()
                 self.infoTextView.text = name

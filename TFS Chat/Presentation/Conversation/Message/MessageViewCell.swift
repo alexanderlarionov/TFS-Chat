@@ -20,7 +20,7 @@ class MessageViewCell: UITableViewCell, ConfigurableView {
         messageView.layer.cornerRadius = 10
     }
     
-    func configure(with model: MessageModel) {
+    func configure(with model: MessageDataModel) {
         messageLabel.text = model.content
         nameLabel.text = model.senderName
         dateLabel.text = DateUtil.formatForView(date: model.created)

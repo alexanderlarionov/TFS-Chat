@@ -14,15 +14,35 @@ class ChannelListViewController: UITableViewController {
     @IBOutlet var profileLogoView: ProfileLogoView!
     
     let selectedCellView = UIView()
-    let fetchedResultsController = StorageService.instance.getChannelsFRC()
+    
+    var fetchedResultsController: NSFetchedResultsController<ChannelDb>!
+    var apiService: ApiServiceProtocol!
+    var storageService: StorageServiceProtocol!
+    var presentationAssembly: PresentationAssemblyProtocol!
+    var gcdDataManager: FileStorageServiceProtocol!
+    var operationDataManager: FileStorageServiceProtocol!
+    
+    func injectDependcies(storageService: StorageServiceProtocol,
+                          apiService: ApiServiceProtocol,
+                          presentationAssembly: PresentationAssembly,
+                          gcdDataManager: FileStorageServiceProtocol,
+                          operationDataManager: FileStorageServiceProtocol) {
+        self.storageService = storageService
+        self.apiService = apiService
+        self.presentationAssembly = presentationAssembly
+        self.gcdDataManager = gcdDataManager
+        self.operationDataManager = operationDataManager
+        self.fetchedResultsController = storageService.getChannelsFRC()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
-        StorageService.instance.performFetch(for: fetchedResultsController)
-        ApiService.instance.subscribeOnChannelsChanges { channels in
-            StorageService.instance.saveChannels(channelModels: channels)
+        storageService.performFetch(for: fetchedResultsController)
+        apiService.subscribeOnChannelsChanges { channels in
+            self.storageService.saveChannels(channelModels: channels)
         }
+        profileLogoView.finishViewLoading(dataManager: gcdDataManager)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +66,7 @@ class ChannelListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = fetchedResultsController.object(at: indexPath)
-            ApiService.instance.deleteChannel(channelId: channel.id)
+            apiService.deleteChannel(channelId: channel.id)
         }
     }
     
@@ -56,6 +76,7 @@ class ChannelListViewController: UITableViewController {
             target.title = fetchedResultsController.object(at: selectedPath).name
             target.channelId = fetchedResultsController.object(at: selectedPath).id
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+            target.injectDependcies(storageService: storageService, apiService: apiService)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
@@ -66,6 +87,7 @@ class ChannelListViewController: UITableViewController {
         } else if let target = segue.destination as? UINavigationController {
             guard let profileController = target.viewControllers.first as? ProfileViewController else { return }
             profileController.avatarUpdaterDelegate = self
+            profileController.injectDependcies(gcdDataManager: gcdDataManager, operationDataManager: operationDataManager)
         }
         segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
@@ -78,8 +100,8 @@ class ChannelListViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         let createAction = UIAlertAction(title: "Create", style: .default) { _ in
             if let name = alert.textFields?[0].text {
-                let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
-                ApiService.instance.addChannel(channel: channel)
+                let channel = ChannelDataModel(name: name, lastMessage: nil, lastActivity: nil)
+                self.apiService.addChannel(channel: channel)
             }
         }
         alert.addAction(createAction)

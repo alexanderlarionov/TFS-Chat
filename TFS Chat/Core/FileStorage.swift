@@ -10,20 +10,28 @@ import UIKit
 
 protocol FileStorageProtocol {
     
-    static func saveImage(image: UIImage, fileName: String) -> Bool
+    static var avatarFile: String { get }
+    static var profileNameFile: String { get }
+    static var profileInfoFile: String { get }
     
-    static func loadImage(fileName: String) -> UIImage?
+    func saveImage(image: UIImage, fileName: String) -> Bool
     
-    static func saveString(_ input: String, fileName: String) -> Bool
+    func loadImage(fileName: String) -> UIImage?
     
-    static func loadString(fileName: String) -> String?
+    func saveString(_ input: String, fileName: String) -> Bool
+    
+    func loadString(fileName: String) -> String?
 }
 
 class FileStorage: FileStorageProtocol {
     
-    static func saveImage(image: UIImage, fileName: String) -> Bool {
+    static var avatarFile = "avatar.jpeg"
+    static var profileNameFile = "profileName.txt"
+    static var profileInfoFile = "profileInfo.txt"
+    
+    func saveImage(image: UIImage, fileName: String) -> Bool {
         do {
-            try image.jpegData(compressionQuality: 1)?.write(to: getDocumentsDirectory().appendingPathComponent(avatarFile))
+            try image.jpegData(compressionQuality: 1)?.write(to: getDocumentsDirectory().appendingPathComponent(fileName))
             return true
         } catch {
             print(error.localizedDescription)
@@ -31,11 +39,11 @@ class FileStorage: FileStorageProtocol {
         }
     }
     
-    static func loadImage(fileName: String) -> UIImage? {
-        return UIImage(contentsOfFile: URL(fileURLWithPath: getDocumentsDirectory().absoluteString).appendingPathComponent(avatarFile).path)
+    func loadImage(fileName: String) -> UIImage? {
+        return UIImage(contentsOfFile: URL(fileURLWithPath: getDocumentsDirectory().absoluteString).appendingPathComponent(fileName).path)
     }
     
-    static func saveString(_ input: String, fileName: String) -> Bool {
+    func saveString(_ input: String, fileName: String) -> Bool {
         do {
             try input.write(to: getDocumentsDirectory().appendingPathComponent(fileName), atomically: true, encoding: String.Encoding.utf8)
             return true
@@ -45,7 +53,7 @@ class FileStorage: FileStorageProtocol {
         }
     }
     
-    static func loadString(fileName: String) -> String? {
+    func loadString(fileName: String) -> String? {
         do {
             return try String(contentsOf: getDocumentsDirectory().appendingPathComponent(fileName), encoding: .utf8)
         } catch {
@@ -54,15 +62,9 @@ class FileStorage: FileStorageProtocol {
         }
     }
     
-    private static func getDocumentsDirectory() -> URL {
+    private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-}
-
-extension FileStorage {
-    static let avatarFile = "avatar.jpeg"
-    static let profileNameFile = "profileName.txt"
-    static let profileInfoFile = "profileInfo.txt"
 }

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct MessageModel {
+struct MessageDataModel {
     
     let identifier: String
     let content: String

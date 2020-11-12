@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct ChannelModel {
+struct ChannelDataModel {
     
     let identifier: String
     let name: String

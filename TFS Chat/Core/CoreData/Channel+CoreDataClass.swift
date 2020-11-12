@@ -12,7 +12,7 @@ import CoreData
 
 public class ChannelDb: NSManagedObject {
     
-    convenience init(context: NSManagedObjectContext, model: ChannelModel) {
+    convenience init(context: NSManagedObjectContext, model: ChannelDataModel) {
         self.init(context: context)
         self.id = model.identifier
         self.name = model.name
@@ -24,8 +24,8 @@ public class ChannelDb: NSManagedObject {
         return "identifier: \(id), name: \(name), lastMessage: \(String(describing: lastMessage)), lastActivity: \(String(describing: lastActivity))"
     }
     
-    func toChannelModel() -> ChannelModel {
-        return ChannelModel(name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity)
+    func toChannelModel() -> ChannelDataModel {
+        return ChannelDataModel(name: self.name, lastMessage: self.lastMessage, lastActivity: self.lastActivity)
     }
     
 }

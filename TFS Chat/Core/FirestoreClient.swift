@@ -17,14 +17,17 @@ protocol ApiClientProtocol {
     func addDocument(to collection: CollectionReference, document: [String: Any], completion: @escaping () -> Void)
     
     func deleteDocument(_ document: DocumentReference)
+    
+    func getMessagesPath(channelId: String) -> CollectionReference
+    
+    func getChannelsRootPath() -> CollectionReference
+    
+    func getChannelPath(channelId: String) -> DocumentReference 
 }
 
 class FirestoreClient: ApiClientProtocol {
     
-    static let instance = FirestoreClient()
     private let root = Firestore.firestore().collection("channels")
-    
-    private init() {}
     
     func addSnapshotListener<T>(for collection: CollectionReference,
                                 mapper: @escaping (QueryDocumentSnapshot) -> T?,
@@ -63,10 +66,6 @@ class FirestoreClient: ApiClientProtocol {
         }
     }
     
-}
-
-extension FirestoreClient {
-    
     func getMessagesPath(channelId: String) -> CollectionReference {
         return root.document(channelId).collection("messages")
     }
@@ -78,4 +77,5 @@ extension FirestoreClient {
     func getChannelPath(channelId: String) -> DocumentReference {
         return root.document(channelId)
     }
+    
 }

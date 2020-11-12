@@ -12,7 +12,7 @@ import CoreData
 
 public class MessageDb: NSManagedObject {
     
-    convenience init(context: NSManagedObjectContext, model: MessageModel, channel: ChannelDb) {
+    convenience init(context: NSManagedObjectContext, model: MessageDataModel, channel: ChannelDb) {
         self.init(context: context)
         self.id = model.identifier
         self.content = model.content
@@ -26,8 +26,8 @@ public class MessageDb: NSManagedObject {
         return "identifier: \(id), content: \(content), created: \(created), senderId: \(senderId), senderName: \(senderName), channel: \(channel.id)"
     }
     
-    func toMessageModel() -> MessageModel {
-        return MessageModel(content: self.content, created: self.created, senderId: self.senderId, senderName: self.senderName)
+    func toMessageModel() -> MessageDataModel {
+        return MessageDataModel(content: self.content, created: self.created, senderId: self.senderId, senderName: self.senderName)
     }
     
 }

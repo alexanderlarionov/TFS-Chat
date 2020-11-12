@@ -10,20 +10,20 @@ import UIKit
 
 struct GCDDataManager: FileStorageServiceProtocol {
     
-    static let instance = GCDDataManager()
-    
+    let fileStorage: FileStorageProtocol
     let queue: DispatchQueue
     let group: DispatchGroup
     
-    private init() {
+    init(fileStorage: FileStorageProtocol) {
         queue = DispatchQueue(label: "com.akatev.TFS-Chat", attributes: .concurrent)
         group = DispatchGroup()
+        self.fileStorage = fileStorage
     }
     
     func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
-            if FileStorage.saveImage(image: image, fileName: FileStorage.avatarFile) {
+            if fileStorage.saveImage(image: image, fileName: FileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -52,7 +52,7 @@ struct GCDDataManager: FileStorageServiceProtocol {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.async {
-            if let image = FileStorage.loadImage(fileName: FileStorage.avatarFile) {
+            if let image = fileStorage.loadImage(fileName: FileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -73,7 +73,7 @@ struct GCDDataManager: FileStorageServiceProtocol {
     
     private func loadString(fileName: String, completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.async {
-            if let image = FileStorage.loadString(fileName: fileName) {
+            if let image = fileStorage.loadString(fileName: fileName) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -88,7 +88,7 @@ struct GCDDataManager: FileStorageServiceProtocol {
     private func saveString(value: String, fileName: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
-            if FileStorage.saveString(value, fileName: fileName) {
+            if fileStorage.saveString(value, fileName: fileName) {
                 completion()
             } else {
                 failure()

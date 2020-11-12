@@ -16,7 +16,15 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet var messageView: UIView!
     var channelId: String?
     let senderID = UIDevice.current.identifierForVendor?.uuidString
-    var fetchedResultsController: NSFetchedResultsController<MessageDb>! //TODO set in init
+    
+    var fetchedResultsController: NSFetchedResultsController<MessageDb>!
+    var apiService: ApiServiceProtocol!
+    var storageService: StorageServiceProtocol!
+    
+    func injectDependcies(storageService: StorageServiceProtocol, apiService: ApiServiceProtocol) {
+        self.storageService = storageService
+        self.apiService = apiService
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +33,11 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         messageTextField.delegate = self
         setupMessageTextField()
         if let channelId = channelId {
-            fetchedResultsController = StorageService.instance.getMessagesFRC(channelId: channelId)
+            fetchedResultsController = storageService.getMessagesFRC(channelId: channelId)
             fetchedResultsController.delegate = self
-            StorageService.instance.performFetch(for: fetchedResultsController)
-            ApiService.instance.subscribeOnMessagesChanges(channelId: channelId) { messages in
-                StorageService.instance.saveMessages(messageModels: messages, channelId: channelId)
+            storageService.performFetch(for: fetchedResultsController)
+            apiService.subscribeOnMessagesChanges(channelId: channelId) { messages in
+                self.storageService.saveMessages(messageModels: messages, channelId: channelId)
             }
         }
     }
@@ -48,13 +56,13 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let channelId = channelId else { return }
         guard let senderID = senderID else { return }
         guard let content = messageTextField.text, content != "" else { return }
-        let message = MessageModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
-        ApiService.instance.addMessage(channelId: channelId,
-                                       message: message,
-                                       completion: { [weak self] in
-                                        self?.dismissKeyboard()
-                                        self?.messageTextField.text = ""
-                                       })
+        let message = MessageDataModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
+        apiService.addMessage(channelId: channelId,
+                              message: message,
+                              completion: { [weak self] in
+                                self?.dismissKeyboard()
+                                self?.messageTextField.text = ""
+                              })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,7 +84,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    private func configureCell(indexPath: IndexPath, identifier: String, model: MessageModel) -> UITableViewCell {
+    private func configureCell(indexPath: IndexPath, identifier: String, model: MessageDataModel) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? MessageViewCell else { return UITableViewCell()}
         cell.setColor(for: identifier)
         cell.configure(with: model)
@@ -91,7 +99,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     deinit {
-        ApiService.instance.unsubscribeFromMessagesChanges()
+        apiService.unsubscribeFromMessagesChanges()
     }
     
 }
