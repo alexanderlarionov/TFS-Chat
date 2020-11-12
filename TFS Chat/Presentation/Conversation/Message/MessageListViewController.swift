@@ -16,38 +16,18 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet var messageView: UIView!
     var channelId: String?
     let senderID = UIDevice.current.identifierForVendor?.uuidString
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<MessageDb> = {
-        let fetchRequest: NSFetchRequest<MessageDb> = MessageDb.createFetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.fetchBatchSize = 10
-        
-        if let channelId = channelId,
-           let channel = StorageService.instance.fetchChannel(by: channelId) {
-            let predicate = NSPredicate(format: "channel == %@", channel)
-            fetchRequest.predicate = predicate
-        }
-        
-        return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: StorageService.instance.viewContext,
-                                          sectionNameKeyPath: nil,
-                                          cacheName: nil)
-    }()
+    var fetchedResultsController: NSFetchedResultsController<MessageDb>! //TODO set in init
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         messageTextField.delegate = self
-        fetchedResultsController.delegate = self
         setupMessageTextField()
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
         if let channelId = channelId {
+            fetchedResultsController = StorageService.instance.getMessagesFRC(channelId: channelId)
+            fetchedResultsController.delegate = self
+            StorageService.instance.performFetch(for: fetchedResultsController)
             ApiService.instance.subscribeOnMessagesChanges(channelId: channelId) { messages in
                 StorageService.instance.saveMessages(messageModels: messages, channelId: channelId)
             }
@@ -70,11 +50,11 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let content = messageTextField.text, content != "" else { return }
         let message = MessageModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
         ApiService.instance.addMessage(channelId: channelId,
-                                             message: message,
-                                             completion: { [weak self] in
-                                                self?.dismissKeyboard()
-                                                self?.messageTextField.text = ""
-                                             })
+                                       message: message,
+                                       completion: { [weak self] in
+                                        self?.dismissKeyboard()
+                                        self?.messageTextField.text = ""
+                                       })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

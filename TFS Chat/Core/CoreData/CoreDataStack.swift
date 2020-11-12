@@ -11,7 +11,7 @@ import CoreData
 
 protocol StorageProtocol {
     
-    //hmmmm
+    //TODO hmmmm
 }
 
 class CoreDataStack: StorageProtocol {

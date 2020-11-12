@@ -14,26 +14,12 @@ class ChannelListViewController: UITableViewController {
     @IBOutlet var profileLogoView: ProfileLogoView!
     
     let selectedCellView = UIView()
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<ChannelDb> = {
-        let fetchRequest: NSFetchRequest<ChannelDb> = ChannelDb.createFetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchRequest.fetchBatchSize = 10
-        return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: StorageService.instance.viewContext,
-                                          sectionNameKeyPath: nil,
-                                          cacheName: nil)
-    }()
+    let fetchedResultsController = StorageService.instance.getChannelsFRC()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
+        StorageService.instance.performFetch(for: fetchedResultsController)
         ApiService.instance.subscribeOnChannelsChanges { channels in
             StorageService.instance.saveChannels(channelModels: channels)
         }
