@@ -66,7 +66,6 @@
                                     <outlet property="dateLabel" destination="qEV-Mi-LBh" id="7wL-c4-4mn"/>
                                     <outlet property="messageLabel" destination="AIK-Ld-icm" id="m5W-9w-LzR"/>
                                     <outlet property="nameLabel" destination="dEW-sV-Fq4" id="Jfe-5q-84f"/>
-                                    <segue destination="Z0f-Nc-Oaq" kind="show" identifier="" id="Bl8-Kf-fbm"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -79,7 +78,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Item" image="gear" id="5R5-B1-0tD">
                             <color key="tintColor" red="0.5495058894" green="0.54958814379999998" blue="0.56095010040000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="eJ7-5o-7G3" kind="show" id="t0G-i7-hpp"/>
+                                <action selector="gearIconTapped:" destination="Tnz-fl-kbU" id="lh6-9U-Akg"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -108,39 +107,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="099-Hc-Bch" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="KgG-iK-p1H">
                     <connections>
-                        <segue destination="83Q-wb-O8f" kind="presentation" identifier="ProfileViewControllerSegue" id="Oqk-bk-CPw"/>
+                        <action selector="profileIconTapped:" destination="Tnz-fl-kbU" id="x54-Pq-W9j"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1017" y="147"/>
-        </scene>
-        <!--ThemesViewController-->
-        <scene sceneID="M0Z-Mh-rWK">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ThemesViewController" referencedIdentifier="ThemesViewController" id="eJ7-5o-7G3" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="HC2-CW-9tE"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pxX-G4-BZl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1618" y="-178"/>
-        </scene>
-        <!--ProfileViewController-->
-        <scene sceneID="j0J-eM-I4A">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ProfileViewController" referencedIdentifier="ProfileViewController" id="83Q-wb-O8f" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PYO-H8-WY5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1683" y="-51"/>
-        </scene>
-        <!--MessageListViewController-->
-        <scene sceneID="buS-oM-Wb2">
-            <objects>
-                <viewControllerPlaceholder storyboardName="MessageListViewController" referencedIdentifier="MessageListViewController" id="Z0f-Nc-Oaq" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="bN8-sn-WhE"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="n4g-Gr-Y44" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1715" y="162"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ewh-e3-K4x">

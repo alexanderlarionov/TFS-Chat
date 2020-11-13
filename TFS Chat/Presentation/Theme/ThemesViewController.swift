@@ -26,6 +26,7 @@ class ThemesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Settings"
         let buttonBorderColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1).cgColor
         for buttonView in [classicButtonView, dayButtonView, nightButtonView] {
             buttonView?.layer.cornerRadius = 14

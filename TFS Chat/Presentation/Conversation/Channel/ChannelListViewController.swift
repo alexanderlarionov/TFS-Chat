@@ -20,18 +20,16 @@ class ChannelListViewController: UITableViewController {
     var storageService: StorageServiceProtocol!
     var presentationAssembly: PresentationAssemblyProtocol!
     var gcdDataManager: FileStorageServiceProtocol!
-    var operationDataManager: FileStorageServiceProtocol!
+    //TODO get rid of force unwrap, move frc to model
     
-    func injectDependcies(storageService: StorageServiceProtocol,
+    func injectDependcies(presentationAssembly: PresentationAssembly,
+                          storageService: StorageServiceProtocol,
                           apiService: ApiServiceProtocol,
-                          presentationAssembly: PresentationAssembly,
-                          gcdDataManager: FileStorageServiceProtocol,
-                          operationDataManager: FileStorageServiceProtocol) {
+                          gcdDataManager: FileStorageServiceProtocol) {
         self.storageService = storageService
         self.apiService = apiService
         self.presentationAssembly = presentationAssembly
         self.gcdDataManager = gcdDataManager
-        self.operationDataManager = operationDataManager
         self.fetchedResultsController = storageService.getChannelsFRC()
     }
     
@@ -70,26 +68,21 @@ class ChannelListViewController: UITableViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let target = segue.destination as? MessageListViewController {
-            guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-            target.title = fetchedResultsController.object(at: selectedPath).name
-            target.channelId = fetchedResultsController.object(at: selectedPath).id
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-            target.injectDependcies(storageService: storageService, apiService: apiService)
-        } else if let target = segue.destination as? ThemesViewController {
-            target.title = "Settings"
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: nil, action: nil)
-            //target.themesPickerDelegate = ThemeManager.instance
-            target.applyThemeBlock = { theme in
-                ThemeManager.instance.applyTheme(theme)
-            }
-        } else if let target = segue.destination as? UINavigationController {
-            guard let profileController = target.viewControllers.first as? ProfileViewController else { return }
-            profileController.avatarUpdaterDelegate = self
-            profileController.injectDependcies(gcdDataManager: gcdDataManager, operationDataManager: operationDataManager)
-        }
-        segue.destination.navigationItem.largeTitleDisplayMode = .never
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let channel = fetchedResultsController.object(at: indexPath)
+        let messageListController = presentationAssembly.messageListControler(channelId: channel.id, title: channel.name)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        navigationController?.pushViewController(messageListController, animated: true)
+    }
+    
+    @IBAction func profileIconTapped(_ sender: UITapGestureRecognizer) {
+        let profileController = presentationAssembly.profileController(delegate: self)
+        self.present(profileController, animated: true)
+    }
+    
+    @IBAction func gearIconTapped(_ sender: Any) {
+        let themeController = presentationAssembly.themesController()
+        navigationController?.pushViewController(themeController, animated: true)
     }
     
     @IBAction func createButtonTapped(_ sender: UIBarButtonItem) {
