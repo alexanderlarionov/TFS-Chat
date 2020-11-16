@@ -20,7 +20,7 @@ struct GCDDataManager: DataManager {
         group = DispatchGroup()
     }
     
-    func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void) {
+    func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
             if FileUtil.saveAvatarImage(image: image) {

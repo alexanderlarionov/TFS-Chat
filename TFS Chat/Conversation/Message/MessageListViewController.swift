@@ -28,20 +28,20 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         setupMessageTextField()
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        adjustViewForCurrentTheme()
         guard let channelId = channelId else { return }
-        FirestoreManager.listenMessagesSnapshot(channelId: channelId,
+        FirestoreManager.instance.listenMessagesSnapshot(channelId: channelId,
                                                 completion: { [weak self] messages in
                                                     self?.messages = messages
                                                     self?.sortMessagesByDate()
                                                     self?.tableView.reloadData()
                                                     self?.scrollToBottom()
-                                                }
-        )
+                                                    CoreDataManager.instance.saveMessages(messageModels: messages, channelId: channelId)
+                                                })
+        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
     }
     
     @objc func sendButtonPressed() {
@@ -49,7 +49,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let senderID = senderID else { return }
         guard let content = messageTextField.text, content != "" else { return }
         let message = MessageModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
-        FirestoreManager.addMessage(channelId: channelId,
+        FirestoreManager.instance.addMessage(channelId: channelId,
                                     message: message,
                                     completion: { [weak self] in
                                         self?.dismissKeyboard()
@@ -119,7 +119,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     deinit {
-        FirestoreManager.messageListener?.remove()
+        FirestoreManager.instance.removeMessageListener()
     }
     
 }

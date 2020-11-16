@@ -10,7 +10,7 @@ import UIKit
 
 class ThemesViewController: UIViewController {
     
-    var themesPickerDelegate: ThemesPickerDelegate?
+    weak var themesPickerDelegate: ThemesPickerDelegate?
     var applyThemeBlock: ((ColorTheme) -> Void)?
     
     @IBOutlet var classicButtonView: UIView!
@@ -61,7 +61,7 @@ class ThemesViewController: UIViewController {
     
 }
 
-protocol ThemesPickerDelegate {
+protocol ThemesPickerDelegate: class {
     func applyTheme(_: ColorTheme)
 }
 
