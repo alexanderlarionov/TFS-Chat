@@ -18,6 +18,7 @@ protocol PresentationAssemblyProtocol {
     
     func themesController() -> ThemesViewController
     
+    func imagesCollectionController() -> ImagesCollectionViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -59,7 +60,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             fatalError("Unable to load ProfileViewController")
         }
         
-        profileController.injectDependcies(gcdDataManager: serviceAssembly.fileStorageGCDService, operationDataManager: serviceAssembly.fileStorageOperationService)
+        profileController.injectDependcies(
+            presentationAssembly: self,
+            gcdDataManager: serviceAssembly.fileStorageGCDService,
+            operationDataManager: serviceAssembly.fileStorageOperationService)
         profileController.avatarUpdaterDelegate = delegate
         profileController.navigationItem.largeTitleDisplayMode = .never
         return navController
@@ -72,6 +76,13 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             ThemeManager.instance.applyTheme(theme)
         }
         controller.navigationItem.largeTitleDisplayMode = .never
+        return controller
+    }
+    
+    func imagesCollectionController() -> ImagesCollectionViewController {
+        guard let controller = loadVCFromStoryboard(name: "ImagesCollectionViewController", identifier: "ImagesCollectionViewController") as? ImagesCollectionViewController else {
+            fatalError("Unable to load ImagesCollectionViewController") }
+        
         return controller
     }
     
