@@ -7,22 +7,36 @@
 //
 
 import UIKit
+import CoreData
 
 class ChannelListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    var channels = [ChannelModel]()
     let selectedCellView = UIView()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<ChannelDb> = {
+        let fetchRequest: NSFetchRequest<ChannelDb> = ChannelDb.createFetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.fetchBatchSize = 10
+        return NSFetchedResultsController(fetchRequest: fetchRequest,
+                                          managedObjectContext: CoreDataManager.instance.viewContext,
+                                          sectionNameKeyPath: nil,
+                                          cacheName: nil)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirestoreManager.instance.listenSnapshotChannels(completion: { [weak self] channels in
-            self?.channels = channels
-            self?.sortChannelsByDate()
-            self?.tableView.reloadData()
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+        FirestoreManager.instance.listenSnapshotChannels { channels in
             CoreDataManager.instance.saveChannels(channelModels: channels)
-        })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,23 +45,30 @@ class ChannelListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        return fetchedResultsController.sections?[0].numberOfObjects ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as? ChannelListCell else { return UITableViewCell() }
         
-        let cellModel = channels[indexPath.row]
+        let cellModel = fetchedResultsController.object(at: indexPath).toChannelModel()
         cell.configure(with: cellModel)
         cell.selectedBackgroundView = selectedCellView
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channel = fetchedResultsController.object(at: indexPath)
+            FirestoreManager.instance.deleteChannel(id: channel.id)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let target = segue.destination as? MessageListViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-            target.title = channels[selectedPath.row].name
-            target.channelId = channels[selectedPath.row].identifier
+            target.title = fetchedResultsController.object(at: selectedPath).name
+            target.channelId = fetchedResultsController.object(at: selectedPath).id
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
@@ -82,13 +103,6 @@ class ChannelListViewController: UITableViewController {
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
     }
     
-    private func sortChannelsByDate() {
-        channels.sort {
-            $0.lastActivity ?? Date(timeIntervalSince1970: 0)
-                > $1.lastActivity ?? Date(timeIntervalSince1970: 0)
-        }
-    }
-    
 }
 
 extension ChannelListViewController: AvatarUpdaterDelegate {
@@ -121,4 +135,45 @@ extension ChannelListViewController: Themable {
         selectedCellView.backgroundColor = theme.navigationBarColor
         tableView.reloadData()
     }
+}
+
+extension ChannelListViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let path = newIndexPath else { return }
+            tableView.insertRows(at: [path], with: .automatic)
+            
+        case .delete:
+            guard let path = indexPath else { return }
+            tableView.deleteRows(at: [path], with: .automatic)
+            
+        case .update:
+            guard let path = indexPath else { return }
+            self.tableView.reloadRows(at: [path], with: .automatic)
+            
+        case .move:
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath  else { return }
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+            
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
 }

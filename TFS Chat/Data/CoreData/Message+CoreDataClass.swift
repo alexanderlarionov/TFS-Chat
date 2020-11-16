@@ -26,4 +26,8 @@ public class MessageDb: NSManagedObject {
         return "identifier: \(id), content: \(content), created: \(created), senderId: \(senderId), senderName: \(senderName), channel: \(channel.id)"
     }
     
+    func toMessageModel() -> MessageModel {
+        return MessageModel(content: self.content, created: self.created, senderId: self.senderId, senderName: self.senderName)
+    }
+    
 }

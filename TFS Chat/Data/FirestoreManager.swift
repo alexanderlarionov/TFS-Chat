@@ -12,7 +12,7 @@ class FirestoreManager {
     
     static let instance = FirestoreManager()
     private let root = Firestore.firestore().collection("channels")
-    var messageListener: ListenerRegistration?
+    private var messageListener: ListenerRegistration?
     
     private init() {}
     
@@ -29,6 +29,7 @@ class FirestoreManager {
                         messages.append(dataModel)
                     }
                 }
+                print(messages.count, " messages loaded from firestore")
                 completion(messages)
             }
         }
@@ -40,6 +41,7 @@ class FirestoreManager {
                 print("Add message error: " + error.localizedDescription)
             } else {
                 completion()
+                print("Message successfully added")
             }
         }
     }
@@ -56,6 +58,7 @@ class FirestoreManager {
                         channels.append(dataModel)
                     }
                 }
+                print(channels.count, " channels loaded from firestore")
                 completion(channels)
             }
         }
@@ -65,6 +68,18 @@ class FirestoreManager {
         root.addDocument(data: channel.toFirebaseDictionary()) { error in
             if let error = error {
                 print("Add channel error: " + error.localizedDescription)
+            } else {
+                print("Channel successfully added")
+            }
+        }
+    }
+    
+    func deleteChannel(id: String) {
+        root.document(id).delete { error in
+            if let error = error {
+                print("Error deleting channel: \(error)")
+            } else {
+                print("Channel successfully deleted")
             }
         }
     }
