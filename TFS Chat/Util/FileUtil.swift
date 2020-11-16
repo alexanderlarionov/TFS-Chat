@@ -51,8 +51,7 @@ struct FileUtil {
     static func loadString(fileName: String) -> String? {
         do {
             return try String(contentsOf: getDocumentsDirectory().appendingPathComponent(fileName), encoding: .utf8)
-        }
-        catch {
+        } catch {
             print(error)
             return nil
         }

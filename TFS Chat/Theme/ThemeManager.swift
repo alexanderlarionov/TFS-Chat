@@ -31,4 +31,3 @@ class ThemeManager: ThemesPickerDelegate {
 protocol Themable {
     func adjustViewForCurrentTheme()
 }
-

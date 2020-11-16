@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ConversationsListViewController: UITableViewController {
+class ChannelListViewController: UITableViewController {
     
     @IBOutlet var profileLogoView: ProfileLogoView!
     
-    let data = FakeData.conversationListData;
+    var channels = [ChannelModel]()
+    let selectedCellView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,41 +22,31 @@ class ConversationsListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+        FirestoreManager.listenSnapshotChannels(completion: { [weak self] channels in
+            self?.channels = channels
+            self?.sortChannelsByDate()
+            self?.tableView.reloadData()
+        })
     }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int { 2 }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data[section].count
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var title: String?
-        if section == 0 {
-            title = "Online"
-        } else if section == 1 {
-            title = "History"
-        }
-        return title
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        return channels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationListCell", for: indexPath) as? ConversationListCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as? ChannelListCell else { return UITableViewCell() }
         
-        let cellModel = data[indexPath.section][indexPath.row]
+        let cellModel = channels[indexPath.row]
         cell.configure(with: cellModel)
+        cell.selectedBackgroundView = selectedCellView
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let target = segue.destination as? ConversationViewController {
+        if let target = segue.destination as? MessageListViewController {
             guard let selectedPath = tableView.indexPathForSelectedRow else { return }
-            target.title = data[selectedPath.section][selectedPath.row].name
+            target.title = channels[selectedPath.row].name
+            target.channelId = channels[selectedPath.row].identifier
             navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         } else if let target = segue.destination as? ThemesViewController {
             target.title = "Settings"
@@ -71,18 +62,41 @@ class ConversationsListViewController: UITableViewController {
         segue.destination.navigationItem.largeTitleDisplayMode = .never
     }
     
+    @IBAction func createButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Create New Channel", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Name"
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        let createAction = UIAlertAction(title: "Create", style: .default) { _ in
+            if let name = alert.textFields?[0].text {
+                let channel = ChannelModel(name: name, lastMessage: nil, lastActivity: nil)
+                FirestoreManager.addChannel(channel: channel)
+            }
+        }
+        alert.addAction(createAction)
+        self.present(alert, animated: true)
+    }
+    
     @IBAction func unwindToConversationList(segue: UIStoryboardSegue) {
+    }
+    
+    private func sortChannelsByDate() {
+        channels.sort {
+            $0.lastActivity ?? Date(timeIntervalSince1970: 0)
+                > $1.lastActivity ?? Date(timeIntervalSince1970: 0)
+        }
     }
     
 }
 
-extension ConversationsListViewController: AvatarUpdaterDelegate {
+extension ChannelListViewController: AvatarUpdaterDelegate {
     func updateAvatar(to image: UIImage) {
         profileLogoView.setImage(image)
     }
 }
 
-extension ConversationsListViewController: Themable {
+extension ChannelListViewController: Themable {
     func adjustViewForCurrentTheme() {
         guard let navBar = navigationController?.navigationBar else { return }
         let theme = ThemeManager.instance.currentTheme
@@ -102,9 +116,8 @@ extension ConversationsListViewController: Themable {
             navBar.largeTitleTextAttributes = [.foregroundColor: textColor]
         }
         
-        tableView.backgroundColor = theme.conversationListBackgroundColor
+        tableView.backgroundColor = theme.channelListBackgroundColor
+        selectedCellView.backgroundColor = theme.navigationBarColor
         tableView.reloadData()
     }
 }
-
-

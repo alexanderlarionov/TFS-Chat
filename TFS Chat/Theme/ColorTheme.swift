@@ -34,40 +34,18 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListBackgroundColor: UIColor {
+    var channelListBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor.white
-        case .day:
-            return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .night:
-            return UIColor.black
-        }
-    }
-    
-    var conversationListCellOnlineColor: UIColor {
-        switch self {
-        case .classic:
-            return UIColor(red: 1.0, green: 1.0, blue: 0.65, alpha: 1.0)
         case .day:
             return UIColor(red: 0.58, green: 0.66, blue: 0.75, alpha: 1.00)
         case .night:
-            return UIColor(red: 0.118, green: 0.118, blue: 0.118, alpha: 1)
-        }
-    }
-    
-    var conversationListCellOfflineColor: UIColor {
-        switch self {
-        case .classic:
-            return UIColor.white
-        case .day:
-            return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .night:
             return UIColor.black
         }
     }
-    
-    var conversationListCellNameColor: UIColor {
+
+    var channelListCellNameColor: UIColor {
         switch self {
         case .classic:
             return UIColor.black
@@ -78,7 +56,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var conversationListCellTextColor: UIColor {
+    var channelListCellTextColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.235, green: 0.235, blue: 0.263, alpha: 0.6)
@@ -88,7 +66,6 @@ enum ColorTheme: Int {
             return UIColor(red: 0.553, green: 0.553, blue: 0.576, alpha: 1)
         }
     }
-    
     
     var themesViewControllerBackgroundColor: UIColor {
         switch self {
@@ -101,7 +78,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var sentMessageBackgroundColor: UIColor {
+    var recievedMessageBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.875, green: 0.875, blue: 0.875, alpha: 1)
@@ -112,7 +89,7 @@ enum ColorTheme: Int {
         }
     }
     
-    var recievedMessageBackgroundColor: UIColor {
+    var sentMessageBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor(red: 0.863, green: 0.969, blue: 0.773, alpha: 1)
@@ -123,29 +100,29 @@ enum ColorTheme: Int {
         }
     }
     
-    var sentMessageTextColor: UIColor {
-        switch self {
-        case .classic:
-            return UIColor.black
-        case .day:
-            return UIColor.black
-        case .night:
-            return UIColor.white
-        }
-    }
-    
     var recievedMessageTextColor: UIColor {
         switch self {
         case .classic:
             return UIColor.black
         case .day:
+            return UIColor.black
+        case .night:
+            return UIColor.white
+        }
+    }
+    
+    var sentMessageTextColor: UIColor {
+        switch self {
+        case .classic:
+            return UIColor.black
+        case .day:
             return UIColor.white
         case .night:
             return UIColor.white
         }
     }
     
-    var conversationViewBackgroundColor: UIColor {
+    var messageListViewBackgroundColor: UIColor {
         switch self {
         case .classic:
             return UIColor.white

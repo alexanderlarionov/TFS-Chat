@@ -20,14 +20,13 @@ struct GCDDataManager: DataManager {
         group = DispatchGroup()
     }
     
-    func saveAvatar(image: UIImage, updateAction: @escaping (UIImage) -> Void, completion: @escaping () -> Void, failure: @escaping  () -> Void) {
+    func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void) {
         group.enter()
         queue.async {
             if FileUtil.saveAvatarImage(image: image) {
                 DispatchQueue.main.async {
-                    updateAction(image)
+                    completion(image)
                 }
-                completion()
             } else {
                 failure()
             }
@@ -51,31 +50,38 @@ struct GCDDataManager: DataManager {
         }
     }
     
-    func loadAvatar(completion: @escaping (UIImage) -> Void, failure: () -> Void) {
-        if let image = FileUtil.loadAvatarImage() {
-            DispatchQueue.main.async {
-                completion(image)
+    func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
+        queue.async {
+            if let image = FileUtil.loadAvatarImage() {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    failure()                }
             }
-        } else { failure() }
-    }
-    
-    func loadProfileName(completion: @escaping (String) -> Void, failure: () -> Void) {
-        if let name = FileUtil.loadString(fileName: FileUtil.profileNameFile) {
-            DispatchQueue.main.async {
-                completion(name)
-            }
-        } else {
-            failure()
         }
     }
     
-    func loadProfileInfo(completion: @escaping (String) -> Void, failure: () -> Void) {
-        if let info = FileUtil.loadString(fileName: FileUtil.profileInfoFile) {
-            DispatchQueue.main.async {
-                completion(info)
+    func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        loadString(fileName: FileUtil.profileNameFile, completion: completion, failure: failure)
+    }
+    
+    func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        loadString(fileName: FileUtil.profileInfoFile, completion: completion, failure: failure)
+    }
+    
+    private func loadString(fileName: String, completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        queue.async {
+            if let image = FileUtil.loadString(fileName: fileName) {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    failure()
+                }
             }
-        } else {
-            failure()
         }
     }
     

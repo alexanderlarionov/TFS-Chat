@@ -42,23 +42,25 @@ class ProfileLogoView: UIView {
         //TODO how to fix for ios12? (view not loading)
         view.frame = self.bounds
         let frameWidth = view.frame.width
-        view.layer.cornerRadius = frameWidth / 2;
+        view.layer.cornerRadius = frameWidth / 2
         self.firstLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         self.secondLetterLabel.font = UIFont.boldSystemFont(ofSize: frameWidth / 2)
         self.lettersStackView.spacing = -frameWidth / 10
         addSubview(view)
         
         activityIndicator.startAnimating()
+        self.lettersStackView.isHidden = true
         
         GCDDataManager.instance.loadAvatar(
-            completion:  { avatar in
+            completion: { avatar in
                 self.activityIndicator.stopAnimating()
                 self.setImage(avatar)
             },
             failure: {
                 self.activityIndicator.stopAnimating()
+                self.lettersStackView.isHidden = false
+                self.backgroundColor = UIColor(red: 0.894, green: 0.908, blue: 0.17, alpha: 1)
             })
     }
-    
-}
 
+}

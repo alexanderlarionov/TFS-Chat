@@ -10,7 +10,7 @@ import UIKit
 
 protocol DataManager {
     
-    func saveAvatar(image: UIImage, updateAction: @escaping (UIImage) -> Void, completion: @escaping () -> Void, failure: @escaping  () -> Void)
+    func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping  () -> Void)
     
     func saveName(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void)
     
