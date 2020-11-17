@@ -47,7 +47,8 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
         guard let previewURL = data?.hits[indexPath.row].previewURL else { return UICollectionViewCell() }
-        cell.setImage(nil)
+        let placeholder = UIImage(named: "profile")
+        cell.setImage(placeholder)
         loadImage(url: previewURL) { image in
             cell.setImage(image)
         }
@@ -92,7 +93,7 @@ extension ImageCollectionViewController {
         
         let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
-            
+
             self.data = try? JSONDecoder().decode(DataModel.self, from: data)
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
