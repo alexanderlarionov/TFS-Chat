@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadFromPixabay() {
-        let controller = presentationAssembly.imagesCollectionController()
+        let controller = presentationAssembly.imageCollectionController()
         self.present(controller, animated: true)
     }
     

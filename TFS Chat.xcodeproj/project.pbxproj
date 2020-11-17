@@ -32,8 +32,9 @@
 		0AA32761255DBAEC004E912A /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA32760255DBAEC004E912A /* ServiceAssembly.swift */; };
 		0AA32769255DC52E004E912A /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA32768255DC52E004E912A /* PresentationAssembly.swift */; };
 		0AA32775255DD622004E912A /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA32774255DD622004E912A /* RootAssembly.swift */; };
-		0AA7EEEF2563238F0049D2B9 /* ImagesCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AA7EEEE2563238F0049D2B9 /* ImagesCollectionViewController.storyboard */; };
-		0AA7EEF2256323A40049D2B9 /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA7EEF1256323A40049D2B9 /* ImagesCollectionViewController.swift */; };
+		0AA7EEEF2563238F0049D2B9 /* ImageCollectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AA7EEEE2563238F0049D2B9 /* ImageCollectionViewController.storyboard */; };
+		0AA7EEF2256323A40049D2B9 /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA7EEF1256323A40049D2B9 /* ImageCollectionViewController.swift */; };
+		0AA7EEF625633A430049D2B9 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA7EEF525633A430049D2B9 /* ImageCollectionCell.swift */; };
 		0AB1FF2B252CA50600AFD8C5 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */; };
 		0AB1FF2E252CA51D00AFD8C5 /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */; };
 		0AC14B97253A213900FCA72C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AC14B96253A213900FCA72C /* GoogleService-Info.plist */; };
@@ -80,8 +81,9 @@
 		0AA32760255DBAEC004E912A /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		0AA32768255DC52E004E912A /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		0AA32774255DD622004E912A /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
-		0AA7EEEE2563238F0049D2B9 /* ImagesCollectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImagesCollectionViewController.storyboard; sourceTree = "<group>"; };
-		0AA7EEF1256323A40049D2B9 /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
+		0AA7EEEE2563238F0049D2B9 /* ImageCollectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageCollectionViewController.storyboard; sourceTree = "<group>"; };
+		0AA7EEF1256323A40049D2B9 /* ImageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewController.swift; sourceTree = "<group>"; };
+		0AA7EEF525633A430049D2B9 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
 		0AB1FF2A252CA50600AFD8C5 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		0AB1FF2D252CA51D00AFD8C5 /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
 		0AC14B96253A213900FCA72C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -227,8 +229,9 @@
 		0AA7EEE72563215A0049D2B9 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
-				0AA7EEF1256323A40049D2B9 /* ImagesCollectionViewController.swift */,
-				0AA7EEEE2563238F0049D2B9 /* ImagesCollectionViewController.storyboard */,
+				0AA7EEF1256323A40049D2B9 /* ImageCollectionViewController.swift */,
+				0AA7EEEE2563238F0049D2B9 /* ImageCollectionViewController.storyboard */,
+				0AA7EEF525633A430049D2B9 /* ImageCollectionCell.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -366,7 +369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AA7EEEF2563238F0049D2B9 /* ImagesCollectionViewController.storyboard in Resources */,
+				0AA7EEEF2563238F0049D2B9 /* ImageCollectionViewController.storyboard in Resources */,
 				0A82BDDE250BFE030088A796 /* LaunchScreen.storyboard in Resources */,
 				0AC14B97253A213900FCA72C /* GoogleService-Info.plist in Resources */,
 				0A82BDDB250BFE030088A796 /* Assets.xcassets in Resources */,
@@ -465,6 +468,7 @@
 				0A0B84292545161B000FA240 /* Message+CoreDataClass.swift in Sources */,
 				0A0B842A2545161B000FA240 /* Message+CoreDataProperties.swift in Sources */,
 				0AC14BE7253A5F4500FCA72C /* ChannelDataModel.swift in Sources */,
+				0AA7EEF625633A430049D2B9 /* ImageCollectionCell.swift in Sources */,
 				0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */,
 				0AC5369F25239CD500B03EE8 /* ConfigurableView.swift in Sources */,
 				0A0B842B2545161B000FA240 /* Channel+CoreDataClass.swift in Sources */,
@@ -472,7 +476,7 @@
 				0AA32769255DC52E004E912A /* PresentationAssembly.swift in Sources */,
 				0A71F9D325378F2F000B20D9 /* OperationDataManager.swift in Sources */,
 				0AA3275E255D7DD3004E912A /* CoreAssembly.swift in Sources */,
-				0AA7EEF2256323A40049D2B9 /* ImagesCollectionViewController.swift in Sources */,
+				0AA7EEF2256323A40049D2B9 /* ImageCollectionViewController.swift in Sources */,
 				0AC5369925235CD200B03EE8 /* ChannelListCell.swift in Sources */,
 				0AC14BEA253A5F8100FCA72C /* MessageDataModel.swift in Sources */,
 				0AC52A8F251247350029503C /* LoggingUtil.swift in Sources */,

@@ -18,7 +18,7 @@ protocol PresentationAssemblyProtocol {
     
     func themesController() -> ThemesViewController
     
-    func imagesCollectionController() -> ImagesCollectionViewController
+    func imageCollectionController() -> ImageCollectionViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -79,9 +79,9 @@ class PresentationAssembly: PresentationAssemblyProtocol {
         return controller
     }
     
-    func imagesCollectionController() -> ImagesCollectionViewController {
-        guard let controller = loadVCFromStoryboard(name: "ImagesCollectionViewController", identifier: "ImagesCollectionViewController") as? ImagesCollectionViewController else {
-            fatalError("Unable to load ImagesCollectionViewController") }
+    func imageCollectionController() -> ImageCollectionViewController {
+        guard let controller = loadVCFromStoryboard(name: "ImageCollectionViewController", identifier: "ImageCollectionViewController") as? ImageCollectionViewController else {
+            fatalError("Unable to load ImageCollectionViewController") }
         
         return controller
     }
