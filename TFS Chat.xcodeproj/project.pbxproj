@@ -226,14 +226,14 @@
 			path = Api;
 			sourceTree = "<group>";
 		};
-		0AA7EEE72563215A0049D2B9 /* Collection */ = {
+		0AA7EEE72563215A0049D2B9 /* ImageCollection */ = {
 			isa = PBXGroup;
 			children = (
 				0AA7EEF1256323A40049D2B9 /* ImageCollectionViewController.swift */,
 				0AA7EEEE2563238F0049D2B9 /* ImageCollectionViewController.storyboard */,
 				0AA7EEF525633A430049D2B9 /* ImageCollectionCell.swift */,
 			);
-			path = Collection;
+			path = ImageCollection;
 			sourceTree = "<group>";
 		};
 		0AB1FF2C252CA50B00AFD8C5 /* Theme */ = {
@@ -270,7 +270,7 @@
 		0AC536A52523B0D500B03EE8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				0AA7EEE72563215A0049D2B9 /* Collection */,
+				0AA7EEE72563215A0049D2B9 /* ImageCollection */,
 				0A82BDD5250BFE010088A796 /* ProfileViewController.swift */,
 				0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */,
 				0AE687702527C230005D6AB3 /* ProfileLogoView.swift */,

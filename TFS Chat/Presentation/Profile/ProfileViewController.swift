@@ -74,7 +74,10 @@ class ProfileViewController: UIViewController {
     }
     
     private func loadFromPixabay() {
-        let controller = presentationAssembly.imageCollectionController()
+        let controller = presentationAssembly.imageCollectionController { [weak self] image in
+            self?.profileLogoView.profileImage.image = image
+            self?.setSaveButtonEnable(true)
+        }
         self.present(controller, animated: true)
     }
     

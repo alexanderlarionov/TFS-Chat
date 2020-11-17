@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageCollectionViewController: UICollectionViewController {
+class ImageCollectionViewController: UIViewController {
     
     private let sectionInsets = UIEdgeInsets(top: 50.0,
                                              left: 20.0,
@@ -16,26 +16,51 @@ class ImageCollectionViewController: UICollectionViewController {
                                              right: 20.0)
     private let itemsPerRow: CGFloat = 3
     private var data: DataModel?
+    var setAvatarBlock: ((UIImage) -> Void)?
+    
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadImages()
+        activityIndicator.startAnimating()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        loadPreviews()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustViewForCurrentTheme()
+    }
+    
 }
 
-extension ImageCollectionViewController {
+extension ImageCollectionViewController: UICollectionViewDataSource {
     
-    override func collectionView(_ collectionView: UICollectionView,
-                                 numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return data?.hits.count ?? 0
     }
     
-    override func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
-        cell.imageView.image = nil
-        cell.loadImage(by: data?.hits[indexPath.row].previewURL ?? "")
+        guard let previewURL = data?.hits[indexPath.row].previewURL else { return UICollectionViewCell() }
+        cell.setImage(nil)
+        loadImage(url: previewURL) { image in
+            cell.setImage(image)
+        }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let webformatURL = data?.hits[indexPath.row].webformatURL else { return }
+        loadImage(url: webformatURL) { image in
+            self.setAvatarBlock?(image)
+            self.dismiss(animated: true)
+        }
+        
     }
 }
 
@@ -58,16 +83,11 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
         return sectionInsets
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
-    }
 }
 
 extension ImageCollectionViewController {
     
-    func loadImages() {
+    func loadPreviews() {
         guard let url = URL(string: "https://pixabay.com/api/?key=19139831-67087a5068526f1d9fc406fc3&q=icons&image_type=photo&per_page=150") else { return }
         
         let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
@@ -76,6 +96,21 @@ extension ImageCollectionViewController {
             self.data = try? JSONDecoder().decode(DataModel.self, from: data)
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+        guard let url = URL(string: url) else {return}
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
+            guard let data = data else { return }
+            guard let image = UIImage(data: data) else { return }
+            DispatchQueue.main.async {
+                completion(image)
             }
         }
         
@@ -88,5 +123,14 @@ struct DataModel: Decodable {
     
     struct ImageData: Decodable {
         let previewURL: String
+        let webformatURL: String
+    }
+}
+
+extension ImageCollectionViewController: Themable {
+    
+    func adjustViewForCurrentTheme() {
+        let theme = ThemeManager.instance.currentTheme
+        collectionView.backgroundColor = theme.navigationBarColor
     }
 }
