@@ -21,12 +21,24 @@ class ImageCollectionViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    var networkService: NetworkServiceProtocol!
+    
+    func injectDependcies(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.startAnimating()
         collectionView.dataSource = self
         collectionView.delegate = self
-        loadPreviews()
+        networkService.loadImagesData { [weak self] data in
+            DispatchQueue.main.async {
+                self?.data = data
+                self?.collectionView.reloadData()
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,17 +61,21 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
         guard let previewURL = data?.hits[indexPath.row].previewURL else { return UICollectionViewCell() }
         let placeholder = UIImage(named: "profile")
         cell.setImage(placeholder)
-        loadImage(url: previewURL) { image in
-            cell.setImage(image)
+        networkService.loadImage(url: previewURL) { image in
+            DispatchQueue.main.async {
+                cell.setImage(image)
+            }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let webformatURL = data?.hits[indexPath.row].webformatURL else { return }
-        loadImage(url: webformatURL) { image in
-            self.setAvatarBlock?(image)
-            self.dismiss(animated: true)
+        networkService.loadImage(url: webformatURL) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.setAvatarBlock?(image)
+                self?.dismiss(animated: true)
+            }
         }
         
     }
@@ -84,48 +100,6 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
         return sectionInsets
     }
     
-}
-
-extension ImageCollectionViewController {
-    
-    func loadPreviews() {
-        guard let url = URL(string: "https://pixabay.com/api/?key=19139831-67087a5068526f1d9fc406fc3&q=icons&image_type=photo&per_page=150") else { return }
-        
-        let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else { return }
-
-            self.data = try? JSONDecoder().decode(DataModel.self, from: data)
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.activityIndicator.stopAnimating()
-            }
-        }
-        
-        dataTask.resume()
-    }
-    
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
-        guard let url = URL(string: url) else {return}
-        
-        let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else { return }
-            guard let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }
-        
-        dataTask.resume()
-    }
-}
-
-struct DataModel: Decodable {
-    let hits: [ImageData]
-    
-    struct ImageData: Decodable {
-        let previewURL: String
-        let webformatURL: String
-    }
 }
 
 extension ImageCollectionViewController: Themable {

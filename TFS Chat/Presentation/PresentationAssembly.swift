@@ -82,6 +82,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func imageCollectionController(setAvatarBlock: @escaping (UIImage) -> Void) -> ImageCollectionViewController {
         guard let controller = loadVCFromStoryboard(name: "ImageCollectionViewController", identifier: "ImageCollectionViewController") as? ImageCollectionViewController else {
             fatalError("Unable to load ImageCollectionViewController") }
+        controller.injectDependcies(networkService: serviceAssembly.networkService)
         controller.setAvatarBlock = setAvatarBlock
         
         return controller
