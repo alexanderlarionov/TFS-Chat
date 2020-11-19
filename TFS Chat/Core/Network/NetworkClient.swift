@@ -10,22 +10,32 @@ import Foundation
 
 protocol NetworkClientProtocol {
     
-    func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping(Parser.Model) -> Void)
+    func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping (Result<Parser.Model, Error>) -> Void)
 }
 
 class NetworkClient: NetworkClientProtocol {
     
-    let session = URLSession.shared
-    
-    func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping(Parser.Model) -> Void) {
+    func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping (Result<Parser.Model, Error>) -> Void) {
         
-        guard let url = URL(string: url) else { return }
-        let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
+        guard let url = URL(string: url) else {
+            completion(.failure(NetworkError.malformedURL))
+            print("Malformed URL")
+            return }
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+                print("Error during request: ", error.localizedDescription)
+            }
+            
             guard let data = data,
                   let parsedModel: Parser.Model = parser.parse(data: data) else {
+                completion(.failure(NetworkError.parsingError))
+                print("Error during parsing")
                 return
             }
-            completion(parsedModel)
+            
+            completion(.success(parsedModel))
         }
         dataTask.resume()
     }

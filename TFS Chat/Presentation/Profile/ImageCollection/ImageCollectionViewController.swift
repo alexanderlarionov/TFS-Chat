@@ -32,11 +32,19 @@ class ImageCollectionViewController: UIViewController {
         activityIndicator.startAnimating()
         collectionView.dataSource = self
         collectionView.delegate = self
-        networkService.loadImagesData { [weak self] data in
-            DispatchQueue.main.async {
-                self?.data = data
-                self?.collectionView.reloadData()
-                self?.activityIndicator.stopAnimating()
+        
+        networkService.loadImagesData { [weak self] result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self?.data = data
+                    self?.collectionView.reloadData()
+                    self?.activityIndicator.stopAnimating()
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    self?.showErrorAlert()
+                }
             }
         }
     }
@@ -46,6 +54,13 @@ class ImageCollectionViewController: UIViewController {
         adjustViewForCurrentTheme()
     }
     
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Error occured during loading.\n Please try again", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+            self.dismiss(animated: true)
+        })
+        self.present(alert, animated: true)
+    }
 }
 
 extension ImageCollectionViewController: UICollectionViewDataSource {
@@ -61,9 +76,14 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
         guard let previewURL = data?.hits[indexPath.row].previewURL else { return UICollectionViewCell() }
         let placeholder = UIImage(named: "profile")
         cell.setImage(placeholder)
-        networkService.loadImage(url: previewURL) { image in
-            DispatchQueue.main.async {
-                cell.setImage(image)
+        
+        networkService.loadImage(url: previewURL) { result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    cell.setImage(image)
+                }
+            case .failure: break
             }
         }
         return cell
@@ -71,13 +91,20 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let webformatURL = data?.hits[indexPath.row].webformatURL else { return }
-        networkService.loadImage(url: webformatURL) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.setAvatarBlock?(image)
-                self?.dismiss(animated: true)
+        
+        networkService.loadImage(url: webformatURL) { [weak self] result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.setAvatarBlock?(image)
+                    self?.dismiss(animated: true)
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    self?.showErrorAlert()
+                }
             }
         }
-        
     }
 }
 

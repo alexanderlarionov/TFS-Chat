@@ -11,9 +11,9 @@ import UIKit
 
 protocol NetworkServiceProtocol {
     
-    func loadImagesData(completion: @escaping (DataModel) -> Void)
+    func loadImagesData(completion: @escaping (Result<DataModel, Error>) -> Void)
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void)
+    func loadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
 }
 
 class NetworkService: NetworkServiceProtocol {
@@ -25,11 +25,11 @@ class NetworkService: NetworkServiceProtocol {
         self.networkClient = networkClient
     }
     
-    func loadImagesData(completion: @escaping (DataModel) -> Void) {
+    func loadImagesData(completion: @escaping (Result<DataModel, Error>) -> Void) {
         networkClient.sendRequest(url: apiBaseUrl, parser: JsonParser(), completion: completion)
     }
     
-    func loadImage(url: String, completion: @escaping (UIImage) -> Void) {
+    func loadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         networkClient.sendRequest(url: url, parser: ImageParser(), completion: completion)
     }
 }
