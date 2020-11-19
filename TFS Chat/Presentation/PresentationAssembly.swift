@@ -35,7 +35,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             fatalError("Unable to load ChannelListViewController")
         }
         
-        channelListViewController.injectDependcies(
+        channelListViewController.injectDependencies(
             presentationAssembly: self,
             storageService: serviceAssembly.storageService,
             apiService: serviceAssembly.apiService,
@@ -47,7 +47,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func messageListControler(channelId: String, title: String) -> MessageListViewController {
         guard let controller = loadVCFromStoryboard(name: "MessageListViewController", identifier: "MessageListViewController") as? MessageListViewController else {
             fatalError("Unable to load MessageListViewController") }
-        controller.injectDependcies(storageService: serviceAssembly.storageService, apiService: serviceAssembly.apiService)
+        controller.injectDependencies(storageService: serviceAssembly.storageService, apiService: serviceAssembly.apiService)
         controller.title = title
         controller.channelId = channelId
         controller.navigationItem.largeTitleDisplayMode = .never
@@ -60,7 +60,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             fatalError("Unable to load ProfileViewController")
         }
         
-        profileController.injectDependcies(
+        profileController.injectDependencies(
             presentationAssembly: self,
             gcdDataManager: serviceAssembly.fileStorageGCDService,
             operationDataManager: serviceAssembly.fileStorageOperationService)
@@ -82,7 +82,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func imageCollectionController(setAvatarBlock: @escaping (UIImage) -> Void) -> ImageCollectionViewController {
         guard let controller = loadVCFromStoryboard(name: "ImageCollectionViewController", identifier: "ImageCollectionViewController") as? ImageCollectionViewController else {
             fatalError("Unable to load ImageCollectionViewController") }
-        controller.injectDependcies(networkService: serviceAssembly.networkService)
+        controller.injectDependencies(networkService: serviceAssembly.networkService)
         controller.setAvatarBlock = setAvatarBlock
         
         return controller

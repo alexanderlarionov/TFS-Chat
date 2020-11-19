@@ -23,7 +23,7 @@ class ImageCollectionViewController: UIViewController {
     
     var networkService: NetworkServiceProtocol!
     
-    func injectDependcies(networkService: NetworkServiceProtocol) {
+    func injectDependencies(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
     

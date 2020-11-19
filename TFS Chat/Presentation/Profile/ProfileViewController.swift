@@ -29,7 +29,7 @@ class ProfileViewController: UIViewController {
     var operationDataManager: FileStorageServiceProtocol!
     var presentationAssembly: PresentationAssemblyProtocol!
     
-    func injectDependcies(presentationAssembly: PresentationAssembly, gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
+    func injectDependencies(presentationAssembly: PresentationAssembly, gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
         self.gcdDataManager = gcdDataManager
         self.operationDataManager = operationDataManager
         self.presentationAssembly = presentationAssembly
