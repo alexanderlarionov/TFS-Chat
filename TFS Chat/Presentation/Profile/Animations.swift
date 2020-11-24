@@ -40,3 +40,32 @@ class Animations {
         view.subviews.forEach({ $0.layer.removeAllAnimations() })
     }
 }
+
+extension UIViewController {
+    
+    private func tinkoffCell() -> CAEmitterCell {
+        let cell = CAEmitterCell()
+        cell.contents = UIImage(named: "tinkoff")?.cgImage
+        cell.scale = 0.5
+        cell.scaleRange = 0.5
+        cell.emissionRange = .pi
+        cell.lifetime = 3.0
+        cell.birthRate = 3
+        cell.velocity = 30
+        return cell
+    }
+    
+    func showTinkoffAnimation(at position: CGPoint, layer: CAEmitterLayer) {
+        let cell = tinkoffCell()
+        layer.lifetime = 1.0
+        layer.emitterPosition = position
+        layer.emitterShape = CAEmitterLayerEmitterShape.point
+        layer.beginTime = CACurrentMediaTime()
+        layer.emitterCells = [cell]
+        view.layer.addSublayer(layer)
+    }
+    
+    func stopTinkoffAnimation(layer: CAEmitterLayer) {
+        layer.lifetime = 0
+    }
+}

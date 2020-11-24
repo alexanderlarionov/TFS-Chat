@@ -145,7 +145,7 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Your message here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5n6-40-ZTs">
                                         <rect key="frame" x="40" y="20" width="334" height="40"/>
-                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
@@ -160,11 +160,15 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gIt-Ju-Sye"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="6CK-5F-BtB" secondAttribute="bottom" id="BNo-Dd-J59"/>
                             <constraint firstItem="6CK-5F-BtB" firstAttribute="leading" secondItem="gIt-Ju-Sye" secondAttribute="leading" id="Qux-qI-vYo"/>
                             <constraint firstItem="gIt-Ju-Sye" firstAttribute="trailing" secondItem="6CK-5F-BtB" secondAttribute="trailing" id="kPn-W5-SQc"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="I8G-QV-38K" appends="YES" id="vcw-JM-5Et"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="messageTextField" destination="5n6-40-ZTs" id="BJM-gQ-EeP"/>
@@ -173,6 +177,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TYf-Fl-sJy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="I8G-QV-38K">
+                    <connections>
+                        <action selector="longPressedAction:" destination="rmw-WV-og3" id="Fzm-f3-L6Y"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-597" y="-72"/>
         </scene>
