@@ -26,6 +26,7 @@
 		0A7CC2E32565E971003B307E /* ParserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CC2E22565E971003B307E /* ParserProtocol.swift */; };
 		0A7CC2E72565E9A7003B307E /* ImageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CC2E62565E9A7003B307E /* ImageParser.swift */; };
 		0A7CC2EC2566CFCD003B307E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CC2EB2566CFCD003B307E /* NetworkError.swift */; };
+		0A7CC2EF256D1E82003B307E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CC2EE256D1E82003B307E /* Animations.swift */; };
 		0A82BDD2250BFE010088A796 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82BDD1250BFE010088A796 /* AppDelegate.swift */; };
 		0A82BDD6250BFE010088A796 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82BDD5250BFE010088A796 /* ProfileViewController.swift */; };
 		0A82BDD9250BFE010088A796 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */; };
@@ -79,6 +80,7 @@
 		0A7CC2E22565E971003B307E /* ParserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserProtocol.swift; sourceTree = "<group>"; };
 		0A7CC2E62565E9A7003B307E /* ImageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageParser.swift; sourceTree = "<group>"; };
 		0A7CC2EB2566CFCD003B307E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		0A7CC2EE256D1E82003B307E /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0A82BDCE250BFE010088A796 /* TFS Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TFS Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A82BDD1250BFE010088A796 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A82BDD5250BFE010088A796 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */,
 				0AE687702527C230005D6AB3 /* ProfileLogoView.swift */,
 				0AE687722527C248005D6AB3 /* ProfileLogoView.xib */,
+				0A7CC2EE256D1E82003B307E /* Animations.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				0A0B840C2544E784000FA240 /* Chat.xcdatamodeld in Sources */,
 				0A71F9CF25378CF0000B20D9 /* FileStorageServiceProtocol.swift in Sources */,
 				0A7CC2C82565D4C3003B307E /* NetworkClient.swift in Sources */,
+				0A7CC2EF256D1E82003B307E /* Animations.swift in Sources */,
 				0AC55E83252E4FCE00C815BB /* ColorTheme.swift in Sources */,
 				0A7CC2DB2565E5A8003B307E /* NetworkService.swift in Sources */,
 				0AEE20972533E35F00EF38C8 /* FileStorage.swift in Sources */,

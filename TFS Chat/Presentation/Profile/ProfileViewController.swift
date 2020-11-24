@@ -36,21 +36,6 @@ class ProfileViewController: UIViewController {
         self.presentationAssembly = presentationAssembly
     }
     
-    private func startAnimation() {
-        print("start animation")
-        UIView.animate(withDuration: 1.0, delay: 0.75, options: [.repeat, .autoreverse, .allowUserInteraction]) {
-            self.editProfileButton.frame.size.height *= 1.15
-            self.view.layoutIfNeeded()
-        } completion: { _ in }
-    }
-    
-    private func stopAnimation() {
-        editProfileButton.layer.removeAllAnimations()
-        editProfileButton.subviews.forEach({ $0.layer.removeAllAnimations() })
-        self.view.layoutIfNeeded()
-        print("stop animation")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -111,7 +96,7 @@ class ProfileViewController: UIViewController {
             infoBeforeChange = infoTextView.text
             avatarBeforeChange = profileLogoView.profileImage.image
             
-            startAnimation()
+            Animations.shake(view: editProfileButton)
             isEditableMode = true
         }
     }
@@ -231,7 +216,7 @@ class ProfileViewController: UIViewController {
         editAvatarButton.isHidden = true
         setSaveButtonEnable(false)
         
-        stopAnimation()
+        Animations.stopShaking(view: editProfileButton)
         isEditableMode = false
     }
     
