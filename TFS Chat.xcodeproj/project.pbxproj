@@ -191,6 +191,7 @@
 				0AC536A52523B0D500B03EE8 /* Profile */,
 				0AB1FF2C252CA50B00AFD8C5 /* Theme */,
 				0AA32768255DC52E004E912A /* PresentationAssembly.swift */,
+				0A7CC2EE256D1E82003B307E /* Animations.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -303,7 +304,6 @@
 				0A82BDD7250BFE010088A796 /* ProfileViewController.storyboard */,
 				0AE687702527C230005D6AB3 /* ProfileLogoView.swift */,
 				0AE687722527C248005D6AB3 /* ProfileLogoView.xib */,
-				0A7CC2EE256D1E82003B307E /* Animations.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";

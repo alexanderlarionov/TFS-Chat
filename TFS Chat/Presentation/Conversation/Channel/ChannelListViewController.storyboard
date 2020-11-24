@@ -72,6 +72,7 @@
                         <connections>
                             <outlet property="dataSource" destination="Tnz-fl-kbU" id="qNs-zG-XYR"/>
                             <outlet property="delegate" destination="Tnz-fl-kbU" id="RNQ-vM-RVE"/>
+                            <outletCollection property="gestureRecognizers" destination="LtA-Wk-J3F" appends="YES" id="9Hm-N7-F8t"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Channels" id="JeF-ft-Pm0">
@@ -105,6 +106,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="099-Hc-Bch" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="LtA-Wk-J3F">
+                    <connections>
+                        <action selector="longPressedAction:" destination="Tnz-fl-kbU" id="08n-7U-TXi"/>
+                    </connections>
+                </pongPressGestureRecognizer>
                 <tapGestureRecognizer id="KgG-iK-p1H">
                     <connections>
                         <action selector="profileIconTapped:" destination="Tnz-fl-kbU" id="x54-Pq-W9j"/>

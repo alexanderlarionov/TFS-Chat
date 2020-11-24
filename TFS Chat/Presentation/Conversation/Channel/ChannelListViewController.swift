@@ -22,6 +22,8 @@ class ChannelListViewController: UITableViewController {
     var gcdDataManager: FileStorageServiceProtocol!
     //TODO get rid of force unwrap, move frc to model
     
+    let animationLayer = CAEmitterLayer()
+    
     func injectDependencies(presentationAssembly: PresentationAssembly,
                             storageService: StorageServiceProtocol,
                             apiService: ApiServiceProtocol,
@@ -46,6 +48,10 @@ class ChannelListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

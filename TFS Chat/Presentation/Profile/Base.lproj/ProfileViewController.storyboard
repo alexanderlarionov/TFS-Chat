@@ -90,6 +90,7 @@ Moscow, Russia</string>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Mel-3p-oMu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="hUr-m6-ZFC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="0Xh-cj-v9K"/>
                             <constraint firstItem="F0w-SN-vej" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mel-3p-oMu" secondAttribute="leading" constant="50" id="1fu-av-Ujh"/>
@@ -112,6 +113,9 @@ Moscow, Russia</string>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="bottom" secondItem="ZGj-tI-rCF" secondAttribute="bottom" constant="40" id="oAT-ef-sgz"/>
                             <constraint firstItem="Mel-3p-oMu" firstAttribute="trailing" secondItem="ZGj-tI-rCF" secondAttribute="trailing" constant="40" id="rPu-6v-Z2t"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="zMx-0O-po8" appends="YES" id="jaq-xp-1mX"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="RkU-vl-wf6">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="8C7-zA-Qj8">
@@ -133,6 +137,11 @@ Moscow, Russia</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1w-zM-gXY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="4lQ-1G-4OB" userLabel="Exit" sceneMemberID="exit"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zMx-0O-po8">
+                    <connections>
+                        <action selector="longPressedAction:" destination="gMr-jh-LkL" id="tLU-HD-pT9"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1620" y="31.934032983508249"/>
         </scene>

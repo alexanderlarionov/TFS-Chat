@@ -20,7 +20,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     var fetchedResultsController: NSFetchedResultsController<MessageDb>!
     var apiService: ApiServiceProtocol!
     var storageService: StorageServiceProtocol!
-    var animationLayer = CAEmitterLayer()
+    let animationLayer = CAEmitterLayer()
     
     func injectDependencies(storageService: StorageServiceProtocol, apiService: ApiServiceProtocol) {
         self.storageService = storageService
@@ -54,12 +54,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .began {
-            let location = sender.location(in: sender.view)
-            showTinkoffAnimation(at: location, layer: animationLayer)
-        } else if sender.state == .ended {
-            stopTinkoffAnimation(layer: animationLayer)
-        }
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     @objc func sendButtonPressed() {

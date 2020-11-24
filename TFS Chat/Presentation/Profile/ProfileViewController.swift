@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController {
     var gcdDataManager: FileStorageServiceProtocol!
     var operationDataManager: FileStorageServiceProtocol!
     var presentationAssembly: PresentationAssemblyProtocol!
+    let animationLayer = CAEmitterLayer()
     
     func injectDependencies(presentationAssembly: PresentationAssembly, gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
         self.gcdDataManager = gcdDataManager
@@ -52,6 +53,10 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     @IBAction func editAvatarButtonPressed(_ sender: UIButton) {
