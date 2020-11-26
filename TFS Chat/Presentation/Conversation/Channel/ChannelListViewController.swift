@@ -23,6 +23,7 @@ class ChannelListViewController: UITableViewController {
     //TODO get rid of force unwrap, move frc to model
     
     let animationLayer = CAEmitterLayer()
+    let transition = TransitionAnimation()
     
     func injectDependencies(presentationAssembly: PresentationAssembly,
                             storageService: StorageServiceProtocol,
@@ -83,6 +84,7 @@ class ChannelListViewController: UITableViewController {
     
     @IBAction func profileIconTapped(_ sender: UITapGestureRecognizer) {
         let profileController = presentationAssembly.profileController(delegate: self)
+        profileController.transitioningDelegate = self
         self.present(profileController, animated: true)
     }
     
@@ -183,4 +185,11 @@ extension ChannelListViewController: NSFetchedResultsControllerDelegate {
         tableView.endUpdates()
     }
     
+}
+
+extension ChannelListViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
 }

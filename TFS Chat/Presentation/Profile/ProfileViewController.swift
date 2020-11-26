@@ -101,7 +101,7 @@ class ProfileViewController: UIViewController {
             infoBeforeChange = infoTextView.text
             avatarBeforeChange = profileLogoView.profileImage.image
             
-            Animations.shake(view: editProfileButton)
+            ShakingAnimation.shake(view: editProfileButton)
             isEditableMode = true
         }
     }
@@ -221,7 +221,7 @@ class ProfileViewController: UIViewController {
         editAvatarButton.isHidden = true
         setSaveButtonEnable(false)
         
-        Animations.stopShaking(view: editProfileButton)
+        ShakingAnimation.stopShaking(view: editProfileButton)
         isEditableMode = false
     }
     
