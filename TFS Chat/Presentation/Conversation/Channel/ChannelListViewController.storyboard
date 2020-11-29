@@ -87,6 +87,7 @@
                                 <view key="customView" clipsSubviews="YES" contentMode="scaleToFill" id="wmr-uT-8gD" customClass="ProfileLogoView" customModule="TFS_Chat" customModuleProvider="target">
                                     <rect key="frame" x="359" y="4.5" width="35" height="35"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="profileLogo"/>
                                     <gestureRecognizers/>
                                     <connections>
                                         <outletCollection property="gestureRecognizers" destination="KgG-iK-p1H" appends="YES" id="Q90-h1-6DY"/>
