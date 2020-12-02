@@ -21,7 +21,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     var apiService: ApiServiceProtocol!
     var storageService: StorageServiceProtocol!
     
-    func injectDependcies(storageService: StorageServiceProtocol, apiService: ApiServiceProtocol) {
+    func injectDependencies(storageService: StorageServiceProtocol, apiService: ApiServiceProtocol) {
         self.storageService = storageService
         self.apiService = apiService
     }

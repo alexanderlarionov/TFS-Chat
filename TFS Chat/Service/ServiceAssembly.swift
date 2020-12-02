@@ -13,6 +13,7 @@ protocol ServiceAssemblyProtocol {
     var storageService: StorageServiceProtocol { get }
     var fileStorageGCDService: FileStorageServiceProtocol { get }
     var fileStorageOperationService: FileStorageServiceProtocol { get }
+    var networkService: NetworkServiceProtocol { get }
 }
 
 class ServicesAssembly: ServiceAssemblyProtocol {
@@ -27,4 +28,6 @@ class ServicesAssembly: ServiceAssemblyProtocol {
     lazy var storageService: StorageServiceProtocol = StorageService(storage: self.coreAssembly.storage)
     lazy var fileStorageGCDService: FileStorageServiceProtocol = GCDDataManager(fileStorage: self.coreAssembly.fileStorage)
     lazy var fileStorageOperationService: FileStorageServiceProtocol = OperationDataManager(fileStorage: self.coreAssembly.fileStorage)
+    lazy var networkService: NetworkServiceProtocol = NetworkService(networkClient: self.coreAssembly.networkClient)
+    
 }

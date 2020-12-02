@@ -22,10 +22,10 @@ class ChannelListViewController: UITableViewController {
     var gcdDataManager: FileStorageServiceProtocol!
     //TODO get rid of force unwrap, move frc to model
     
-    func injectDependcies(presentationAssembly: PresentationAssembly,
-                          storageService: StorageServiceProtocol,
-                          apiService: ApiServiceProtocol,
-                          gcdDataManager: FileStorageServiceProtocol) {
+    func injectDependencies(presentationAssembly: PresentationAssembly,
+                            storageService: StorageServiceProtocol,
+                            apiService: ApiServiceProtocol,
+                            gcdDataManager: FileStorageServiceProtocol) {
         self.storageService = storageService
         self.apiService = apiService
         self.presentationAssembly = presentationAssembly

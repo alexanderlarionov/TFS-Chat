@@ -18,6 +18,7 @@ protocol PresentationAssemblyProtocol {
     
     func themesController() -> ThemesViewController
     
+    func imageCollectionController(setAvatarBlock: @escaping (UIImage) -> Void) -> ImageCollectionViewController
 }
 
 class PresentationAssembly: PresentationAssemblyProtocol {
@@ -34,7 +35,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             fatalError("Unable to load ChannelListViewController")
         }
         
-        channelListViewController.injectDependcies(
+        channelListViewController.injectDependencies(
             presentationAssembly: self,
             storageService: serviceAssembly.storageService,
             apiService: serviceAssembly.apiService,
@@ -46,7 +47,7 @@ class PresentationAssembly: PresentationAssemblyProtocol {
     func messageListControler(channelId: String, title: String) -> MessageListViewController {
         guard let controller = loadVCFromStoryboard(name: "MessageListViewController", identifier: "MessageListViewController") as? MessageListViewController else {
             fatalError("Unable to load MessageListViewController") }
-        controller.injectDependcies(storageService: serviceAssembly.storageService, apiService: serviceAssembly.apiService)
+        controller.injectDependencies(storageService: serviceAssembly.storageService, apiService: serviceAssembly.apiService)
         controller.title = title
         controller.channelId = channelId
         controller.navigationItem.largeTitleDisplayMode = .never
@@ -59,7 +60,10 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             fatalError("Unable to load ProfileViewController")
         }
         
-        profileController.injectDependcies(gcdDataManager: serviceAssembly.fileStorageGCDService, operationDataManager: serviceAssembly.fileStorageOperationService)
+        profileController.injectDependencies(
+            presentationAssembly: self,
+            gcdDataManager: serviceAssembly.fileStorageGCDService,
+            operationDataManager: serviceAssembly.fileStorageOperationService)
         profileController.avatarUpdaterDelegate = delegate
         profileController.navigationItem.largeTitleDisplayMode = .never
         return navController
@@ -72,6 +76,15 @@ class PresentationAssembly: PresentationAssemblyProtocol {
             ThemeManager.instance.applyTheme(theme)
         }
         controller.navigationItem.largeTitleDisplayMode = .never
+        return controller
+    }
+    
+    func imageCollectionController(setAvatarBlock: @escaping (UIImage) -> Void) -> ImageCollectionViewController {
+        guard let controller = loadVCFromStoryboard(name: "ImageCollectionViewController", identifier: "ImageCollectionViewController") as? ImageCollectionViewController else {
+            fatalError("Unable to load ImageCollectionViewController") }
+        controller.injectDependencies(networkService: serviceAssembly.networkService)
+        controller.setAvatarBlock = setAvatarBlock
+        
         return controller
     }
     

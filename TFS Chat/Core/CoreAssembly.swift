@@ -12,10 +12,12 @@ protocol CoreAssemblyProtocol {
     var fileStorage: FileStorageProtocol { get }
     var firestoreClient: ApiClientProtocol { get }
     var storage: StorageProtocol { get }
+    var networkClient: NetworkClientProtocol { get }
 }
 
 class CoreAssembly: CoreAssemblyProtocol {
     lazy var fileStorage: FileStorageProtocol = FileStorage()
     lazy var firestoreClient: ApiClientProtocol = FirestoreClient()
     lazy var storage: StorageProtocol = CoreDataStack.instance
+    lazy var networkClient: NetworkClientProtocol = NetworkClient()
 }

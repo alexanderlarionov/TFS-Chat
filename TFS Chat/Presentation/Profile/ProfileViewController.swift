@@ -27,10 +27,12 @@ class ProfileViewController: UIViewController {
     
     var gcdDataManager: FileStorageServiceProtocol!
     var operationDataManager: FileStorageServiceProtocol!
+    var presentationAssembly: PresentationAssemblyProtocol!
     
-    func injectDependcies(gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
+    func injectDependencies(presentationAssembly: PresentationAssembly, gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
         self.gcdDataManager = gcdDataManager
         self.operationDataManager = operationDataManager
+        self.presentationAssembly = presentationAssembly
     }
     
     override func viewDidLoad() {
@@ -62,9 +64,21 @@ class ProfileViewController: UIViewController {
             self.selectFromCamera()
         }))
         
+        alert.addAction(UIAlertAction(title: "From Pixabay", style: .default, handler: { _ in
+            self.loadFromPixabay()
+        }))
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(alert, animated: true)
+    }
+    
+    private func loadFromPixabay() {
+        let controller = presentationAssembly.imageCollectionController { [weak self] image in
+            self?.profileLogoView.profileImage.image = image
+            self?.setSaveButtonEnable(true)
+        }
+        self.present(controller, animated: true)
     }
     
     @IBAction func editButtonTapped(_ sender: UIButton) {
