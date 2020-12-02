@@ -38,6 +38,16 @@
                ReferencedContainer = "container:TFS Chat.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0A6727F32575B14700AF267E"
+               BuildableName = "TFS Chat Tests.xctest"
+               BlueprintName = "TFS Chat Tests"
+               ReferencedContainer = "container:TFS Chat.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
