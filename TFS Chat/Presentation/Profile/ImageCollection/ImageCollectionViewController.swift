@@ -17,6 +17,7 @@ class ImageCollectionViewController: UIViewController {
     private let itemsPerRow: CGFloat = 3
     private var data: DataModel?
     var setAvatarBlock: ((UIImage) -> Void)?
+    let animationLayer = CAEmitterLayer()
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -52,6 +53,10 @@ class ImageCollectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     private func showErrorAlert() {

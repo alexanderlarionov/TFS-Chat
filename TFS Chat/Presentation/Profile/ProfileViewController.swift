@@ -13,21 +13,23 @@ class ProfileViewController: UIViewController {
     @IBOutlet var profileLogoView: ProfileLogoView!
     @IBOutlet var saveGCDButton: UIButton!
     @IBOutlet var saveOperationsButton: UIButton!
-    @IBOutlet var editProfileButton: UIBarButtonItem!
     @IBOutlet var editAvatarButton: UIButton!
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var editProfileButton: UIButton!
     
     weak var avatarUpdaterDelegate: AvatarUpdaterDelegate?
     lazy var imagePicker = UIImagePickerController()
     var nameBeforeChange: String?
     var infoBeforeChange: String?
     var avatarBeforeChange: UIImage?
+    var isEditableMode = false
     
     var gcdDataManager: FileStorageServiceProtocol!
     var operationDataManager: FileStorageServiceProtocol!
     var presentationAssembly: PresentationAssemblyProtocol!
+    let animationLayer = CAEmitterLayer()
     
     func injectDependencies(presentationAssembly: PresentationAssembly, gcdDataManager: FileStorageServiceProtocol, operationDataManager: FileStorageServiceProtocol) {
         self.gcdDataManager = gcdDataManager
@@ -51,6 +53,10 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     @IBAction func editAvatarButtonPressed(_ sender: UIButton) {
@@ -82,16 +88,22 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func editButtonTapped(_ sender: UIButton) {
-        nameTextField.isUserInteractionEnabled = true
-        nameTextField.layer.borderWidth = 1.0
-        infoTextView.isEditable = true
-        infoTextView.layer.borderWidth = 1.0
-        editAvatarButton.isHidden = false
-        setEditButtonVisible(false)
-        
-        nameBeforeChange = nameTextField.text
-        infoBeforeChange = infoTextView.text
-        avatarBeforeChange = profileLogoView.profileImage.image
+        if isEditableMode {
+            handleSaveButtonPressed()
+        } else {
+            nameTextField.isUserInteractionEnabled = true
+            nameTextField.layer.borderWidth = 1.0
+            infoTextView.isEditable = true
+            infoTextView.layer.borderWidth = 1.0
+            editAvatarButton.isHidden = false
+            
+            nameBeforeChange = nameTextField.text
+            infoBeforeChange = infoTextView.text
+            avatarBeforeChange = profileLogoView.profileImage.image
+            
+            ShakingAnimation.shake(view: editProfileButton)
+            isEditableMode = true
+        }
     }
     
     @IBAction func saveGCDButtonPressed(_ sender: UIButton) {
@@ -105,6 +117,8 @@ class ProfileViewController: UIViewController {
     }
     
     func saveData(dataManager: FileStorageServiceProtocol) {
+        activityIndicator.startAnimating()
+        
         var avatarSaved = true
         var nameSaved = true
         var infoSaved = true
@@ -152,7 +166,6 @@ class ProfileViewController: UIViewController {
     func handleSavingResult(avatarSaved: Bool, nameSaved: Bool, infoSaved: Bool, dataManager: FileStorageServiceProtocol) {
         self.activityIndicator.stopAnimating()
         self.setSaveButtonEnable(false)
-        self.setEditButtonVisible(true)
         
         if avatarSaved && nameSaved && infoSaved {
             self.showOkAlert(title: "Data succesfully saved")
@@ -200,16 +213,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func setEditButtonVisible(_ state: Bool) {
-        if state {
-            editProfileButton.isEnabled = true
-            editProfileButton.tintColor = nil
-        } else {
-            editProfileButton.isEnabled = false
-            editProfileButton.tintColor = .clear
-        }
-    }
-    
     func handleSaveButtonPressed() {
         nameTextField.isUserInteractionEnabled = false
         nameTextField.layer.borderWidth = 0
@@ -217,7 +220,9 @@ class ProfileViewController: UIViewController {
         infoTextView.isEditable = false
         editAvatarButton.isHidden = true
         setSaveButtonEnable(false)
-        activityIndicator.startAnimating()
+        
+        ShakingAnimation.stopShaking(view: editProfileButton)
+        isEditableMode = false
     }
     
     func setupTextFields() {
@@ -233,6 +238,7 @@ class ProfileViewController: UIViewController {
     }
     
     func setupButtons() {
+        editProfileButton.layer.cornerRadius = 14
         saveGCDButton.layer.cornerRadius = 14
         saveOperationsButton.layer.cornerRadius = 14
         setSaveButtonEnable(false)
@@ -302,6 +308,7 @@ extension ProfileViewController: Themable {
         view.backgroundColor = theme.messageListViewBackgroundColor
         saveGCDButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         saveOperationsButton.layer.backgroundColor = theme.navigationBarColor.cgColor
+        editProfileButton.layer.backgroundColor = theme.navigationBarColor.cgColor
         nameTextField.textColor = theme.navigationBarTextColor
         infoTextView.textColor = theme.navigationBarTextColor
         infoTextView.backgroundColor = view.backgroundColor

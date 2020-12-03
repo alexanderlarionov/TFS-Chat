@@ -23,6 +23,8 @@ class ThemesViewController: UIViewController {
     @IBOutlet var dayRightLabel: UILabel!
     @IBOutlet var nightLeftLabel: UILabel!
     @IBOutlet var nightRightLabel: UILabel!
+    
+    let animationLayer = CAEmitterLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +42,10 @@ class ThemesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     @IBAction func classicButtonPressed(_ sender: Any) {

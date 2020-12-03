@@ -22,6 +22,9 @@ class ChannelListViewController: UITableViewController {
     var gcdDataManager: FileStorageServiceProtocol!
     //TODO get rid of force unwrap, move frc to model
     
+    let animationLayer = CAEmitterLayer()
+    let transition = TransitionAnimation()
+    
     func injectDependencies(presentationAssembly: PresentationAssembly,
                             storageService: StorageServiceProtocol,
                             apiService: ApiServiceProtocol,
@@ -46,6 +49,10 @@ class ChannelListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustViewForCurrentTheme()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,6 +84,7 @@ class ChannelListViewController: UITableViewController {
     
     @IBAction func profileIconTapped(_ sender: UITapGestureRecognizer) {
         let profileController = presentationAssembly.profileController(delegate: self)
+        profileController.transitioningDelegate = self
         self.present(profileController, animated: true)
     }
     
@@ -177,4 +185,11 @@ extension ChannelListViewController: NSFetchedResultsControllerDelegate {
         tableView.endUpdates()
     }
     
+}
+
+extension ChannelListViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
 }

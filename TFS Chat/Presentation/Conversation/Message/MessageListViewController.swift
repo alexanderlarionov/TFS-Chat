@@ -20,6 +20,7 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     var fetchedResultsController: NSFetchedResultsController<MessageDb>!
     var apiService: ApiServiceProtocol!
     var storageService: StorageServiceProtocol!
+    let animationLayer = CAEmitterLayer()
     
     func injectDependencies(storageService: StorageServiceProtocol, apiService: ApiServiceProtocol) {
         self.storageService = storageService
@@ -50,6 +51,10 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollToBottom()
+    }
+    
+    @IBAction func longPressedAction(_ sender: UILongPressGestureRecognizer) {
+        showTinkoffAnimation(sender: sender, layer: animationLayer)
     }
     
     @objc func sendButtonPressed() {
