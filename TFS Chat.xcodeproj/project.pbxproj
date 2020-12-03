@@ -40,6 +40,8 @@
 		0A8371F6253E31E300021647 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8371F5253E31E300021647 /* DateUtil.swift */; };
 		0A9ECC912577108A00CD1A32 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9ECC902577108A00CD1A32 /* NetworkSession.swift */; };
 		0A9ECC9C2577122D00CD1A32 /* NetworkSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9ECC9B2577122D00CD1A32 /* NetworkSessionMock.swift */; };
+		0A9ECCAA2578400900CD1A32 /* GCDDataManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9ECCA92578400900CD1A32 /* GCDDataManagerTest.swift */; };
+		0A9ECCAF2578401F00CD1A32 /* FileStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9ECCAE2578401F00CD1A32 /* FileStorageMock.swift */; };
 		0AA3273F255C3715004E912A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA3273E255C3715004E912A /* CoreDataStack.swift */; };
 		0AA3274C255C6210004E912A /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA3274B255C6210004E912A /* ApiService.swift */; };
 		0AA3275E255D7DD3004E912A /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA3275D255D7DD3004E912A /* CoreAssembly.swift */; };
@@ -123,6 +125,8 @@
 		0A8371F5253E31E300021647 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		0A9ECC902577108A00CD1A32 /* NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
 		0A9ECC9B2577122D00CD1A32 /* NetworkSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionMock.swift; sourceTree = "<group>"; };
+		0A9ECCA92578400900CD1A32 /* GCDDataManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManagerTest.swift; sourceTree = "<group>"; };
+		0A9ECCAE2578401F00CD1A32 /* FileStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageMock.swift; sourceTree = "<group>"; };
 		0AA3273E255C3715004E912A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		0AA3274B255C6210004E912A /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		0AA3275D255D7DD3004E912A /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
@@ -217,6 +221,8 @@
 			children = (
 				0A6727F62575B14700AF267E /* NetworkServiceTest.swift */,
 				0A9ECC9B2577122D00CD1A32 /* NetworkSessionMock.swift */,
+				0A9ECCA92578400900CD1A32 /* GCDDataManagerTest.swift */,
+				0A9ECCAE2578401F00CD1A32 /* FileStorageMock.swift */,
 				0A6727F82575B14700AF267E /* Info.plist */,
 			);
 			path = "TFS Chat Tests";
@@ -656,7 +662,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A9ECCAF2578401F00CD1A32 /* FileStorageMock.swift in Sources */,
 				0A9ECC9C2577122D00CD1A32 /* NetworkSessionMock.swift in Sources */,
+				0A9ECCAA2578400900CD1A32 /* GCDDataManagerTest.swift in Sources */,
 				0A6727F72575B14700AF267E /* NetworkServiceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

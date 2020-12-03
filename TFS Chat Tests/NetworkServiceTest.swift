@@ -11,7 +11,7 @@ import XCTest
 
 class NetworkServiceTest: XCTestCase {
     
-    func testRequestAndParsing() throws {
+    func testRequestSentAndResponseParsed() throws {
         
         //Arrange
         let validJsonString = """

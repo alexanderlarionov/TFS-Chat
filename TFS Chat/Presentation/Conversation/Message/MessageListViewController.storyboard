@@ -58,6 +58,7 @@
                                                     <color key="backgroundColor" red="0.87308239939999999" green="0.87320828439999998" blue="0.87305486200000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="AFF-vh-gw0" firstAttribute="top" secondItem="7Pj-4d-PVW" secondAttribute="bottom" id="66L-jv-cJ0"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="F1e-U8-lVs"/>
                                                         <constraint firstAttribute="trailing" secondItem="zgq-uO-4H7" secondAttribute="trailing" constant="20" id="NH0-Rw-H9F"/>
                                                         <constraint firstItem="7Pj-4d-PVW" firstAttribute="leading" secondItem="LW4-ad-tL0" secondAttribute="leading" constant="10" id="Oa0-nD-dk5"/>
                                                         <constraint firstAttribute="bottom" secondItem="AFF-vh-gw0" secondAttribute="bottom" constant="3" id="QCn-TO-cto"/>
@@ -117,6 +118,7 @@
                                                     <constraints>
                                                         <constraint firstItem="1BQ-Mj-i00" firstAttribute="top" secondItem="9HZ-sm-q80" secondAttribute="bottom" id="Adh-ah-7k4"/>
                                                         <constraint firstItem="9HZ-sm-q80" firstAttribute="leading" secondItem="YN2-2C-Sqr" secondAttribute="leading" constant="10" id="Igc-i8-e93"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="UK1-dU-cpr"/>
                                                         <constraint firstAttribute="trailing" secondItem="1BQ-Mj-i00" secondAttribute="trailing" constant="5" id="VtK-of-XPs"/>
                                                         <constraint firstAttribute="bottom" secondItem="1BQ-Mj-i00" secondAttribute="bottom" constant="3" id="X7e-am-Egp"/>
                                                         <constraint firstItem="9HZ-sm-q80" firstAttribute="top" secondItem="YN2-2C-Sqr" secondAttribute="top" constant="10" id="cLh-cR-BgM"/>

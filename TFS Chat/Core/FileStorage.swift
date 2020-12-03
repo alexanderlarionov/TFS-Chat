@@ -10,9 +10,9 @@ import UIKit
 
 protocol FileStorageProtocol {
     
-    static var avatarFile: String { get }
-    static var profileNameFile: String { get }
-    static var profileInfoFile: String { get }
+    var avatarFile: String { get }
+    var profileNameFile: String { get }
+    var profileInfoFile: String { get }
     
     func saveImage(image: UIImage, fileName: String) -> Bool
     
@@ -25,9 +25,9 @@ protocol FileStorageProtocol {
 
 class FileStorage: FileStorageProtocol {
     
-    static var avatarFile = "avatar.jpeg"
-    static var profileNameFile = "profileName.txt"
-    static var profileInfoFile = "profileInfo.txt"
+    var avatarFile = "avatar.jpeg"
+    var profileNameFile = "profileName.txt"
+    var profileInfoFile = "profileInfo.txt"
     
     func saveImage(image: UIImage, fileName: String) -> Bool {
         do {
