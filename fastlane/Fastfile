@@ -1,0 +1,27 @@
+desc "Install dependencies and build project for testing"
+lane :build_for_testing do
+	cocoapods
+	scan(
+		clean: true,
+		build_for_testing: true, 
+		derived_data_path: "../DerivedData/"
+		)
+	puts("'build_for_testing' lane finished successfully🤘")
+end
+
+desc "Run tests against builded project"
+lane :test do
+	scan(
+		test_without_building: true, 
+		derived_data_path: "../DerivedData/",
+		devices: ["iPhone 11"]
+		)
+	puts("'test' lane finished successfully🤘")
+end
+
+desc "Build project and run tests"
+lane :build_and_test do
+	build_for_testing
+	test
+	puts("'build_and_test' lane finished successfully🤘")
+end
