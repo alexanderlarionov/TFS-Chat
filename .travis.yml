@@ -1,0 +1,8 @@
+language: swift
+osx_image: xcode12
+before_install:
+  - gem install bundler
+install:
+  - bundle install
+script:
+  - bundle exec fastlane build_for_testing
