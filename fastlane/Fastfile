@@ -1,27 +1,38 @@
 desc "Install dependencies and build project for testing"
 lane :build_for_testing do
-	cocoapods
-	scan(
-		clean: true,
-		build_for_testing: true, 
-		derived_data_path: "../DerivedData/"
-		)
-	puts("'build_for_testing' lane finished successfully🤘")
+  cocoapods
+  scan(
+    clean: true,
+    build_for_testing: true, 
+    derived_data_path: "../DerivedData/"
+    )
 end
 
 desc "Run tests against builded project"
 lane :test do
-	scan(
-		test_without_building: true, 
-		derived_data_path: "../DerivedData/",
-		devices: ["iPhone 11"]
-		)
-	puts("'test' lane finished successfully🤘")
+  scan(
+    test_without_building: true, 
+    derived_data_path: "../DerivedData/",
+    devices: ["iPhone 11"]
+    )
 end
 
 desc "Build project and run tests"
 lane :build_and_test do
-	build_for_testing
-	test
-	puts("'build_and_test' lane finished successfully🤘")
+  build_for_testing
+  test
+  discord_notifier(
+    webhook_url: ENV['DISCORD_WEBHOOK_URL'],
+    title: "TFS Chat",
+    description: "Build succeeded🤘"
+  )
+end
+
+error do |lane, exception|
+discord_notifier(
+    webhook_url: ENV['DISCORD_WEBHOOK_URL'],
+    title: "TFS Chat",
+    description: "Build failed💩",
+    success: false
+    )
 end
