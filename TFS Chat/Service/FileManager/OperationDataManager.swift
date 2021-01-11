@@ -34,11 +34,11 @@ class OperationDataManager: FileStorageServiceProtocol {
     }
     
     func saveName(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: fileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func saveInfo(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: fileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     private func saveString(value: String, fileName: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
@@ -61,7 +61,7 @@ class OperationDataManager: FileStorageServiceProtocol {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let image = self.fileStorage.loadImage(fileName: FileStorage.avatarFile) {
+            if let image = self.fileStorage.loadImage(fileName: self.fileStorage.avatarFile) {
                 OperationQueue.main.addOperation {
                     completion(image)
                 }
@@ -71,7 +71,7 @@ class OperationDataManager: FileStorageServiceProtocol {
     
     func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = self.fileStorage.loadString(fileName: FileStorage.profileNameFile) {
+            if let data = self.fileStorage.loadString(fileName: self.fileStorage.profileNameFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -81,7 +81,7 @@ class OperationDataManager: FileStorageServiceProtocol {
     
     func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
         queue.addOperation {
-            if let data = self.fileStorage.loadString(fileName: FileStorage.profileInfoFile) {
+            if let data = self.fileStorage.loadString(fileName: self.fileStorage.profileInfoFile) {
                 OperationQueue.main.addOperation {
                     completion(data)
                 }
@@ -121,7 +121,7 @@ class SaveImageOperation: Operation {
     }
     
     override func main() {
-        success = fileStorage.saveImage(image: dataToSave, fileName: FileStorage.avatarFile)
+        success = fileStorage.saveImage(image: dataToSave, fileName: fileStorage.avatarFile)
     }
     
 }

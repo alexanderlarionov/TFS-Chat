@@ -141,6 +141,7 @@ extension ChannelListViewController: Themable {
         }
         
         tableView.backgroundColor = theme.channelListBackgroundColor
+        tableView.separatorColor = theme.channelListCellTextColor
         selectedCellView.backgroundColor = theme.navigationBarColor
         tableView.reloadData()
     }
