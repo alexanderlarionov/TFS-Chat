@@ -93,6 +93,7 @@
 		0A0B84262545161B000FA240 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0A0B84272545161B000FA240 /* Channel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Channel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0A0B84282545161B000FA240 /* Channel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Channel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0A55CF44258193580046A883 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		0A59AA10256F1213008C5E44 /* TinkoffAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffAnimation.swift; sourceTree = "<group>"; };
 		0A59AA15256F12B2008C5E44 /* TransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimation.swift; sourceTree = "<group>"; };
 		0A5EC23C257422F5000DA35C /* TFS Chat UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TFS Chat UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,6 +321,7 @@
 				0A82BDDF250BFE030088A796 /* Info.plist */,
 				0AC14B96253A213900FCA72C /* GoogleService-Info.plist */,
 				0AC52A8E251247350029503C /* LoggingUtil.swift */,
+				0A55CF44258193580046A883 /* Config.xcconfig */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -761,7 +763,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat UITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -781,7 +783,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S776FDY3DL;
 				INFOPLIST_FILE = "TFS Chat UITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -876,6 +878,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -894,6 +897,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PIXABAY_API_KEY = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -937,6 +941,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -948,6 +953,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PIXABAY_API_KEY = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -957,7 +963,7 @@
 		};
 		0A82BDE3250BFE030088A796 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4889533EACA3CC0EC11FA2B5 /* Pods-TFS Chat.debug.xcconfig */;
+			baseConfigurationReference = 0A55CF44258193580046A883 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -979,7 +985,7 @@
 		};
 		0A82BDE4250BFE030088A796 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35FE2667E25F24E5243B99F4 /* Pods-TFS Chat.release.xcconfig */;
+			baseConfigurationReference = 0A55CF44258193580046A883 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";

@@ -1,0 +1,9 @@
+language: swift
+osx_image: xcode12
+before_install:
+  - gem install bundler
+  - brew install libsodium
+install:
+  - bundle install
+script:
+  - bundle exec fastlane build_and_test

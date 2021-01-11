@@ -1,0 +1,14 @@
+//
+//  Config.xcconfig
+//  TFS Chat
+//
+//  Created by dmitry on 10.12.2020.
+//  Copyright © 2020 dmitry. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Pods/Target Support Files/Pods-TFS Chat/Pods-TFS Chat.debug.xcconfig"
+#include "Pods/Target Support Files/Pods-TFS Chat/Pods-TFS Chat.release.xcconfig"
+
+PIXABAY_API_KEY = 
