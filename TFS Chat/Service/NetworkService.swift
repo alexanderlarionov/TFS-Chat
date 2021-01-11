@@ -19,7 +19,13 @@ protocol NetworkServiceProtocol {
 class NetworkService: NetworkServiceProtocol {
     
     let networkClient: NetworkClientProtocol
-    let apiBaseUrl = "https://pixabay.com/api/?key=19139831-67087a5068526f1d9fc406fc3&q=icons&image_type=photo&per_page=150"
+    let apiBaseUrl: String = {
+        guard let apiKey = Bundle.main.infoDictionary?["PIXABAY_API_KEY"] as? String else {
+            print("API Key not set for Pixabay")
+            return ""
+        }
+        return "https://pixabay.com/api/?key=" + apiKey + "&q=icons&image_type=photo&per_page=150"
+    }()
     
     init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient

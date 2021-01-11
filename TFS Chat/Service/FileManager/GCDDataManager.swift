@@ -23,7 +23,7 @@ struct GCDDataManager: FileStorageServiceProtocol {
     func saveAvatar(image: UIImage, completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         group.enter()
         queue.async {
-            if fileStorage.saveImage(image: image, fileName: FileStorage.avatarFile) {
+            if fileStorage.saveImage(image: image, fileName: fileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -35,11 +35,11 @@ struct GCDDataManager: FileStorageServiceProtocol {
     }
     
     func saveName(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: fileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func saveInfo(value: String, completion: @escaping () -> Void, failure: @escaping () -> Void) {
-        saveString(value: value, fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
+        saveString(value: value, fileName: fileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     func completeBatchSave(completion: @escaping () -> Void) {
@@ -52,7 +52,7 @@ struct GCDDataManager: FileStorageServiceProtocol {
     
     func loadAvatar(completion: @escaping (UIImage) -> Void, failure: @escaping () -> Void) {
         queue.async {
-            if let image = fileStorage.loadImage(fileName: FileStorage.avatarFile) {
+            if let image = fileStorage.loadImage(fileName: fileStorage.avatarFile) {
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -64,11 +64,11 @@ struct GCDDataManager: FileStorageServiceProtocol {
     }
     
     func loadProfileName(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
-        loadString(fileName: FileStorage.profileNameFile, completion: completion, failure: failure)
+        loadString(fileName: fileStorage.profileNameFile, completion: completion, failure: failure)
     }
     
     func loadProfileInfo(completion: @escaping (String) -> Void, failure: @escaping () -> Void) {
-        loadString(fileName: FileStorage.profileInfoFile, completion: completion, failure: failure)
+        loadString(fileName: fileStorage.profileInfoFile, completion: completion, failure: failure)
     }
     
     private func loadString(fileName: String, completion: @escaping (String) -> Void, failure: @escaping () -> Void) {

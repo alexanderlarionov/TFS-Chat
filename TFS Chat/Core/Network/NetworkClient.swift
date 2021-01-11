@@ -15,6 +15,12 @@ protocol NetworkClientProtocol {
 
 class NetworkClient: NetworkClientProtocol {
     
+    private let session: NetworkSessionProtocol
+    
+    init(session: NetworkSessionProtocol = URLSession.shared) {
+        self.session = session
+    }
+    
     func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping (Result<Parser.Model, Error>) -> Void) {
         
         guard let url = URL(string: url) else {
@@ -22,7 +28,7 @@ class NetworkClient: NetworkClientProtocol {
             print("Malformed URL")
             return }
         
-        let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+        session.loadData(from: url) { data, error in
             if let error = error {
                 completion(.failure(error))
                 print("Error during request: ", error.localizedDescription)
@@ -37,6 +43,5 @@ class NetworkClient: NetworkClientProtocol {
             
             completion(.success(parsedModel))
         }
-        dataTask.resume()
     }
 }
