@@ -12,6 +12,12 @@ struct DateUtil {
    
     static func formatForView(date: Date) -> String {
         let formattedDate: String
+        /// Создание инстанс DateFormatter занимает довольно много времени
+        /// Рекоендую создать два инстанса DateFormatter с разными dateFormat
+        /// Сохранить их в переменные (или сделать ленивыми)
+        /// И потом использовать их в зависимости от условия
+        
+        
         let formatter = DateFormatter()
         if Calendar.current.isDateInToday(date) {
             formatter.dateFormat = "HH:mm"

@@ -126,6 +126,10 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
+    /// Раз здесь используется константа
+    /// Лучше установить её в свойство инстанса UICollectionViewDelegateFlowLayout
+    /// sectionInset
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {

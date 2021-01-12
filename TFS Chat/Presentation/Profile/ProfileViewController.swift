@@ -237,6 +237,12 @@ class ProfileViewController: UIViewController {
         infoTextView.isHidden = true
     }
     
+    
+    /// Чтобы сэкономить место в Контроллере
+    /// Советую завести отдельный класс под кнопку
+    /// Там настраивать отображение, реагировать на смену состояния (enabled / selected)
+    /// Так же там удобнее реагировать на смену темы
+    
     func setupButtons() {
         editProfileButton.layer.cornerRadius = 14
         saveGCDButton.layer.cornerRadius = 14

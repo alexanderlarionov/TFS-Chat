@@ -21,6 +21,10 @@ class NetworkClient: NetworkClientProtocol {
         self.session = session
     }
     
+    /// Параметризуй у NetworkClientProtocol свойство callbackQueue
+    /// Передавай туда DispatchQueue.main и вызывай completion в этой очереди
+    /// Это позволит тебе избежать оберток DispatchQueue.main.async { ... } в коде где работаешь с UI
+    
     func sendRequest<Parser: ParserProtocol>(url: String, parser: Parser, completion: @escaping (Result<Parser.Model, Error>) -> Void) {
         
         guard let url = URL(string: url) else {

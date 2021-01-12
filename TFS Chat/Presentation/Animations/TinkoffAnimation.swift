@@ -11,6 +11,12 @@ import UIKit
 extension UIViewController {
     
     func showTinkoffAnimation(sender: UILongPressGestureRecognizer, layer: CAEmitterLayer) {
+    
+        /// Сделай UIView к которой прикрепи UILongPressGestureRecognizer
+        /// Там обрабатывай state этого GestureRecognizer
+        /// В инстансах UIViewController используй не CAEmitterLayer а получившуюся обертку
+    
+
         //TODO how to avoid copypaste for each controller? how to get rid of layer as a param?
         if sender.state == .began {
             let location = sender.location(in: sender.view)

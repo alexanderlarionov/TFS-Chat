@@ -23,6 +23,8 @@ struct ChannelDataModel {
         self.lastActivity = lastActivity
     }
     
+    /// Тут бы хорошо смотрелся протокол Codable
+    
     init?(firebaseData: QueryDocumentSnapshot) {
         let data = firebaseData.data()
         let identifier = firebaseData.documentID

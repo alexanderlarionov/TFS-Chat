@@ -17,6 +17,10 @@ class TransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
+        
+        /// Стоит помнить что при обратном transition (dismiss или pop)
+        /// .to будет другим (тот на который возвращаемся
+        
         guard let toView = transitionContext.view(forKey: .to) else { return }
         let initialFrame = CGRect.zero
         let finalFrame = toView.frame

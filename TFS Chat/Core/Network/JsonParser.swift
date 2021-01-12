@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
+/// Я бы переименовал JsonParser -> DataModelParser
+/// Суть класса не в том что он прасит JSON, а в том что на выходе получается DataModel
+
 class JsonParser: ParserProtocol {
-    
     typealias Model = DataModel
     
     func parse(data: Data) -> DataModel? {

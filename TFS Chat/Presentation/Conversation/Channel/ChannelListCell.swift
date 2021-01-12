@@ -36,6 +36,9 @@ class ChannelListCell: UITableViewCell, ConfigurableView {
             messageLabel.text = lastMessage
             messageLabel.font = UIFont.systemFont(ofSize: fontSize)
         } else {
+            /// Сделай файл с локализацией (хотя бы одну английскую)
+            /// Используй локализованные строки
+            
             messageLabel.text = "No messages yet"
             messageLabel.font = UIFont.italicSystemFont(ofSize: fontSize)
         }

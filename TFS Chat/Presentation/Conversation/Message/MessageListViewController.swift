@@ -61,6 +61,11 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
         guard let channelId = channelId else { return }
         guard let senderID = senderID else { return }
         guard let content = messageTextField.text, content != "" else { return }
+        
+        /// Я бы вынес константу "Dmitry Akatev" куда повыше
+        /// Чтобы было проще конфигурировать
+        /// Рядом бы настраивал и senderID
+        
         let message = MessageDataModel(content: content, created: Date(), senderId: senderID, senderName: "Dmitry Akatev")
         apiService.addMessage(channelId: channelId,
                               message: message,
@@ -81,6 +86,9 @@ class MessageListViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = fetchedResultsController.object(at: indexPath).toMessageModel()
+        
+        /// Для удобства у классов ячеек можно сделать метод
+        /// Который будет возвращать их identifier
         
         if cellModel.senderId == senderID {
             return configureCell(indexPath: indexPath, identifier: "SentMessageCell", model: cellModel)

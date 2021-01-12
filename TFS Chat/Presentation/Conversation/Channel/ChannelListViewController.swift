@@ -40,6 +40,10 @@ class ChannelListViewController: UITableViewController {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
         storageService.performFetch(for: fetchedResultsController)
+        
+        /// Здесь упущен модификатор замыкания [weak self];
+        /// Утечки памяти не будет, но apiService будет держать этот инстанс пока не получит ответ на запрос;
+        /// Это может привести в будущем к проблемам, которые сложно диагностировать
         apiService.subscribeOnChannelsChanges { channels in
             self.storageService.saveChannels(channelModels: channels)
         }
@@ -92,6 +96,10 @@ class ChannelListViewController: UITableViewController {
         let themeController = presentationAssembly.themesController()
         navigationController?.pushViewController(themeController, animated: true)
     }
+    
+    /// Хорошо бы создание и настройку инстанса UIAlertController вынести куда-нибудь
+    /// У тебя для этого как раз есть Assembly
+    /// Вот так вот и начинаются шутки про MVC — Massive View Contoller
     
     @IBAction func createButtonTapped(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Create New Channel", message: nil, preferredStyle: .alert)

@@ -24,6 +24,8 @@ struct MessageDataModel {
         self.senderName = senderName
     }
     
+    /// Тут бы хорошо смотрелся протокол Codable
+    
     init?(firebaseData: QueryDocumentSnapshot) {
         let data = firebaseData.data()
         self.identifier = firebaseData.documentID

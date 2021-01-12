@@ -36,6 +36,11 @@ class ShakingAnimation {
     }
     
     static func stopShaking(view: UIView) {
+        /// Это удалит все анимации
+        /// Может достаточно удалить с ключом "shake"?
+        /// Зачем удалять у всех subviews?
+        /// Если действительно надо, то стоит удалять во всем дереве рекурсивно
+        
         view.layer.removeAllAnimations()
         view.subviews.forEach({ $0.layer.removeAllAnimations() })
     }

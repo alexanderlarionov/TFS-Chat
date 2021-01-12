@@ -25,6 +25,9 @@ protocol FileStorageProtocol {
 
 class FileStorage: FileStorageProtocol {
     
+    /// Почему эти свойства var?
+    /// Вероятно это просто константы
+    
     var avatarFile = "avatar.jpeg"
     var profileNameFile = "profileName.txt"
     var profileInfoFile = "profileInfo.txt"

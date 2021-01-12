@@ -16,6 +16,11 @@ protocol StorageServiceProtocol {
     
     func fetchChannel(by id: String) -> ChannelDb?
     
+    /// Протоколы используются для того чтобы оперировать абстракция;
+    /// Здесь же есть использование очень конкретной реализции — NSFetchedResultsController;
+    /// Отныне все классы реализующие протокол Сервиса Хранения обязаны иметь дело с CoreData;
+    /// Так себе гибкость получается;
+    
     func getChannelsFRC() -> NSFetchedResultsController<ChannelDb>
     
     func getMessagesFRC(channelId: String) -> NSFetchedResultsController<MessageDb>
@@ -75,6 +80,7 @@ class StorageService: StorageServiceProtocol {
         do {
             try frc.performFetch()
         } catch {
+            /// В логгер бы завернуть
             print("Error during fetch: ", error.localizedDescription)
         }
     }

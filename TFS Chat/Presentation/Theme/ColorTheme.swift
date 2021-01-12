@@ -12,6 +12,11 @@ enum ColorTheme: Int {
     
     case classic, day, night
     
+    /// Советую разделить свойства на категории
+    /// NavigationBar / ChannelList / MessageList
+    /// Так удобнее в коде ориентироваться
+    /// Проверь что все цвета работают через ColorTheme
+    
     var navigationBarColor: UIColor {
         switch self {
         case .classic:
@@ -25,6 +30,10 @@ enum ColorTheme: Int {
     
     var navigationBarTextColor: UIColor {
         switch self {
+        /// Можно писать компактнее:
+        /// case .class, .day:
+        ///     return .black
+        
         case .classic:
             return UIColor.black
         case .day:
