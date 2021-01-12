@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    
+    /// Все эти методы можно заменить на обработку уведомлений NotificationCenter
+    /// UIApplication.didBecomeActiveNotification
+    /// Захламления AppDelegate стоит избегать, эта классическая проблема
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         printStateInfo(from: .inactive, to: .active, methodName: #function)
     }
